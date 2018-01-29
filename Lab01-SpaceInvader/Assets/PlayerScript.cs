@@ -2,32 +2,57 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerScript : MonoBehaviour
+{
 
-    float speed = 2f;
-    public enum PlayerState { Alive, Dead, BeenHit }
-    public PlayerState player = PlayerState.Alive;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        PlayerMovement();
-	}
+    #region Variable
+    float speed = 2f, dmg = 1f, hp = 3f, shootDelay;
+    public enum State { Alive, Dead, BeenHit }
+    public State player = State.Alive;
+    GameObject bulletPrefab;
+    #endregion
 
-    void PlayerStates()
+    #region Start
+    // Use this for initialization
+    void Start()
     {
-        switch(player)
+        bulletPrefab = Resources.Load("bulletPrefab") as GameObject;
+    }
+    #endregion
+
+    #region Update
+    // Update is called once per frame
+    void Update()
+    {
+        States();
+    }
+    #endregion
+
+    #region States
+    void States()
+    {
+        switch (player)
         {
-            case PlayerState.Alive:
+            case State.Alive:
+                PlayerControls();
+                if (hp < 1)
+                {
+                    player = State.Dead;
+                }
                 break;
-            case PlayerState.Dead:
+            case State.Dead:
+                Death();
                 break;
-            case PlayerState.BeenHit:
+            case State.BeenHit:
                 break;
         }
+    }
+    #endregion
+    #region Player Controls
+    void PlayerControls()
+    {
+        PlayerMovement();
+        PlayerShoot();
     }
     #region Movement
     void PlayerMovement()
@@ -50,7 +75,42 @@ public class PlayerScript : MonoBehaviour {
     void Shoot()
     {
         Vector3 bulletSpawnPos = transform.position + new Vector3(0, -gameObject.GetComponent<BoxCollider2D>().edgeRadius, 0);
-        
+        GameObject shotBullet = Instantiate(bulletPrefab, bulletSpawnPos, Quaternion.identity);
+        Destroy(shotBullet, 5f);
+    }
+    #endregion
+    #region Player Shoot
+    void PlayerShoot()
+    {
+        if (Input.GetKey(KeyCode.Space) && shootDelay < Time.time)
+        {
+            Shoot();
+            float timeDelay = Random.Range(0.2f, 0.6f);
+            shootDelay = Time.time + timeDelay;
+        }
+    }
+    #endregion
+    #endregion
+    #region Health Stuff
+    public void TakeDamage()
+    {
+        hp--;
+    }
+    public void TakeDamage(int takedmg)
+    {
+        hp -= takedmg;
+    }
+    public void Heal()
+    {
+        hp++;
+    }
+    public void Heal(int healHealth)
+    {
+        hp += healHealth;
+    }
+    public void Death()
+    {
+        Destroy(gameObject);
     }
     #endregion
 }
