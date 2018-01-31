@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour {
 
-    public float speed = 2f, bulletDMG = 1f;
-    string owner;
+    public float speed = 2f, bulletDMG = 1f, moveBy;
+    public string owner;
 	// Use this for initialization
 	void Start () {
 		
@@ -13,22 +13,34 @@ public class BulletScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(new Vector3(0, Time.deltaTime*speed, 0));
+        moveBy = Time.deltaTime * speed;
+        transform.Translate(new Vector3(0, moveBy, 0));
 	}
-    private void OnCollisionEnter2D(Collision2D collision)
+    #region Doing the thing
+    void DoTheThing(GameObject thing)
     {
-        switch (collision.gameObject.tag)
+        if (thing.tag == "PlayerTank" && owner != "PlayerTank")
         {
-            case "PlayerTank":
-                PlayerScript player = collision.gameObject.GetComponent<PlayerScript>();
-                player.TakeDamage();
-                Destroy(gameObject);
-                break;
-            case "Enemy":
-                InvaderScript enemy = collision.gameObject.GetComponent<InvaderScript>();
-                enemy.TakeDamage();
-                Destroy(gameObject);
-                break;
+            PlayerScript player = thing.GetComponent<PlayerScript>();
+            player.TakeDamage();
+            Destroy(gameObject);
+        }
+        else if (thing.tag == "Enemy" && owner != "Enemy")
+        {
+            InvaderScript enemy = thing.GetComponent<InvaderScript>();
+            enemy.TakeDamage();
+            Destroy(gameObject);
         }
     }
+    #endregion
+    #region Collision
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        DoTheThing(collision.gameObject);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        DoTheThing(collision.gameObject);
+    }
+    #endregion
 }

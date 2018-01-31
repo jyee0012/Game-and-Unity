@@ -6,10 +6,10 @@ public class PlayerScript : MonoBehaviour
 {
 
     #region Variable
-    float speed = 2f, dmg = 1f, hp = 3f, shootDelay;
+    protected float speed = 2f, dmg = 1f, hp = 3f, shootDelay;
     public enum State { Alive, Dead, BeenHit }
-    public State player = State.Alive;
-    GameObject bulletPrefab;
+    public State thing = State.Alive;
+    protected GameObject bulletPrefab;
     #endregion
 
     #region Start
@@ -31,13 +31,13 @@ public class PlayerScript : MonoBehaviour
     #region States
     void States()
     {
-        switch (player)
+        switch (thing)
         {
             case State.Alive:
                 PlayerControls();
                 if (hp < 1)
                 {
-                    player = State.Dead;
+                    thing = State.Dead;
                 }
                 break;
             case State.Dead:
@@ -65,17 +65,30 @@ public class PlayerScript : MonoBehaviour
         {
             Move(new Vector3(1, 0, 0));
         }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = 5f;
+        }
+        else
+        {
+            speed = 2f;
+        }
     }
-    void Move(Vector3 moveBy)
+    protected void Move(Vector3 moveBy)
     {
         transform.Translate(moveBy * Time.deltaTime * speed);
     }
     #endregion
     #region Shoot
-    void Shoot()
+    protected void Shoot(bool enemy)
     {
-        Vector3 bulletSpawnPos = transform.position + new Vector3(0, -gameObject.GetComponent<BoxCollider2D>().edgeRadius, 0);
+        Vector3 bulletSpawnPos = transform.position + new Vector3(0, -gameObject.GetComponent<BoxCollider2D>().edgeRadius, +3);
         GameObject shotBullet = Instantiate(bulletPrefab, bulletSpawnPos, Quaternion.identity);
+        shotBullet.GetComponent<BulletScript>().owner = gameObject.tag;
+        if (enemy)
+        {
+            shotBullet.GetComponent<BulletScript>().moveBy *= -1;
+        }
         Destroy(shotBullet, 5f);
     }
     #endregion
@@ -84,7 +97,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space) && shootDelay < Time.time)
         {
-            Shoot();
+            Shoot(false);
             float timeDelay = Random.Range(0.2f, 0.6f);
             shootDelay = Time.time + timeDelay;
         }
