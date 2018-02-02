@@ -1,0 +1,8 @@
+There wasn't really much difficult I found in it.
+If I had more time I would add more features, that's about it.
+
+Player has 3 hits before death, after each hit you will be moved back to the center.
+I made it that so when the aliens touch the barrier, it will be destroyed.
+
+Bugs:
+Sometimes the alien ships will get stuck along the walls, and or get stuck on each other.
