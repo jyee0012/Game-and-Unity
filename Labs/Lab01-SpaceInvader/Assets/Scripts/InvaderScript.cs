@@ -6,6 +6,7 @@ public class InvaderScript : PlayerScript
 {
 
     Vector3 direction = new Vector3(1, 0, 0), moveDown = new Vector3(0, -3, 0);
+    float movementDelay;
     // Use this for initialization
     void Start()
     {
@@ -39,6 +40,10 @@ public class InvaderScript : PlayerScript
                 {
                     thing = State.Dead;
                     GameObject.FindGameObjectWithTag("PlayerTank").GetComponent<PlayerScript>().GameOver();
+                }
+                if (movementDelay <= Time.time)
+                {
+                    ChangeDirection();
                 }
                 break;
             case State.Dead:
@@ -75,6 +80,7 @@ public class InvaderScript : PlayerScript
     }
     public void ChangeDirection()
     {
+        movementDelay = Time.time + 10f;
         direction *= -1;
         Move(moveDown);
     }
