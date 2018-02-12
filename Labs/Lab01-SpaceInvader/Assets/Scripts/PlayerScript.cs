@@ -11,6 +11,7 @@ public class PlayerScript : MonoBehaviour
     public State thing = State.Alive;
     protected GameObject bulletPrefab;
     bool gotHit = false, hit = false;
+    int hitNum = 0;
     public Text gameText;
     #endregion
 
@@ -19,7 +20,8 @@ public class PlayerScript : MonoBehaviour
     void Start()
     {
         bulletPrefab = Resources.Load("bulletPrefab") as GameObject;
-        gameText.gameObject.SetActive(true);
+        gameText.gameObject.SetActive(false);
+        gameText.text = "";
     }
     #endregion
 
@@ -42,15 +44,24 @@ public class PlayerScript : MonoBehaviour
                 {
                     thing = State.Dead;
                 }
+                if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0)
+                {
+                    YouWin();
+                }
                 break;
             case State.Dead:
+                GameOver();
                 Death();
                 break;
             case State.BeenHit:
                 if (hitDelay <= Time.time)
                 {
-                    gameObject.GetComponent<SpriteRenderer>().gameObject.SetActive(hit);
-                    hit = !hit;
+                    if (hitNum % 2 == 0)
+                    {
+                        gameObject.GetComponent<SpriteRenderer>().gameObject.SetActive(hit);
+                        hit = !hit;
+                    }
+                    hitNum++;
                 }
                 else
                 {

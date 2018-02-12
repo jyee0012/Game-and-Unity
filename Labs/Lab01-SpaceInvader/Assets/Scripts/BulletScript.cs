@@ -18,6 +18,7 @@ public class BulletScript : MonoBehaviour {
         if (owner == "PlayerTank")
         {
             transform.Translate(new Vector3(0, moveBy, 0));
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
         }
         else if (owner == "Enemy")
         {
