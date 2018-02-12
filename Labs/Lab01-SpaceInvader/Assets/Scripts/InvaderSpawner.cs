@@ -10,7 +10,7 @@ public class InvaderSpawner : MonoBehaviour
     void Start()
     {
         invader = Resources.Load("Invader") as GameObject;
-        SpawnInvaders(5, 9);
+        SpawnInvaders(3, 7);
     }
 
     // Update is called once per frame

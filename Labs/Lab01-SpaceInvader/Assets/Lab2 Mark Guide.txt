@@ -1,0 +1,26 @@
+This lab is out of 25 marks.
+
+Requirements
+
+    Add a Start Menu to the game. It will:
+        (1 mark) Be the first screen that the player sees.
+        (1 mark) When the game is first opened, display the name of your game and an opening message.
+        (2 marks) When the game ends, display the results of the game, and give the player an opportunity to play again.
+        (1 mark) Display a different message based on the results of the game (one message if the player lost, another if the player won).
+        (2 marks) Display the player's score.
+        (2 marks) Contain a button that allows the player to start playing the game.
+    Add Level 1, the level that you built in the first lab to this game. It will be the level loaded from the start menu. It will:
+        (1 mark) Keep track of how many hit points the player has.
+        (1 mark) Keep track of how many enemy ships still exist.
+        (2 marks) Load Level 2 if the player destroys all of the enemy ships.
+        (2 marks) Load the Start Menu if the enemies reduce the player's hit points to zero.
+    Add Level 2 to the game. It will be loaded once the first wave of enemy bots is cleared. It will:
+        (2 marks) Contain at one new type of enemy bot. The new enemy bot will:
+            (2 marks) Fire different-looking projectiles.
+            (2 marks) Have a different sprite than the other enemies.
+            (2 marks) Move independently of the other enemies.
+        (2 marks) Also contain the same bots as Level 01, but ones that move at a faster speed
+
+Submission:
+
+Make a text document called Lab02_Specs_FirstName_LastName.txt that outlines the challenges that you met in your lab.

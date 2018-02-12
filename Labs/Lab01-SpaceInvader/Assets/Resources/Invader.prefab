@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thing: 0
   gameText: {fileID: 0}
+  level: 1
 --- !u!212 &212026192750104450
 SpriteRenderer:
   m_ObjectHideFlags: 1

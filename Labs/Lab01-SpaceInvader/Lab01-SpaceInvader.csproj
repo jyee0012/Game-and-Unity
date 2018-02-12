@@ -308,6 +308,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\BarrierScript.cs" />
     <Compile Include="Assets\Scripts\BulletScript.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\InvaderScript.cs" />
     <Compile Include="Assets\Scripts\InvaderSpawner.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
@@ -315,6 +316,7 @@
   <ItemGroup>
     <None Include="Assets\Lab01_Specs_James_Yee.txt" />
     <None Include="Assets\Lab1 Mark Guide.txt" />
+    <None Include="Assets\Lab2 Mark Guide.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

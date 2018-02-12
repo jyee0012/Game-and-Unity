@@ -7,6 +7,7 @@ public class InvaderScript : PlayerScript
 
     Vector3 direction = new Vector3(1, 0, 0), moveDown = new Vector3(0, -3, 0);
     float movementDelay;
+    public float level = 1;
     // Use this for initialization
     void Start()
     {
@@ -26,11 +27,12 @@ public class InvaderScript : PlayerScript
         switch (thing)
         {
             case State.Alive:
+                speed = 2f * (0.5f*level);
                 Move(direction);
                 if (shootDelay <= Time.time)
                 {
                     Shoot();
-                    shootDelay = Time.time + Random.Range(2f, 14f);
+                    shootDelay = Time.time + Random.Range(5f, 14f);
                 }
                 if (hp < 1 || (transform.position.x > 9.5 || transform.position.x < -9.5))
                 {
