@@ -19,7 +19,7 @@ public class BarrierScript : MonoBehaviour {
     {
         if (hp <= 0)
         {
-            Destroy(this.gameObject);
+            gameObject.SetActive(false);
         }
         else if (hp <= 5)
         {
@@ -37,5 +37,10 @@ public class BarrierScript : MonoBehaviour {
     public void TakeDamage()
     {
         hp--;
+    }
+    public void ResetBarrier()
+    {
+        gameObject.SetActive(true);
+        hp = 25;
     }
 }

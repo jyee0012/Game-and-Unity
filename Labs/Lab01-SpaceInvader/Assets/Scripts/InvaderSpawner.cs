@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InvaderSpawner : MonoBehaviour
 {
 
     GameObject invader;
+    public float level = 1;
+    public Text levelText;
     // Use this for initialization
     void Start()
     {
@@ -16,10 +19,7 @@ public class InvaderSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.S))
-        //{
-        //    SpawnInvaders(5, 9);
-        //}
+        levelText.text = "Level: " + level;
     }
     public void SpawnInvaders(int row, int col)
     {
@@ -31,6 +31,7 @@ public class InvaderSpawner : MonoBehaviour
                 // x =  - ((col) * -1.25f) + c*1.25f?
                 Vector3 spawnPos = new Vector3((0 - ((2/col) * -1.25f)) + (c * 1.25f), 4 - (0.2f*r), -5);
                 GameObject theInvader = Instantiate(invader, spawnPos, Quaternion.identity, gameObject.transform);
+                theInvader.GetComponent<InvaderScript>().level = this.level;
             }
         }
     }

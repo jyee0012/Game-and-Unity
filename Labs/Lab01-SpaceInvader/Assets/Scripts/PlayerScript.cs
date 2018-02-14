@@ -11,8 +11,8 @@ public class PlayerScript : MonoBehaviour
     public State thing = State.Alive;
     protected GameObject bulletPrefab;
     bool gotHit = false, hit = false;
-    int hitNum = 0;
-    public Text gameText;
+    int hitNum = 0, score = 0;
+    public Text gameText, scoreText, subGameText;
     #endregion
 
     #region Start
@@ -22,6 +22,8 @@ public class PlayerScript : MonoBehaviour
         bulletPrefab = Resources.Load("bulletPrefab") as GameObject;
         gameText.gameObject.SetActive(false);
         gameText.text = "";
+        subGameText.gameObject.SetActive(false);
+        subGameText.text = "";
     }
     #endregion
 
@@ -29,6 +31,7 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        scoreText.text = "Score: " + score;
         States();
     }
     #endregion
@@ -43,6 +46,10 @@ public class PlayerScript : MonoBehaviour
                 if (hp < 1)
                 {
                     thing = State.Dead;
+                }
+                else if (hp > 5)
+                {
+                    hp = 5;
                 }
                 if (GameObject.FindGameObjectsWithTag("Enemy").Length <= 0)
                 {
@@ -152,14 +159,16 @@ public class PlayerScript : MonoBehaviour
     #region Win/Lose
     public void YouWin()
     {
-        gameText.text = "Congratulations, You Win!";
-        gameText.gameObject.SetActive(true);
-        thing = State.End;
+        GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>().currentScene = GameManager.SceneState.Win;
+        NextLevel();
     }
     public void GameOver()
     {
         gameText.text = "Game Over!";
+        subGameText.text = "Your Score: " + score;
+        GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>().currentScene = GameManager.SceneState.GameOver;
         gameText.gameObject.SetActive(true);
+        subGameText.gameObject.SetActive(true);
         thing = State.End;
     }
     #endregion
@@ -172,5 +181,23 @@ public class PlayerScript : MonoBehaviour
             hitDelay = Time.time + 5f;
             transform.position = new Vector3(0, -4, -5);
         }
+    }
+    public void NextLevel()
+    {
+        GameObject.FindGameObjectWithTag("Spawner").GetComponent<InvaderSpawner>().level++;
+        GameObject.FindGameObjectWithTag("Spawner").GetComponent<InvaderSpawner>().SpawnInvaders(3, 7);
+        hp += 3;
+        foreach (GameObject barrier in GameObject.FindGameObjectsWithTag("Wall"))
+        {
+            barrier.GetComponent<BarrierScript>().ResetBarrier();
+        }
+    }
+    public void ScoreUp()
+    {
+        score += 10;
+    }
+    public void ScoreUp(int num)
+    {
+        score += num;
     }
 }

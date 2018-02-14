@@ -39,6 +39,7 @@ public class BulletScript : MonoBehaviour {
             InvaderScript enemy = thing.GetComponent<InvaderScript>();
             enemy.TakeDamage();
             Destroy(gameObject);
+            GameObject.FindGameObjectWithTag("PlayerTank").GetComponent<PlayerScript>().ScoreUp();
         }
         else if (thing.tag == "Wall")
         {

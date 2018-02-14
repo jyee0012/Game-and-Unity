@@ -8,6 +8,9 @@ TagManager:
   - Enemy
   - Bullet
   - Wall
+  - Buttons
+  - Manager
+  - Spawner
   layers:
   - Default
   - TransparentFX
