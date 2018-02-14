@@ -9,6 +9,7 @@ public class InvaderSpawner : MonoBehaviour
     GameObject invader;
     public float level = 1;
     public Text levelText;
+    public int num = 0;
     // Use this for initialization
     void Start()
     {
@@ -20,6 +21,10 @@ public class InvaderSpawner : MonoBehaviour
     void Update()
     {
         levelText.text = "Level: " + level;
+        if (((int)Time.time) % 15 == 0)
+        {
+            num++;
+        }
     }
     public void SpawnInvaders(int row, int col)
     {
@@ -29,7 +34,7 @@ public class InvaderSpawner : MonoBehaviour
             {
                 // height of one invader = 0.2, default height spawn = 4, width of one invader = 1.25
                 // x =  - ((col) * -1.25f) + c*1.25f?
-                Vector3 spawnPos = new Vector3((0 - ((2/col) * -1.25f)) + (c * 1.25f), 4 - (0.2f*r), -5);
+                Vector3 spawnPos = new Vector3((0 - ((2/col) * -1.25f)) + (c * 1.25f), 3 - (0.2f*r), -5);
                 GameObject theInvader = Instantiate(invader, spawnPos, Quaternion.identity, gameObject.transform);
                 theInvader.GetComponent<InvaderScript>().level = this.level;
             }
