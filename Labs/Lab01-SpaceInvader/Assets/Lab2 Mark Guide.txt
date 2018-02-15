@@ -15,12 +15,12 @@ Requirements
 -       (2 marks) Load Level 2 if the player destroys all of the enemy ships.
 -       (2 marks) Load the Start Menu if the enemies reduce the player's hit points to zero.
     Add Level 2 to the game. It will be loaded once the first wave of enemy bots is cleared. It will:
-        (2 marks) Contain at one new type of enemy bot. The new enemy bot will:
-            (2 marks) Fire different-looking projectiles.
-            (2 marks) Have a different sprite than the other enemies.
-            (2 marks) Move independently of the other enemies.
+-       (2 marks) Contain at one new type of enemy bot. The new enemy bot will:
+-           (2 marks) Fire different-looking projectiles.
+-           (2 marks) Have a different sprite than the other enemies.
+-           (2 marks) Move independently of the other enemies.
 -       (2 marks) Also contain the same bots as Level 01, but ones that move at a faster speed
 
 Submission:
-17
+25
 Make a text document called Lab02_Specs_FirstName_LastName.txt that outlines the challenges that you met in your lab.

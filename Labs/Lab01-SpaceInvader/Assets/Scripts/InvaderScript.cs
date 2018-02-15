@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class InvaderScript : PlayerScript
 {
-
     Vector3 direction = new Vector3(1, 0, 0), moveDown = new Vector3(0, -3, 0);
     float movementDelay;
-    public float level = 1;
+    public float level = 1, scoreHold = 10;
+    int bounceCounter = 0;
+    public bool unique = false;
     // Use this for initialization
     void Start()
     {
-        bulletPrefab = Resources.Load("bulletPrefab") as GameObject;
+        if (!unique)
+        {
+            bulletPrefab = Resources.Load("bulletPrefab") as GameObject;
+        }
+        else
+        {
+            bulletPrefab = Resources.Load("newBulletPrefab") as GameObject;
+            direction *= -1;
+            scoreHold = 100;
+        }
         hp = 1;
         shootDelay = Time.time + Random.Range(2f, 14f);
     }
@@ -26,8 +36,16 @@ public class InvaderScript : PlayerScript
     {
         switch (thing)
         {
+            #region Alive
             case State.Alive:
-                speed = 2f * (0.5f*level);
+                if (!unique)
+                {
+                    speed = 2f * (0.5f * level);
+                }
+                else
+                {
+                    speed = 2f;
+                }
                 Move(direction);
                 if (shootDelay <= Time.time)
                 {
@@ -45,14 +63,34 @@ public class InvaderScript : PlayerScript
                 }
                 if (movementDelay <= Time.time)
                 {
-                    ChangeDirection();
+                    if (!unique)
+                    {
+                        ChangeDirection();
+                    }
+                    else
+                    {
+                        NewChangeDirection();
+                    }
+                }
+                if (bounceCounter >= 3)
+                {
+                    transform.Translate(new Vector3(-0.5f, 0, 0));
                 }
                 break;
+            #endregion
+            #region Dead
             case State.Dead:
                 Death();
                 break;
+            #endregion
+            #region Been Hit
             case State.BeenHit:
                 break;
+            #endregion
+            #region Pause
+            case State.Pause:
+                break;
+                #endregion
         }
     }
     #endregion
@@ -61,7 +99,14 @@ public class InvaderScript : PlayerScript
     {
         if (collision.gameObject.tag == "Wall")
         {
-            ChangeEveryInvader();
+            if (!unique)
+            {
+                ChangeEveryInvader();
+            }
+            else
+            {
+                NewChangeDirection();
+            }
         }
     }
 
@@ -73,17 +118,28 @@ public class InvaderScript : PlayerScript
         }
     }
     #endregion
+    #region Change Invader
     void ChangeEveryInvader()
     {
-        foreach(GameObject invader in GameObject.FindGameObjectsWithTag("Enemy"))
+        foreach (GameObject invader in GameObject.FindGameObjectsWithTag("Enemy"))
         {
             invader.GetComponent<InvaderScript>().ChangeDirection();
         }
     }
     public void ChangeDirection()
     {
+        if (!unique)
+        {
+            movementDelay = Time.time + 10f;
+            direction *= -1;
+            Move(moveDown);
+        }
+    }
+    void NewChangeDirection()
+    {
         movementDelay = Time.time + 10f;
         direction *= -1;
-        Move(moveDown);
+        bounceCounter++;
     }
+    #endregion
 }

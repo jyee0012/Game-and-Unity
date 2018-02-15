@@ -1,0 +1,9 @@
+Not really that difficult.
+
+Player starts with 3 lives, gains 3 lives per level with a maximum of 5.
+new ship comes in every once in awhile and shoots a little slower green ball that will take away all of the player's lives.
+Added a Pause function that will occasionally break the game.....for teh luls. (Esc Key)
+
+
+Bugs:
+Alien ships still get stuck along the walls, and or get stuck on each other.

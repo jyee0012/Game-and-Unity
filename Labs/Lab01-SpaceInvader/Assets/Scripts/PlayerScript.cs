@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class PlayerScript : MonoBehaviour
 {
 
     #region Variable
-    protected float speed = 2f, dmg = 1f, hp = 3f, shootDelay, hitDelay;
-    public enum State { Alive, Dead, BeenHit, End }
+    protected float speed = 2f, dmg = 1f, hp = 3f, shootDelay, hitDelay, pauseDelay;
+    public enum State { Alive, Dead, BeenHit, Pause, End }
     public State thing = State.Alive;
     protected GameObject bulletPrefab;
     bool gotHit = false, hit = false;
@@ -42,6 +43,7 @@ public class PlayerScript : MonoBehaviour
     {
         switch (thing)
         {
+            #region Alive
             case State.Alive:
                 PlayerControls();
                 ShowHealth();
@@ -58,10 +60,14 @@ public class PlayerScript : MonoBehaviour
                     YouWin();
                 }
                 break;
+            #endregion
+            #region Dead
             case State.Dead:
                 GameOver();
                 Death();
                 break;
+            #endregion
+            #region Been Hit
             case State.BeenHit:
                 if (hitDelay <= Time.time)
                 {
@@ -79,6 +85,12 @@ public class PlayerScript : MonoBehaviour
                     hit = false;
                 }
                 break;
+            #endregion
+            #region Pause
+            case State.Pause:
+                PlayerControls();
+                break;
+            #endregion
             case State.End:
                 break;
         }
@@ -87,8 +99,23 @@ public class PlayerScript : MonoBehaviour
     #region Player Controls
     void PlayerControls()
     {
-        PlayerMovement();
-        PlayerShoot();
+        if (Input.GetKey(KeyCode.Escape) && pauseDelay <= Time.time)
+        {
+            if (thing != State.Pause)
+            {
+                Pause(true);
+            }
+            else
+            {
+                Pause(false);
+            }
+            pauseDelay = Time.time + 1f;
+        }
+        if (thing != State.Pause)
+        {
+            PlayerMovement();
+            PlayerShoot();
+        }
     }
     #region Movement
     void PlayerMovement()
@@ -135,6 +162,39 @@ public class PlayerScript : MonoBehaviour
         }
     }
     #endregion
+    #region Pause
+    public void Pause(bool isPause)
+    {
+        if (isPause)
+        {
+            gameText.text = "Paused";
+            gameText.gameObject.SetActive(true);
+            thing = State.Pause;
+            foreach (GameObject bullet in GameObject.FindGameObjectsWithTag("Bullet"))
+            {
+                bullet.GetComponent<BulletScript>().pause = true;
+            }
+            foreach (GameObject invader in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                invader.GetComponent<InvaderScript>().thing = State.Pause;
+            }
+        }
+        else
+        {
+            gameText.text = "";
+            gameText.gameObject.SetActive(false);
+            thing = State.Alive;
+            foreach (GameObject bullet in GameObject.FindGameObjectsWithTag("Bullet"))
+            {
+                bullet.GetComponent<BulletScript>().pause = false;
+            }
+            foreach (GameObject invader in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                invader.GetComponent<InvaderScript>().thing = State.Alive;
+            }
+        }
+    }
+    #endregion
     #endregion
     #region Health Stuff
     public void TakeDamage()
@@ -174,18 +234,26 @@ public class PlayerScript : MonoBehaviour
         thing = State.End;
     }
     #endregion
-    public void getHit()
+    #region Get Hit
+    public void getHit(int dmg)
     {
         if (thing == State.Alive)
         {
-            TakeDamage();
+            TakeDamage(dmg);
             thing = State.BeenHit;
             hitDelay = Time.time + 5f;
             transform.position = new Vector3(0, -4, -5);
         }
     }
+    #endregion
+    #region Next Level
     public void NextLevel()
     {
+        GameObject[] allBullets = GameObject.FindGameObjectsWithTag("Bullet");
+        foreach (GameObject bullet in allBullets)
+        {
+            Destroy(bullet);
+        }
         GameObject.FindGameObjectWithTag("Spawner").GetComponent<InvaderSpawner>().level++;
         GameObject.FindGameObjectWithTag("Spawner").GetComponent<InvaderSpawner>().SpawnInvaders(3, 7);
         hp += 3;
@@ -194,6 +262,8 @@ public class PlayerScript : MonoBehaviour
             barrier.GetComponent<BarrierScript>().ResetBarrier();
         }
     }
+    #endregion
+    #region UI Stuff
     public void ScoreUp()
     {
         score += 10;
@@ -242,4 +312,5 @@ public class PlayerScript : MonoBehaviour
                 break;
         }
     }
+    #endregion
 }

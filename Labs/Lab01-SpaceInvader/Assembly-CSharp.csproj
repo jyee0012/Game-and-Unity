@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\PlayerScript.cs" />
      <None Include="Assets\Lab1 Mark Guide.txt" />
      <None Include="Assets\Lab01_Specs_James_Yee.txt" />
+     <None Include="Assets\Lab02_Specs_James_Yee.txt" />
      <None Include="Assets\Lab2 Mark Guide.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

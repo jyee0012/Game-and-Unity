@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
 public class GameManager : MonoBehaviour {
 
     public Text bigMsg;
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour {
 	void Update () {
         States();
 	}
+    #region States
     void States()
     {
         switch(currentScene)
@@ -46,6 +48,8 @@ public class GameManager : MonoBehaviour {
                 break;
         }
     }
+    #endregion
+    #region Button Functions
     public void LoadGameSpace(int index)
     {
         SceneManager.LoadScene(index);
@@ -54,6 +58,8 @@ public class GameManager : MonoBehaviour {
     {
         currentScene = SceneState.Quit;
     }
+    #endregion
+    #region Show Buttons
     void ShowButtons(bool show)
     {
         if (playButton != null && quitButton != null)
@@ -73,5 +79,10 @@ public class GameManager : MonoBehaviour {
                 quitButton.gameObject.SetActive(false);
             }
         }
+    }
+    #endregion
+    public void ChangeButtonText(Text buttonText)
+    {
+        buttonText.text = "X";
     }
 }

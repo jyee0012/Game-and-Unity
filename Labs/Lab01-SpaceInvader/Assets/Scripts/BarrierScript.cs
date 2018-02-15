@@ -19,7 +19,7 @@ public class BarrierScript : MonoBehaviour {
     {
         if (hp <= 0)
         {
-            gameObject.SetActive(false);
+            DisplayBarrier(false);
         }
         else if (hp <= 5)
         {
@@ -38,9 +38,26 @@ public class BarrierScript : MonoBehaviour {
     {
         hp--;
     }
+    public void TakeDamage(int dmg)
+    {
+        hp -= dmg;
+    }
     public void ResetBarrier()
     {
-        gameObject.SetActive(true);
+        DisplayBarrier(true);
         hp = 25;
+    }
+    void DisplayBarrier(bool show)
+    {
+        if (show)
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = true;
+            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        else
+        {
+            gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        }
     }
 }

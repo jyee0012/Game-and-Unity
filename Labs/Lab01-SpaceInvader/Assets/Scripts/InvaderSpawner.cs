@@ -6,14 +6,15 @@ using UnityEngine.UI;
 public class InvaderSpawner : MonoBehaviour
 {
 
-    GameObject invader;
+    GameObject invader, newVader;
     public float level = 1;
     public Text levelText;
-    public int num = 0;
+    float uniqueTimer = 15;
     // Use this for initialization
     void Start()
     {
         invader = Resources.Load("Invader") as GameObject;
+        newVader = Resources.Load("UFO") as GameObject;
         SpawnInvaders(3, 7);
     }
 
@@ -21,9 +22,14 @@ public class InvaderSpawner : MonoBehaviour
     void Update()
     {
         levelText.text = "Level: " + level;
-        if (((int)Time.time) % 15 == 0)
+        if (uniqueTimer < Time.time)
         {
-            num++;
+            uniqueTimer = Time.time + 20f;
+            SpawnNewInvader();
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            SpawnInvaders(3, 7);
         }
     }
     public void SpawnInvaders(int row, int col)
@@ -39,5 +45,9 @@ public class InvaderSpawner : MonoBehaviour
                 theInvader.GetComponent<InvaderScript>().level = this.level;
             }
         }
+    }
+    public void SpawnNewInvader()
+    {
+        GameObject newInvader = Instantiate(newVader, new Vector3(-8, 4.7f,-5), Quaternion.identity, gameObject.transform);
     }
 }
