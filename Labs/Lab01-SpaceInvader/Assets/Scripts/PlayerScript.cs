@@ -148,7 +148,7 @@ public class PlayerScript : MonoBehaviour
         Vector3 bulletSpawnPos = transform.position + new Vector3(0, -gameObject.GetComponent<BoxCollider2D>().edgeRadius, +3);
         GameObject shotBullet = Instantiate(bulletPrefab, bulletSpawnPos, Quaternion.identity);
         shotBullet.GetComponent<BulletScript>().owner = gameObject.tag;
-        Destroy(shotBullet, 5f);
+        Destroy(shotBullet, 10f);
     }
     #endregion
     #region Player Shoot
