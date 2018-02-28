@@ -14,13 +14,14 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Respawn(-15);
+        Respawn(-20);
     }
     void Respawn(float limit)
     {
         if(transform.position.y < limit)
         {
             transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
+            gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
     }
 }
