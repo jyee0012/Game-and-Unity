@@ -5,7 +5,7 @@ Suggest a requirement to your instructor if you have a cool idea.
 Requirements
 
     REQUIRED - Create a pinball game:
-        (2 marks) It will have two flippers, one on either side of the game play area at the bottom. They will rotate partially (like in a real pinball game), and they will hit the ball with realistic(ish) physics.
+-       (2 marks) It will have two flippers, one on either side of the game play area at the bottom. They will rotate partially (like in a real pinball game), and they will hit the ball with realistic(ish) physics.
         (2 marks) A ball will fall from the top of the game play area when the game begins. When it falls through the bottom of the game play area, it will be regenerated near the top again (until the player runs out of balls).
         (2 marks) The game will tally and display points and lives.
         (3 marks) The game will sense when the player has run out of lives, and display a game over screen. It will include the option to start another game.
@@ -15,7 +15,7 @@ Requirements
         (2 marks) Create bumpers: "upright, typically cylindrical or rectangular areas, that apply force to the ball when hit." (source)
             (2 marks) Animate the bumpers when they get hit.
             or
-            (1 mark) Change the color the bumper for a split second when it gets hit.
+-           (1 mark) Change the color the bumper for a split second when it gets hit.
         (1 mark) Save and display a high score between games (as in, when Unity is exited and then reopened).
             (1 mark) Save and display a top ten of high scores.
             (2 marks) Allow the player to enter their initials to be displayed in the top ten.
@@ -24,6 +24,7 @@ Requirements
         (1 mark) Add "Outlanes" to your game.
         (2 marks) Add a "Plunger" to your game.
         (2 marks) Give your game a "Match" option.
+		https://en.wikipedia.org/wiki/Glossary_of_pinball_terms
 
 Submission:
 
