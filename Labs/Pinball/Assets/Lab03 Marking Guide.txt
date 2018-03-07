@@ -9,10 +9,10 @@ Requirements
         (2 marks) A ball will fall from the top of the game play area when the game begins. When it falls through the bottom of the game play area, it will be regenerated near the top again (until the player runs out of balls).
         (2 marks) The game will tally and display points and lives.
         (3 marks) The game will sense when the player has run out of lives, and display a game over screen. It will include the option to start another game.
-        (1 mark) The game will have sides and a top to the game play area. They will stop the ball from exiting the screen.
+-       (1 mark) The game will have sides and a top to the game play area. They will stop the ball from exiting the screen.
         (4 marks) The game will have an opening menu. When the game is over, it will return to the opening menu. On it, the number of points that the player earned will be displayed, and the player will be able to choose to play again.
     ADDITIONAL MARKS - Make the pinball game cool with these additions:
-        (2 marks) Create bumpers: "upright, typically cylindrical or rectangular areas, that apply force to the ball when hit." (source)
+-       (2 marks) Create bumpers: "upright, typically cylindrical or rectangular areas, that apply force to the ball when hit." (source)
             (2 marks) Animate the bumpers when they get hit.
             or
 -           (1 mark) Change the color the bumper for a split second when it gets hit.
@@ -21,11 +21,11 @@ Requirements
             (2 marks) Allow the player to enter their initials to be displayed in the top ten.
         (2 marks) Add "Drop Targets" to your game.
         (2 marks) Add a "Kickout Hole" to your game.
-        (1 mark) Add "Outlanes" to your game.
-        (2 marks) Add a "Plunger" to your game.
+-       (1 mark) Add "Outlanes" to your game.
+-       (2 marks) Add a "Plunger" to your game.
         (2 marks) Give your game a "Match" option.
 		https://en.wikipedia.org/wiki/Glossary_of_pinball_terms
 
 Submission:
-
+Total so far: 9/25
 Make a text document called Lab03_Specs_FirstName_LastName.txt that outlines which of the above requirements you completed in your lab.

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BallScript : MonoBehaviour
 {
-    int ballAmount = 5, points;
+    int ballAmount = 5, points = 0;
     public Text ballText, pointText;
     // Use this for initialization
     void Start()
@@ -17,6 +17,7 @@ public class BallScript : MonoBehaviour
     void Update()
     {
         Respawn(-20);
+        pointText.text = "Pts: " + points;
     }
     void Respawn(float limit)
     {
@@ -35,5 +36,9 @@ public class BallScript : MonoBehaviour
     void MoarBalls(int num)
     {
         ballAmount += num;
+    }
+    void GetPoints(int pts)
+    {
+        points += pts;
     }
 }
