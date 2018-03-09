@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class BallScript : MonoBehaviour
 {
-    int ballAmount = 5, points = 0;
-    public Text ballText, pointText;
+    public int ballAmount = 5, points = 0;
+    public Text pointText;
     // Use this for initialization
     void Start()
     {
