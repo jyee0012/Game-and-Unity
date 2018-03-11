@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlungerScript : BumperScript {
-
-    float powValue = 0, powMax = 100;
+    
     Vector3 currentPos;
 	// Use this for initialization
 	void Start () {
@@ -25,11 +24,6 @@ public class PlungerScript : BumperScript {
             //gameObject.GetComponentInChildren<BoxCollider2D>().enabled = true;
         }
 	}
-    void PlungerShoot()
-    {
-        bumperForce = 5 * powValue;
-        powValue = 0;
-    }
     void OnCollisionEnter2D(Collision2D collision)
     {
         Rigidbody2D ballRigidBody = collision.gameObject.GetComponent<Rigidbody2D>();

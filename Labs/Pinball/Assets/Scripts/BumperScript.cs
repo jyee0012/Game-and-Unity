@@ -17,6 +17,7 @@ public class BumperScript : MonoBehaviour {
         Rigidbody2D ballRigidBody = collision.gameObject.GetComponent<Rigidbody2D>();
         ballRigidBody.AddForce(collision.relativeVelocity * bumperForce);
         gameObject.GetComponent<MeshRenderer>().material = hitMAT;
+        collision.gameObject.GetComponent<BallScript>().points += hitPoints;
     }
     void Update()
     {

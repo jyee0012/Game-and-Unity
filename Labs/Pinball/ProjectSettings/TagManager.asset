@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Spawn
   - Ball
+  - Kickout
+  - Outlane
   layers:
   - Default
   - TransparentFX
