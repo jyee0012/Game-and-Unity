@@ -8,6 +8,8 @@ TagManager:
   - Ball
   - Kickout
   - Outlane
+  - GameManager
+  - PtText
   layers:
   - Default
   - TransparentFX

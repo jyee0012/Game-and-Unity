@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BallScript : MonoBehaviour
 {
@@ -10,6 +11,11 @@ public class BallScript : MonoBehaviour
     public Text pointText;
     float timeStamp;
     bool thing = false;
+    private void Awake()
+    {
+        Debug.Log(SceneManager.GetActiveScene().buildIndex);
+        DontDestroyOnLoad(transform.gameObject);
+    }
     // Use this for initialization
     void Start()
     {
@@ -19,9 +25,16 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ballAmount >= 0)
+        if (ballAmount > 0)
         {
             Respawn(-20);
+        }
+        else
+        {
+            if (SceneManager.GetActiveScene().buildIndex != 2)
+            {
+                SceneManager.LoadScene(2);
+            }
         }
         if (thing)
         {
@@ -32,7 +45,10 @@ public class BallScript : MonoBehaviour
                 thing = false;
             }
         }
-        pointText.text = "Pts: " + points*100;
+        if (SceneManager.GetActiveScene().buildIndex == 1)
+        {
+            pointText.text = "Pts: " + points * 100;
+        }
     }
     #region Respawn
     void Respawn(float limit)
@@ -77,17 +93,20 @@ public class BallScript : MonoBehaviour
     #region Collide
     void Collide(string tag)
     {
-        switch (tag)
+        if (!thing)
         {
-            case "Outlane":
-                thing = true;
-                ballAmount += 1;
-                timeStamp = Time.time + 2f;
-                break;
-            case "Kickout":
-                break;
-            default:
-                break;
+            switch (tag)
+            {
+                case "Outlane":
+                    thing = true;
+                    ballAmount += 1;
+                    timeStamp = Time.time + 5f;
+                    break;
+                case "Kickout":
+                    break;
+                default:
+                    break;
+            }
         }
     }
     void OnCollisionEnter2D(Collision2D collision)
