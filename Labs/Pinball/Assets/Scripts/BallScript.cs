@@ -13,8 +13,10 @@ public class BallScript : MonoBehaviour
     bool thing = false;
     private void Awake()
     {
-        Debug.Log(SceneManager.GetActiveScene().buildIndex);
-        DontDestroyOnLoad(transform.gameObject);
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            DontDestroyOnLoad(transform.gameObject);
+        }
     }
     // Use this for initialization
     void Start()
@@ -31,7 +33,7 @@ public class BallScript : MonoBehaviour
         }
         else
         {
-            if (SceneManager.GetActiveScene().buildIndex != 2)
+            if (SceneManager.GetActiveScene().buildIndex == 1)
             {
                 SceneManager.LoadScene(2);
             }
@@ -103,6 +105,8 @@ public class BallScript : MonoBehaviour
                     timeStamp = Time.time + 5f;
                     break;
                 case "Kickout":
+                    transform.position = new Vector3(-22, 42, transform.position.z);
+                    gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.RandomRange(-1.1f,-0.1f), Random.RandomRange(-1.1f, -0.1f)) * 500);
                     break;
                 default:
                     break;

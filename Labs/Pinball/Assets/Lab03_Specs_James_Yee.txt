@@ -1,0 +1,15 @@
+Had problems with understanding the pinball terms.
+
+Player starts with 3 balls, excluding the one in play.
+Getting into the outlanes will provide an extra life.
+A certain set in the targets will unlock one of the outlanes.
+Match will trigger when you have x200 points.
+
+Without rotation, the ball will always hit the same starting point. 
+
+Z for left paddle, X for right paddle, and Up arrow for controlling the plunger.
+
+Bugs:
+With how fast the force can stack upon one another, the ball will shoot off into space or more than likely the abyss.
+Sometimes the rotation will screw with the plunger and the starting system.
+There are times when rotation will stop the ball on it's path out.

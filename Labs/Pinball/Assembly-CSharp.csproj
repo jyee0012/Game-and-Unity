@@ -59,6 +59,7 @@
      <Compile Include="Assets\Scripts\OneWayCollider.cs" />
      <Compile Include="Assets\Scripts\PlungerScript.cs" />
      <Compile Include="Assets\Scripts\SpawnPoint.cs" />
+     <Compile Include="Assets\Scripts\TargetScript.cs" />
      <None Include="Assets\Lab03 Marking Guide.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

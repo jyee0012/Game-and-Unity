@@ -19,13 +19,13 @@ Requirements
         (1 mark) Save and display a high score between games (as in, when Unity is exited and then reopened).
             (1 mark) Save and display a top ten of high scores.
             (2 marks) Allow the player to enter their initials to be displayed in the top ten.
-        (2 marks) Add "Drop Targets" to your game.
-        (2 marks) Add a "Kickout Hole" to your game.
+-       (2 marks) Add "Drop Targets" to your game.
+-       (2 marks) Add a "Kickout Hole" to your game.
 -       (1 mark) Add "Outlanes" to your game.
 -       (2 marks) Add a "Plunger" to your game.
 -       (2 marks) Give your game a "Match" option.
 		https://en.wikipedia.org/wiki/Glossary_of_pinball_terms
 
 Submission:
-Total so far: 13/25
+Total so far: 28/25
 Make a text document called Lab03_Specs_FirstName_LastName.txt that outlines which of the above requirements you completed in your lab.

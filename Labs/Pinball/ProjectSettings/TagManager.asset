@@ -10,6 +10,8 @@ TagManager:
   - Outlane
   - GameManager
   - PtText
+  - Block
+  - Target
   layers:
   - Default
   - TransparentFX
