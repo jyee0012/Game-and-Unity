@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour
 {
 
-    public float maxSpeed = 5, jumpForce = 1000;
+    public float maxSpeed = 15, jumpForce = 1000;
     public Transform groundCheck;
 
     protected Animator myAnimator;
@@ -30,9 +30,26 @@ public class CharacterController : MonoBehaviour
         // layer mask bitwise ops: https://answers.unity.com/questions/8715/how-do-i-use-layermasks.html
         grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
         jump = (Input.GetButtonDown("Jump") && grounded);
+        Respawn(-20);
+        Movement();
     }
 
     void FixedUpdate()
+    {
+
+    }
+    #region Respawn
+    void Respawn(float limit)
+    {
+        if (transform.position.y < limit)
+        {
+            transform.position = GameObject.FindGameObjectWithTag("Spawn").transform.position;
+            //Instantiate(Resources.Load("Ball"), GameObject.FindGameObjectWithTag("Spawn").transform.position, Quaternion.identity);
+        }
+    }
+    #endregion
+    #region Movement
+    void Movement()
     {
         float horizontalAxis = Input.GetAxis("Horizontal");
         if (horizontalAxis != 0)
@@ -63,6 +80,6 @@ public class CharacterController : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
-
     }
+    #endregion
 }
