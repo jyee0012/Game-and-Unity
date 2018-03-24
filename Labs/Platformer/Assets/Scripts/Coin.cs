@@ -15,7 +15,10 @@ public class Coin : MonoBehaviour {
 	}
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject.Find("SoundHub").GetComponent<SoundHub>().PlayCoinSound();
-        Destroy(this.gameObject);
+        {
+            
+            GetComponent<AudioSource>().Play();
+            Destroy(this.gameObject);
+        }
     }
 }
