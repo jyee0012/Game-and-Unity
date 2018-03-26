@@ -13,17 +13,13 @@ public class CameraScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         transform.position = new Vector3(player.transform.position.x, transform.position.y, transform.position.z);
-        if(player.transform.position.y < 6)
+        if(player.transform.position.y < 8)
         {
-            transform.position = new Vector3(transform.position.x, -1f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 5f, transform.position.z);
         }
-        else if (player.transform.position.y < 9)
+        else
         {
-            transform.position = new Vector3(transform.position.x, 11f, transform.position.z);
-        }
-        else if (player.transform.position.y < 16)
-        {
-            transform.position = new Vector3(transform.position.x, 14f, transform.position.z);
+            transform.position = new Vector3(transform.position.x, 12f, transform.position.z);
         }
     }
 }

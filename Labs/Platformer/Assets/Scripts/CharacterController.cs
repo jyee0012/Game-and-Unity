@@ -1,17 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterController : MonoBehaviour
 {
 
     public float maxSpeed = 15, jumpForce = 1000;
     public Transform groundCheck;
-
+    public bool hasKey { get; set; }
     protected Animator myAnimator;
     protected Rigidbody2D myRigidBody;
     protected float moveForce = 365;
     protected bool facingRight = true, grounded = false, jump = false;
+    int totalCoins;
+    public Text coinText;
 
     void Awake()
     {
@@ -21,7 +24,7 @@ public class CharacterController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        totalCoins = GameObject.FindGameObjectsWithTag("Coin").Length;
     }
 
     // Update is called once per frame
@@ -32,6 +35,7 @@ public class CharacterController : MonoBehaviour
         jump = (Input.GetButtonDown("Jump") && grounded);
         Respawn(-20);
         Movement();
+        coinText.text = (totalCoins - GameObject.FindGameObjectsWithTag("Coin").Length) + "/" + totalCoins;
     }
 
     void FixedUpdate()

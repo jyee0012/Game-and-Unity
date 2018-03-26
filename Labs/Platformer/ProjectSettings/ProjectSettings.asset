@@ -656,7 +656,7 @@ PlayerSettings:
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
   cloudProjectId: 9e883d2a-bbfe-4732-bd25-4d5200c82f0a
-  projectName: 
+  projectName: Platformer
   organizationId: jyee12
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0

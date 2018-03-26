@@ -42,6 +42,7 @@ public class FallingPlatform : MonoBehaviour
     {
         StopAllCoroutines();
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        transform.rotation = new Quaternion(0, 0, 0, 0);
         transform.position = startingPos;
         falling = false;
     }
