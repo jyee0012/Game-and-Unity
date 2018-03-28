@@ -15,6 +15,8 @@ public class CharacterController : MonoBehaviour
     protected bool facingRight = true, grounded = false, jump = false;
     int totalCoins;
     public Text coinText;
+    GameObject bullet;
+    float shotDelay;
 
     void Awake()
     {
@@ -25,6 +27,8 @@ public class CharacterController : MonoBehaviour
     void Start()
     {
         totalCoins = GameObject.FindGameObjectsWithTag("Coin").Length;
+        bullet = Resources.Load("bulletPrefab") as GameObject;
+        hasKey = false;
     }
 
     // Update is called once per frame
@@ -35,6 +39,11 @@ public class CharacterController : MonoBehaviour
         jump = (Input.GetButtonDown("Jump") && grounded);
         Respawn(-20);
         Movement();
+        if (Input.GetKey(KeyCode.V) && shotDelay < Time.time)
+        {
+            Shoot();
+            shotDelay = Time.time + 0.5f;
+        }
         coinText.text = (totalCoins - GameObject.FindGameObjectsWithTag("Coin").Length) + "/" + totalCoins;
     }
 
@@ -84,6 +93,21 @@ public class CharacterController : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, 1, 1);
         }
+    }
+    #endregion
+    #region Shoot
+    void Shoot()
+    {
+        GameObject shotBullet = Instantiate(bullet, transform.position, Quaternion.identity);
+        if (facingRight)
+        {
+            shotBullet.GetComponent<BulletScript>().direction = new Vector3(1, 0, 0);
+        }
+        else
+        {
+            shotBullet.GetComponent<BulletScript>().direction = new Vector3(-1, 0, 0);
+        }
+        Destroy(shotBullet, 10f);
     }
     #endregion
 }
