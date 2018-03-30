@@ -6,7 +6,7 @@ public class FallingPlatform : MonoBehaviour
 {
 
     Vector3 startingPos;
-    bool falling = false, once = true;
+    bool falling = false;
     public float timeStamp;
     // Use this for initialization
     void Start()

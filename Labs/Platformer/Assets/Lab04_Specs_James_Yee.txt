@@ -1,0 +1,10 @@
+Completed everything in the list.
+
+V - key to shoot
+
+Requires some well timed jumps
+The only things that are missing textures is the door
+Goal is the door on the far left of the map, winning requires the key
+
+Bugs:
+Slight button delay.

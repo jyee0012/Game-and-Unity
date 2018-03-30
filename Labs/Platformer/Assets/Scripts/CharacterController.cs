@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class CharacterController : MonoBehaviour
     int totalCoins;
     public Text coinText;
     GameObject bullet;
+    public GameObject key;
     float shotDelay;
 
     void Awake()
@@ -45,6 +47,7 @@ public class CharacterController : MonoBehaviour
             shotDelay = Time.time + 0.5f;
         }
         coinText.text = (totalCoins - GameObject.FindGameObjectsWithTag("Coin").Length) + "/" + totalCoins;
+        key.GetComponent<SpriteRenderer>().enabled = hasKey;
     }
 
     void FixedUpdate()
@@ -110,4 +113,11 @@ public class CharacterController : MonoBehaviour
         Destroy(shotBullet, 10f);
     }
     #endregion
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Finish" && hasKey)
+        {
+            SceneManager.LoadScene(2);
+        }
+    }
 }

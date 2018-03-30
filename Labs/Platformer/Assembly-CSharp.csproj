@@ -51,11 +51,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\BulletScript.cs" />
      <Compile Include="Assets\Scripts\CameraScript.cs" />
      <Compile Include="Assets\Scripts\CharacterController.cs" />
      <Compile Include="Assets\Scripts\Coin.cs" />
      <Compile Include="Assets\Scripts\FallingPlatform.cs" />
+     <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\SpawnPoint.cs" />
+     <None Include="Assets\Lab04_Specs_James_Yee.txt" />
      <None Include="Assets\Lab04 Marking Guide.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
