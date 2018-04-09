@@ -5,18 +5,28 @@ using UnityEngine;
 public class PrefabPool : MonoBehaviour
 {
 
-    public int numEnemiesInScene;
+    public int numEnemiesInScene, bulletNum;
     public Transform enemyPrefab;
+    public GameObject bulletPrefab;
     protected Transform[] enemyPrefabPool = new Transform[0];
+    protected GameObject[] bulletPrefabPool = new GameObject[0];
     // Use this for initialization
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
         InitializeEnemies();
+        InitializeBullets();
     }
     void Start()
     {
-
+        if (enemyPrefab == null)
+        {
+            enemyPrefab = Resources.Load("Enemy") as Transform;
+        }
+        if (bulletPrefab == null)
+        {
+            bulletPrefab = Resources.Load("Bullet") as GameObject;
+        }
     }
 
     // Update is called once per frame
@@ -24,7 +34,7 @@ public class PrefabPool : MonoBehaviour
     {
 
     }
-    #region Initialize Enemies
+    #region Initialize Things
     public void InitializeEnemies()
     {
         if (enemyPrefabPool.Length == 0)
@@ -37,7 +47,21 @@ public class PrefabPool : MonoBehaviour
             }
         }
     }
+    public void InitializeBullets()
+    {
+        if (bulletPrefabPool.Length == 0)
+        {
+            bulletPrefabPool = new GameObject[bulletNum];
+            for (int i = 0; i < bulletNum; i++)
+            {
+                bulletPrefabPool[i] = Instantiate(bulletPrefab);
+                bulletPrefabPool[i].gameObject.SetActive(false);
+            }
+        }
+    }
     #endregion
+
+    #region Return Objects
     public Transform Enemy
     {
         get
@@ -56,4 +80,23 @@ public class PrefabPool : MonoBehaviour
             return returnTransform;
         }
     }
+    public GameObject Bullet
+    {
+        get
+        {
+            GameObject returnBullet = null;
+            int i = 0;
+            while (i < bulletPrefabPool.Length && returnBullet == null)
+            {
+                if (!bulletPrefabPool[i].gameObject.activeInHierarchy)
+                {
+                    returnBullet = bulletPrefabPool[i];
+                    bulletPrefabPool[i].gameObject.SetActive(true);
+                }
+                i++;
+            }
+            return returnBullet;
+        }
+    }
+    #endregion
 }
