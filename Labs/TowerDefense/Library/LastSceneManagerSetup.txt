@@ -1,4 +1,4 @@
 sceneSetups:
-- path: C:/Users/jyee12/Downloads/TowerDefense/Assets/Level01.unity
+- path: Assets/Scenes/Level1.unity
   isLoaded: 1
   isActive: 1

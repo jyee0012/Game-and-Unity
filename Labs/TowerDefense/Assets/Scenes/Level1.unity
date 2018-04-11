@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eea70b4028dfb6488f3cfcb5adaba0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveTowardsTarget: {fileID: 0}
+  moveTowardsTarget: {fileID: 1379290161}
   enemiesInWave: 40
 --- !u!4 &549335565
 Transform:
@@ -347,6 +347,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1379290161 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4172251443138458, guid: 04442525af54e104db97f1e1eeda260b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1516665933}
 --- !u!1 &1475719826
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,6 +566,10 @@ Prefab:
     - target: {fileID: 4172251443138458, guid: 04442525af54e104db97f1e1eeda260b, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1217494677073866, guid: 04442525af54e104db97f1e1eeda260b, type: 2}
+      propertyPath: m_Name
+      value: Turret
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 04442525af54e104db97f1e1eeda260b, type: 2}
