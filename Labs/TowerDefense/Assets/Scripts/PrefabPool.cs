@@ -5,28 +5,31 @@ using UnityEngine;
 public class PrefabPool : MonoBehaviour
 {
 
-    public int numEnemiesInScene, bulletNum;
-    public Transform enemyPrefab;
-    public GameObject bulletPrefab;
-    protected Transform[] enemyPrefabPool = new Transform[0];
-    protected GameObject[] bulletPrefabPool = new GameObject[0];
+    public int numEnemiesInScene, bulletNum, turretNum;
+    public GameObject enemyPrefab, bulletPrefab, turretPrefab;
+    protected Transform[] enemyPrefabPool = new Transform[0],  bulletPrefabPool = new Transform[0], turretPrefabPool = new Transform[0];
     // Use this for initialization
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        InitializeEnemies();
-        InitializeBullets();
-    }
-    void Start()
-    {
         if (enemyPrefab == null)
         {
-            enemyPrefab = Resources.Load("Enemy") as Transform;
+            enemyPrefab = Resources.Load("Enemy") as GameObject;
         }
         if (bulletPrefab == null)
         {
             bulletPrefab = Resources.Load("Bullet") as GameObject;
         }
+        if (turretPrefab == null)
+        {
+            turretPrefab = Resources.Load("Turret") as GameObject;
+        }
+        InitializeEnemies();
+        InitializeBullets();
+        InitializeTurrets();
+    }
+    void Start()
+    {
     }
 
     // Update is called once per frame
@@ -42,7 +45,7 @@ public class PrefabPool : MonoBehaviour
             enemyPrefabPool = new Transform[numEnemiesInScene];
             for (int i = 0; i < numEnemiesInScene; i++)
             {
-                enemyPrefabPool[i] = Instantiate(enemyPrefab);
+                enemyPrefabPool[i] = Instantiate(enemyPrefab.transform);
                 enemyPrefabPool[i].gameObject.SetActive(false);
             }
         }
@@ -51,11 +54,23 @@ public class PrefabPool : MonoBehaviour
     {
         if (bulletPrefabPool.Length == 0)
         {
-            bulletPrefabPool = new GameObject[bulletNum];
+            bulletPrefabPool = new Transform[bulletNum];
             for (int i = 0; i < bulletNum; i++)
             {
-                bulletPrefabPool[i] = Instantiate(bulletPrefab);
+                bulletPrefabPool[i] = Instantiate(bulletPrefab.transform);
                 bulletPrefabPool[i].gameObject.SetActive(false);
+            }
+        }
+    }
+    public void InitializeTurrets()
+    {
+        if (turretPrefabPool.Length == 0)
+        {
+            turretPrefabPool = new Transform[turretNum];
+            for (int i = 0; i < turretNum; i++)
+            {
+                turretPrefabPool[i] = Instantiate(turretPrefab.transform);
+                turretPrefabPool[i].gameObject.SetActive(false);
             }
         }
     }
@@ -80,11 +95,11 @@ public class PrefabPool : MonoBehaviour
             return returnTransform;
         }
     }
-    public GameObject Bullet
+    public Transform Bullet
     {
         get
         {
-            GameObject returnBullet = null;
+            Transform returnBullet = null;
             int i = 0;
             while (i < bulletPrefabPool.Length && returnBullet == null)
             {
@@ -96,6 +111,23 @@ public class PrefabPool : MonoBehaviour
                 i++;
             }
             return returnBullet;
+        }
+    }
+    public Transform Turret
+    {
+        get
+        {
+            Transform returnTurret = null;
+            int i = 0;
+            while (i< turretPrefabPool.Length && returnTurret == null)
+            {
+                if (!turretPrefabPool[i].gameObject.activeInHierarchy)
+                {
+                    returnTurret = turretPrefabPool[i];
+                    turretPrefabPool[i].gameObject.SetActive(true);
+                }
+            }
+            return returnTurret;
         }
     }
     #endregion

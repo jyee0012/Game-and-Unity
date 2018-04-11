@@ -5,8 +5,8 @@ using UnityEngine;
 public class BarrelController : MonoBehaviour
 {
     PrefabPool prefabPool;
-    public GameObject bulletPrefab;
-    public float rotationSpeed, projectileSpeed;
+    public Transform bulletPrefab;
+    public float rotationSpeed, projectileSpeed = 100;
     void Awake()
     {
         prefabPool = GameObject.Find("PrefabPool").GetComponent<PrefabPool>();
@@ -34,12 +34,19 @@ public class BarrelController : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Space))
         {
-
+            Shoot();
         }
     }
     void Shoot()
     {
-
+        Transform projectile = prefabPool.Bullet;
+        if (projectile != null)
+        {
+            projectile.position = transform.GetChild(0).transform.position;
+            Vector2 projectileDirection = transform.up;
+            projectile.GetComponent<Rigidbody2D>().AddForce(projectileDirection * projectileSpeed);
+            projectile.GetComponent<Rigidbody2D>().AddTorque(100);
+        }
     }
     private void OnDrawGizmos()
     {

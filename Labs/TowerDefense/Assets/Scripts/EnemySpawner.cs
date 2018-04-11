@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour {
         for(int i = 0; i < enemiesInWave; i++)
         {
             enemies[i] = prefabPool.Enemy;
-            //enemies[i].GetComponent<EnemyController>().moveTarget = moveTowardsTarget;
+            enemies[i].GetComponent<EnemyController>().target = moveTowardsTarget;
         }
         
         Vector3 centrePos = new Vector3(0, 0, 32);
