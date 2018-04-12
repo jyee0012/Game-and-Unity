@@ -5,7 +5,7 @@ using UnityEngine;
 public class BarrelController : MonoBehaviour
 {
     PrefabPool prefabPool;
-    public Transform bulletPrefab;
+    public Transform target;
     public float rotationSpeed, projectileSpeed = 100;
     void Awake()
     {
@@ -14,10 +14,6 @@ public class BarrelController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (bulletPrefab == null)
-        {
-            bulletPrefab = prefabPool.Bullet;
-        }
     }
 
     // Update is called once per frame
@@ -37,8 +33,26 @@ public class BarrelController : MonoBehaviour
             Shoot();
         }
     }
+    void GetTarget()
+    {
+
+        if (target == null)
+        {
+            //this should be moved to prefabPool
+            GameObject[] enemyShips = GameObject.FindGameObjectsWithTag("Enemy");
+            int randomShip = Random.Range(0, enemyShips.Length);
+            target = enemyShips[randomShip].transform;
+        }
+
+        //have the barrel follow its target
+        //RotateGradually2D();
+
+        Shoot();
+    }
     void Shoot()
     {
+        //decide when to shoot (at random intervals)
+
         Transform projectile = prefabPool.Bullet;
         if (projectile != null)
         {

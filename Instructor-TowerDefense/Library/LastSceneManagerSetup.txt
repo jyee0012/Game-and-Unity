@@ -1,0 +1,4 @@
+sceneSetups:
+- path: C:/Users/shark_000/Documents/GitHub/DMIT-1512/Labs/TowerDefense/Assets/Scenes/Level1.unity
+  isLoaded: 1
+  isActive: 1

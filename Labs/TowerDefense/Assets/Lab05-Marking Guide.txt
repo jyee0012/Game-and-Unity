@@ -1,17 +1,26 @@
 Tower Defense - worth 40% of your final mark.
 
-Using the code provided in class, and elements from your past labs if you like (or solutions to past labs), complete the following requirements for a maximum of 20 marks:
+Using the code provided in class, and elements from your past labs if you like (or solutions to past labs), 
+complete the following requirements for a maximum of 20 marks:
 
-    (3 marks) Create a game with two levels and a start screen. The three scenes should flow between each other as one would expect, with the game being "finished" after the second level is passed.
+    (3 marks) Create a game with two levels and a start screen. The three scenes should flow between each other as one would expect, 
+	with the game being "finished" after the second level is passed.
     The first level should contain the following elements:
-        (2 marks) Enemies that come  from all directions towards an object of some kind that is in the centre of the screen, in waves. They should be pointed towards where they are headed.
-        (3 marks) When the player clicks with the mouse somewhere on the screen, a turret will appear. The turret will choose an enemy as a target, and fire at it at random intervals. When it has destroyed an enemy, it will choose another and begin the carnage again.
+        (2 marks) Enemies that come  from all directions towards an object of some kind that is in the centre of the screen, in waves. 
+		They should be pointed towards where they are headed.
+        (3 marks) When the player clicks with the mouse somewhere on the screen, a turret will appear. The turret will choose an enemy 
+		as a target, and fire at it at random intervals. When it has destroyed an enemy, it will choose another and begin the carnage again.
         (2 marks) The turret's barrel will rotate and track the target that it has chosen.
-        (1 mark) The level ends when the player either destroys all of the enemies (load the next level), or one of the enemies reaches the centre of the screen (go back to the start screen with a "you lose" message).
+        (1 mark) The level ends when the player either destroys all of the enemies (load the next level), or one of the enemies reaches 
+		the centre of the screen (go back to the start screen with a "you lose" message).
     The second level should contain the following elements:
         (1 mark) More enemy waves
-        (4 marks) The ability for the player to right-click on areas of the screen and create "blooms", that destroy an enemy when it touches the bloom (the bloom will also get destroyed when it touches an enemy)
-        (1 mark) The level ends when the player either destroys all of the enemies or one of the enemies touches the player. It will go back to the start screen, display an appropriate message, and give the player the chance to play again.
-    (3 marks) This lab should never "Instantiate" a game object except within the PrefabPool, as provided in class. It should never "Destroy" a game object. Add a method to the PrefabPool class that returns an Enemy (either a random one or the closest one or whatever) for the Turret to target.
+        (4 marks) The ability for the player to right-click on areas of the screen and create "blooms", that destroy an enemy when it 
+		touches the bloom (the bloom will also get destroyed when it touches an enemy)
+        (1 mark) The level ends when the player either destroys all of the enemies or one of the enemies touches the player. 
+		It will go back to the start screen, display an appropriate message, and give the player the chance to play again.
+    (3 marks) This lab should never "Instantiate" a game object except within the PrefabPool, as provided in class. 
+	It should never "Destroy" a game object. Add a method to the PrefabPool class that returns an 
+	Enemy (either a random one or the closest one or whatever) for the Turret to target.
 
 Make a text document called Lab05_Specs_FirstName_LastName.txt that outlines which of the above requirements you completed in your lab.
