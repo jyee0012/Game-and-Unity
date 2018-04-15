@@ -45,7 +45,7 @@ public class PrefabPool : MonoBehaviour
             enemyPrefabPool = new Transform[numEnemiesInScene];
             for (int i = 0; i < numEnemiesInScene; i++)
             {
-                enemyPrefabPool[i] = Instantiate(enemyPrefab.transform);
+                enemyPrefabPool[i] = Instantiate(enemyPrefab.transform, gameObject.transform);
                 enemyPrefabPool[i].gameObject.SetActive(false);
             }
         }
@@ -57,7 +57,7 @@ public class PrefabPool : MonoBehaviour
             bulletPrefabPool = new Transform[bulletNum];
             for (int i = 0; i < bulletNum; i++)
             {
-                bulletPrefabPool[i] = Instantiate(bulletPrefab.transform);
+                bulletPrefabPool[i] = Instantiate(bulletPrefab.transform, gameObject.transform);
                 bulletPrefabPool[i].gameObject.SetActive(false);
             }
         }
@@ -69,7 +69,7 @@ public class PrefabPool : MonoBehaviour
             turretPrefabPool = new Transform[turretNum];
             for (int i = 0; i < turretNum; i++)
             {
-                turretPrefabPool[i] = Instantiate(turretPrefab.transform);
+                turretPrefabPool[i] = Instantiate(turretPrefab.transform, gameObject.transform);
                 turretPrefabPool[i].gameObject.SetActive(false);
             }
         }
