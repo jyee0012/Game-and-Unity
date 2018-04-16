@@ -144,5 +144,14 @@ public class PrefabPool : MonoBehaviour
             return returnTurret;
         }
     }
+    public Transform EnemyShip
+    {
+        get
+        {
+            Transform enemyShip = null;
+            enemyShip = GameObject.FindGameObjectsWithTag("Enemy")[0].transform;
+            return enemyShip;
+        }
+    }
     #endregion
 }

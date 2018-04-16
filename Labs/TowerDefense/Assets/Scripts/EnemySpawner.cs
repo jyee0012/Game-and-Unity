@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour {
 
     protected PrefabPool prefabPool;
     public Transform moveTowardsTarget;
-    public int enemiesInWave;
+    public int wave1, wave2;
 	// Use this for initialization
 	void Awake () {
         prefabPool = GameObject.Find("PrefabPool").GetComponent<PrefabPool>();
@@ -15,13 +15,17 @@ public class EnemySpawner : MonoBehaviour {
 
     void Start()
     {
-        SpawnWave();
+        SpawnWave(wave1, 10);
     }
     // Update is called once per frame
     void Update () {
+        if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
+        {
+            SpawnWave(wave2, 10);
+        }
 
     }
-    protected void SpawnWave()
+    protected void SpawnWave(int enemiesInWave, int distance)
     {
         Transform[] enemies = new Transform[enemiesInWave];
         for(int i = 0; i < enemiesInWave; i++)
@@ -38,8 +42,8 @@ public class EnemySpawner : MonoBehaviour {
             // get the angle for this step (in radians, not degrees)
             float angle = i * Mathf.PI * 2;
             // the X &amp; Y position for this angle are calculated using Sin &amp; Cos
-            float x = Mathf.Sin(angle) * 10;
-            float y = Mathf.Cos(angle) * 10;
+            float x = Mathf.Sin(angle) * distance;
+            float y = Mathf.Cos(angle) * distance;
             Vector3 pos = new Vector3(x, y, 0) + centrePos;
             // no need to assign the instance to a variable unless you're using it afterwards:
             enemies[pointNum].transform.position = pos;

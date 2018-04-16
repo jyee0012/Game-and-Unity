@@ -38,10 +38,7 @@ public class BarrelController : MonoBehaviour
     {
         if (target == null)
         {
-            //this should be moved to prefabPool
-            GameObject[] enemyShips = GameObject.FindGameObjectsWithTag("Enemy");
-            int randomShip = Random.Range(0, enemyShips.Length);
-            target = enemyShips[randomShip].transform;
+            target = prefabPool.EnemyShip;
         }
 
         //have the barrel follow its target

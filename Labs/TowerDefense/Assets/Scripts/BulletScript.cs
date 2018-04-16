@@ -17,7 +17,7 @@ public class BulletScript : MonoBehaviour
     {
         if (gameObject.activeInHierarchy && once)
         {
-            activeTimer = Time.time + 15f;
+            activeTimer = Time.time + 5f;
             once = false;
         }
         if (gameObject.activeInHierarchy && activeTimer < Time.time)
