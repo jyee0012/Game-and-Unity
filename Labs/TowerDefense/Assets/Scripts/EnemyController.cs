@@ -23,5 +23,9 @@ public class EnemyController : MonoBehaviour {
             collision.gameObject.SetActive(false);
             this.gameObject.SetActive(false);
         }
+        if(collision.gameObject.tag == "Player")
+        {
+            // Trigger Game Over
+        }
     }
 }

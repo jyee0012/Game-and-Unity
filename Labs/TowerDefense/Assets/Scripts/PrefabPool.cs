@@ -8,6 +8,7 @@ public class PrefabPool : MonoBehaviour
     public int numEnemiesInScene, bulletNum, turretNum;
     public GameObject enemyPrefab, bulletPrefab, turretPrefab;
     protected Transform[] enemyPrefabPool = new Transform[0],  bulletPrefabPool = new Transform[0], turretPrefabPool = new Transform[0];
+    public Material enemyMat, bulletMat, turretMat;
     // Use this for initialization
     private void Awake()
     {
@@ -46,6 +47,10 @@ public class PrefabPool : MonoBehaviour
             for (int i = 0; i < numEnemiesInScene; i++)
             {
                 enemyPrefabPool[i] = Instantiate(enemyPrefab.transform, gameObject.transform);
+                if(enemyMat != null)
+                {
+                    enemyPrefabPool[i].GetComponent<MeshRenderer>().material = enemyMat;
+                }
                 enemyPrefabPool[i].gameObject.SetActive(false);
             }
         }
@@ -58,6 +63,10 @@ public class PrefabPool : MonoBehaviour
             for (int i = 0; i < bulletNum; i++)
             {
                 bulletPrefabPool[i] = Instantiate(bulletPrefab.transform, gameObject.transform);
+                if (bulletMat != null)
+                {
+                    bulletPrefabPool[i].GetComponent<MeshRenderer>().material = bulletMat;
+                }
                 bulletPrefabPool[i].gameObject.SetActive(false);
             }
         }
@@ -70,6 +79,10 @@ public class PrefabPool : MonoBehaviour
             for (int i = 0; i < turretNum; i++)
             {
                 turretPrefabPool[i] = Instantiate(turretPrefab.transform, gameObject.transform);
+                if (turretMat != null)
+                {
+                    turretPrefabPool[i].GetComponent<MeshRenderer>().material = turretMat;
+                }
                 turretPrefabPool[i].gameObject.SetActive(false);
             }
         }
@@ -126,6 +139,7 @@ public class PrefabPool : MonoBehaviour
                     returnTurret = turretPrefabPool[i];
                     turretPrefabPool[i].gameObject.SetActive(true);
                 }
+                i++;
             }
             return returnTurret;
         }

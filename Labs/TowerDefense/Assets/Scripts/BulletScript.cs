@@ -15,12 +15,12 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameObject.active && once)
+        if (gameObject.activeInHierarchy && once)
         {
             activeTimer = Time.time + 15f;
             once = false;
         }
-        if (gameObject.active && activeTimer < Time.time)
+        if (gameObject.activeInHierarchy && activeTimer < Time.time)
         {
             gameObject.SetActive(false);
             once = true;
