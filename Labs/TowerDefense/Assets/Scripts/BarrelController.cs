@@ -20,6 +20,7 @@ public class BarrelController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GetTarget();
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             transform.Rotate(new Vector3(0, 0, 3), Space.World);
@@ -42,7 +43,7 @@ public class BarrelController : MonoBehaviour
         }
 
         //have the barrel follow its target
-        //RotateGradually2D();
+        RotateGradually2D();
 
         if (target != null && shootDelay < Time.time)
         {
@@ -50,11 +51,20 @@ public class BarrelController : MonoBehaviour
             shootDelay = Time.time + Random.Range(0.1f, 2f);
         }
     }
+    void RotateGradually2D()
+    {
+        Vector3 diff = target.position - transform.position;
+        diff.Normalize();
+
+        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        Quaternion targetLook = Quaternion.Euler(0f, 0f, rot_z - 90);
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetLook, Time.deltaTime * 10f);
+    }
     #region Shoot
     void Shoot()
     {
         //decide when to shoot (at random intervals)
-        
+
         Transform projectile = prefabPool.Bullet;
         if (projectile != null)
         {
