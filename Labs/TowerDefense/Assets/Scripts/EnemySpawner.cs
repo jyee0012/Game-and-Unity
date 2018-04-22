@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,8 @@ public class EnemySpawner : MonoBehaviour {
 
     protected PrefabPool prefabPool;
     public Transform moveTowardsTarget;
-    public int wave1, wave2;
+    public int waveNum = 0, wave1, wave2;
+
 	// Use this for initialization
 	void Awake () {
         prefabPool = GameObject.Find("PrefabPool").GetComponent<PrefabPool>();
@@ -21,12 +21,13 @@ public class EnemySpawner : MonoBehaviour {
     void Update () {
         if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
         {
-            SpawnWave(wave2, 10);
+            SpawnWave(wave2, Random.Range(10, 60));
         }
 
     }
     protected void SpawnWave(int enemiesInWave, int distance)
     {
+        waveNum++;
         Transform[] enemies = new Transform[enemiesInWave];
         for(int i = 0; i < enemiesInWave; i++)
         {

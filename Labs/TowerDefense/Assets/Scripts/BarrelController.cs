@@ -37,7 +37,7 @@ public class BarrelController : MonoBehaviour
     }
     void GetTarget()
     {
-        if (target == null)
+        if (target == null || !target.gameObject.activeInHierarchy)
         {
             target = prefabPool.EnemyShip;
         }
@@ -80,6 +80,7 @@ public class BarrelController : MonoBehaviour
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(transform.position, 0.1f);
+        Gizmos.DrawCube(target.position, new Vector3(0.5f, 0.5f));
     }
     #endregion
 }

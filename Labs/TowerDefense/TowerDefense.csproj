@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\CanvasClick.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />
     <Compile Include="Assets\Scripts\EnemySpawner.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\PrefabPool.cs" />
   </ItemGroup>
   <ItemGroup>

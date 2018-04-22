@@ -9,6 +9,7 @@ public class PrefabPool : MonoBehaviour
     public GameObject enemyPrefab, bulletPrefab, turretPrefab;
     protected Transform[] enemyPrefabPool = new Transform[0],  bulletPrefabPool = new Transform[0], turretPrefabPool = new Transform[0];
     public Material enemyMat, bulletMat, turretMat;
+    public bool win { get; set; }
     // Use this for initialization
     private void Awake()
     {
