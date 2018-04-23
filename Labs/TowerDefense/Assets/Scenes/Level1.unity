@@ -365,9 +365,11 @@ MonoBehaviour:
   bulletNum: 500
   turretNum: 50
   waveNum: 0
+  bloomNum: 50
   enemyPrefab: {fileID: 0}
   bulletPrefab: {fileID: 0}
   turretPrefab: {fileID: 0}
+  bloomPrefab: {fileID: 0}
   enemyMat: {fileID: 2100000, guid: f761b1af9c9ecb343841635cc05058e5, type: 2}
   bulletMat: {fileID: 2100000, guid: 333f927b406cb6447a7ca0856cc87721, type: 2}
   turretMat: {fileID: 0}

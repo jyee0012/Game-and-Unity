@@ -27,7 +27,10 @@ public class EnemySpawner : MonoBehaviour {
             currentWave = wave2;
             SpawnWave(currentWave, Random.Range(10, 60));
         }
-
+        if(waveNum == 3)
+        {
+            WinGame();
+        }
     }
     protected void SpawnWave(int enemiesInWave, int distance)
     {
@@ -66,5 +69,11 @@ public class EnemySpawner : MonoBehaviour {
             }
         }
         return count;
+    }
+    public void WinGame()
+    {
+        GameObject.Find("PrefabPool").GetComponent<PrefabPool>().win = true;
+        GameObject.Find("PrefabPool").GetComponent<PrefabPool>().DisableEverything();
+        GameManager.SLoadGameSpace(2);
     }
 }

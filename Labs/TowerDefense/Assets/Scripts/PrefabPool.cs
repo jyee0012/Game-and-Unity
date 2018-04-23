@@ -5,9 +5,9 @@ using UnityEngine;
 public class PrefabPool : MonoBehaviour
 {
 
-    public int numEnemiesInScene, bulletNum, turretNum, waveNum;
-    public GameObject enemyPrefab, bulletPrefab, turretPrefab;
-    protected Transform[] enemyPrefabPool = new Transform[0],  bulletPrefabPool = new Transform[0], turretPrefabPool = new Transform[0];
+    public int numEnemiesInScene, bulletNum, turretNum, waveNum, bloomNum;
+    public GameObject enemyPrefab, bulletPrefab, turretPrefab, bloomPrefab;
+    protected Transform[] enemyPrefabPool = new Transform[0],  bulletPrefabPool = new Transform[0], turretPrefabPool = new Transform[0], bloomPrefabPool = new Transform[0];
     public Material enemyMat, bulletMat, turretMat;
     public bool win { get; set; }
     // Use this for initialization
@@ -26,10 +26,16 @@ public class PrefabPool : MonoBehaviour
         {
             turretPrefab = Resources.Load("Turret") as GameObject;
         }
+        if (bloomPrefab == null)
+        {
+            bloomPrefab = Resources.Load("Bloom") as GameObject;
+        }
         InitializeEnemies();
         InitializeBullets();
         InitializeTurrets();
+        InitializeBlooms();
     }
+
     void Start()
     {
         
@@ -86,6 +92,18 @@ public class PrefabPool : MonoBehaviour
                     turretPrefabPool[i].GetComponent<MeshRenderer>().material = turretMat;
                 }
                 turretPrefabPool[i].gameObject.SetActive(false);
+            }
+        }
+    }
+    void InitializeBlooms()
+    {
+        if (bloomPrefabPool.Length == 0)
+        {
+            bloomPrefabPool = new Transform[bloomNum];
+            for (int i = 0; i < bloomNum; i++)
+            {
+                bloomPrefabPool[i] = Instantiate(bloomPrefab.transform, gameObject.transform);
+                bloomPrefabPool[i].gameObject.SetActive(false);
             }
         }
     }
@@ -153,6 +171,25 @@ public class PrefabPool : MonoBehaviour
             Transform enemyShip = null;
             enemyShip = GameObject.FindGameObjectsWithTag("Enemy")[Random.Range(0, EnemySpawner.CountActiveEnemy())].transform;
             return enemyShip;
+        }
+    }
+    public Transform Bloom
+    {
+        get
+        {
+            Transform returnBloom = null;
+            int i = 0;
+            while (i < bloomPrefabPool.Length && returnBloom == null)
+            {
+                if (!bloomPrefabPool[i].gameObject.activeInHierarchy)
+                {
+                    returnBloom = bloomPrefabPool[i];
+                    returnBloom.GetComponent<BloomScript>().isActive = true;
+                    bloomPrefabPool[i].gameObject.SetActive(true);
+                }
+                i++;
+            }
+            return returnBloom;
         }
     }
     #endregion

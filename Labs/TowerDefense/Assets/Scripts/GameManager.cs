@@ -8,18 +8,21 @@ public class GameManager : MonoBehaviour
 {
     public Text sceneText, subText, sizeText;
     public Slider sizeSlider;
+    string conditionText;
     // Use this for initialization
     void Start()
     {
         if (GameObject.Find("PrefabPool").GetComponent<PrefabPool>().win)
         {
             sceneText.text = "Congratulations, you win!";
+            conditionText = "You made it past - Wave ";
         }
         else
         {
             sceneText.text = "Game Over";
+            conditionText = "You made it to - Wave ";
         }
-        subText.text = "You made it to - Wave " + GameObject.Find("PrefabPool").GetComponent<PrefabPool>().waveNum;
+        subText.text = conditionText + (GameObject.Find("PrefabPool").GetComponent<PrefabPool>().waveNum - 1);
     }
 
     // Update is called once per frame

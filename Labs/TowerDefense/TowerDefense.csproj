@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BarrelController.cs" />
+    <Compile Include="Assets\Scripts\BloomScript.cs" />
     <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\CanvasClick.cs" />
     <Compile Include="Assets\Scripts\EnemyController.cs" />

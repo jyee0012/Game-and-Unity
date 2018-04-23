@@ -15,7 +15,7 @@ complete the following requirements for a maximum of 20 marks:
 		the centre of the screen (go back to the start screen with a "you lose" message).
     The second level should contain the following elements:
 -       (1 mark) More enemy waves
-        (4 marks) The ability for the player to right-click on areas of the screen and create "blooms", that destroy an enemy when it 
+-       (4 marks) The ability for the player to right-click on areas of the screen and create "blooms", that destroy an enemy when it 
 		touches the bloom (the bloom will also get destroyed when it touches an enemy)
 -       (1 mark) The level ends when the player either destroys all of the enemies or one of the enemies touches the player. 
 		It will go back to the start screen, display an appropriate message, and give the player the chance to play again.

@@ -19,7 +19,6 @@ public class PlayerScript : MonoBehaviour {
         if (collision.gameObject.tag == "Enemy")
         {
             // Trigger Game Over
-            Debug.Log("Game Over");
             GameObject.Find("PrefabPool").GetComponent<PrefabPool>().win = false;
             GameObject.Find("PrefabPool").GetComponent<PrefabPool>().DisableEverything();
             GameManager.SLoadGameSpace(2);
