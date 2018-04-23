@@ -1,0 +1,14 @@
+Completed everything in the list.
+
+Left click - Drop Turret on spot
+Right click - Drop Bloom on spot
+
+Blooms are somewhat confusing to me.
+Max 100 Enemies
+Max 500 Bullets
+Max 50 Turrets
+Max 50 Blooms
+
+Bugs:
+Blooms have a slight delay in particle animation, and it has a fixed hit box so, 
+it will only destroy when hitting near the center of the bloom
