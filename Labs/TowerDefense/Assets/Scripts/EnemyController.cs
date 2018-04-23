@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour {
-
+public class EnemyController : MonoBehaviour
+{
     public Transform target;
     public float speed { get; set; }
-	// Use this for initialization
-	void Start () {
+    public bool isTarget { get; set; }
+    // Use this for initialization
+    void Start()
+    {
         speed = 2f;
-	}
-	
-	// Update is called once per frame
-	void Update ()
+        isTarget = false;
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
     }
@@ -22,10 +25,6 @@ public class EnemyController : MonoBehaviour {
         {
             collision.gameObject.SetActive(false);
             this.gameObject.SetActive(false);
-        }
-        if(collision.gameObject.tag == "Player")
-        {
-            // Trigger Game Over
         }
     }
 }

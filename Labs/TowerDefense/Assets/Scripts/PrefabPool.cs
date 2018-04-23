@@ -5,7 +5,7 @@ using UnityEngine;
 public class PrefabPool : MonoBehaviour
 {
 
-    public int numEnemiesInScene, bulletNum, turretNum;
+    public int numEnemiesInScene, bulletNum, turretNum, waveNum;
     public GameObject enemyPrefab, bulletPrefab, turretPrefab;
     protected Transform[] enemyPrefabPool = new Transform[0],  bulletPrefabPool = new Transform[0], turretPrefabPool = new Transform[0];
     public Material enemyMat, bulletMat, turretMat;
@@ -32,6 +32,7 @@ public class PrefabPool : MonoBehaviour
     }
     void Start()
     {
+        
     }
 
     // Update is called once per frame
@@ -150,9 +151,24 @@ public class PrefabPool : MonoBehaviour
         get
         {
             Transform enemyShip = null;
-            enemyShip = GameObject.FindGameObjectsWithTag("Enemy")[0].transform;
+            enemyShip = GameObject.FindGameObjectsWithTag("Enemy")[Random.Range(0, EnemySpawner.CountActiveEnemy())].transform;
             return enemyShip;
         }
     }
     #endregion
+    public void DisableEverything()
+    {
+        foreach (Transform enemy in enemyPrefabPool)
+        {
+            enemy.gameObject.SetActive(false);
+        }
+        foreach (Transform turret in turretPrefabPool)
+        {
+            turret.gameObject.SetActive(false);
+        }
+        foreach (Transform bullet in bulletPrefabPool)
+        {
+            bullet.gameObject.SetActive(false);
+        }
+    }
 }

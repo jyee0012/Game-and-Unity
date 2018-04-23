@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemySpawner : MonoBehaviour {
 
     protected PrefabPool prefabPool;
     public Transform moveTowardsTarget;
-    public int waveNum = 0, wave1, wave2;
-
+    public int waveNum = 0, wave1, wave2, currentWave;
+    public Text waveText;
 	// Use this for initialization
 	void Awake () {
         prefabPool = GameObject.Find("PrefabPool").GetComponent<PrefabPool>();
@@ -15,19 +16,23 @@ public class EnemySpawner : MonoBehaviour {
 
     void Start()
     {
-        SpawnWave(wave1, 10);
+        currentWave = wave1;
+        SpawnWave(currentWave, 20);
     }
     // Update is called once per frame
     void Update () {
+        waveText.text = "Wave " + waveNum + ": " + CountActiveEnemy() + "/" + currentWave;
         if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
         {
-            SpawnWave(wave2, Random.Range(10, 60));
+            currentWave = wave2;
+            SpawnWave(currentWave, Random.Range(10, 60));
         }
 
     }
     protected void SpawnWave(int enemiesInWave, int distance)
     {
         waveNum++;
+        prefabPool.waveNum = waveNum;
         Transform[] enemies = new Transform[enemiesInWave];
         for(int i = 0; i < enemiesInWave; i++)
         {
@@ -49,5 +54,17 @@ public class EnemySpawner : MonoBehaviour {
             // no need to assign the instance to a variable unless you're using it afterwards:
             enemies[pointNum].transform.position = pos;
         }
+    }
+    public static int CountActiveEnemy()
+    {
+        int count = 0;
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if (enemy.activeInHierarchy)
+            {
+                count++;
+            }
+        }
+        return count;
     }
 }
