@@ -16,6 +16,7 @@ public class EnemySpawner : MonoBehaviour {
 
     void Start()
     {
+        ClearEnemies();
         currentWave = wave1;
         SpawnWave(currentWave, 20);
     }
@@ -24,6 +25,7 @@ public class EnemySpawner : MonoBehaviour {
         waveText.text = "Wave " + waveNum + ": " + CountActiveEnemy() + "/" + currentWave;
         if (GameObject.FindGameObjectsWithTag("Enemy").Length == 0)
         {
+            ClearEnemies();
             currentWave = wave2;
             SpawnWave(currentWave, Random.Range(10, 60));
         }
@@ -75,5 +77,16 @@ public class EnemySpawner : MonoBehaviour {
         GameObject.Find("PrefabPool").GetComponent<PrefabPool>().win = true;
         GameObject.Find("PrefabPool").GetComponent<PrefabPool>().DisableEverything();
         GameManager.SLoadGameSpace(2);
+    }
+    public void ClearEnemies()
+    {
+
+        foreach (GameObject enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            if (enemy.activeInHierarchy)
+            {
+                enemy.SetActive(false);
+            }
+        }
     }
 }

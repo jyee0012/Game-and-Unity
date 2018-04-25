@@ -22,5 +22,5 @@ complete the following requirements for a maximum of 20 marks:
 -   (3 marks) This lab should never "Instantiate" a game object except within the PrefabPool, as provided in class. 
 	It should never "Destroy" a game object. Add a method to the PrefabPool class that returns an 
 	Enemy (either a random one or the closest one or whatever) for the Turret to target.
-12/20
+20/20
 Make a text document called Lab05_Specs_FirstName_LastName.txt that outlines which of the above requirements you completed in your lab.
