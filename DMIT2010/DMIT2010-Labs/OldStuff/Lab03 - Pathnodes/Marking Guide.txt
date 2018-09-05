@@ -1,0 +1,70 @@
+Marking Guide
+
+Requirements
+
+For each element you will receive one mark if your build works occasionally and a second mark if it work consistently.
+
+- Create a Pathnode prefab that contains an empty game object with a script on it that uses the OnDrawGizmos method to draw a yellow sphere with a radius of 0.5 around the Pathnode.
+(Done)
+- Create an area with a floor and a number of walls.
+(Done)
+- Create a menu called "Grid Generation" with the item "Generate Floor Nodes" in the editor. Clicking Generate Nodes should create a number of Pathnodes on any selected "Floor" object.
+
+- All nodes should be 5 units apart.
+
+- All nodes should be parented to the Floor object.
+
+- Create a menu item called "Clear Floor Nodes". Clicking Clear Nodes should remove all nodes on the selected Floor object.
+
+- Create a menu item called "Clear All Nodes". Clicking Clear All Nodes should remove all nodes in the scene.
+
+- Create a menu item called "Build Paths". Clicking Build Paths should create connections between all nodes that are a distance of 5 units or less.
+
+- Create a menu item called "Clear Paths". Clicking Clear Paths should remove all connections for any node in the scene.
+
+- Clicking on Build Paths repeatedly should not duplicate connections.
+(Done)
+- Use the OnDrawGismos method to draw green lines for each connection. 
+
+- The line should draw from a low point on the origin node to a high point on the destination node. Or you may use another way to show direction of the connection.
+
+- Use line of sight to make sure that paths do not build through walls.
+
+- Add a way for the user to force a path to build between to selected nodes. This path will build regardless of range or line of sight.
+
+- Add a way for the user to clear a selected forced path.
+
+- Add a way for the user to block a path between two nodes. This node will not build for any reason.
+
+- Add a way for the user to clear a selected blocked path.
+
+- Any changes made to the path grid should be kept when the user presses the play button.
+
+
+Extras
+
+- Allow the user to change the spacing between generated nodes.
+- Allow the user to change the max distance value that the paths will build.
+
+- Create a menu item called "Generate Trigger Nodes" in the editor. Clicking Generate Nodes should create a number of Pathnodes inside a selected trigger object.
+
+- The trigger nodes should be generated on top of any surface that is within the trigger.
+
+- The paths should be colored based on the size of object that can move along the path. A white path will allow an object 10 units wide to pass, a green path is for 5 units, a blue path is for 3 units, a red path is not wide enough for 3 units.
+
+- When a node is selected use the OnDrawGizmosSelected method to show which other nodes it is connected to.
+
+- Allow the user to create one way paths.
+
+- Add dynamic nodes for doors. When the door opens the connection becomes valid and when the door is closed the connection cannot be used.
+
+- Add Drop nodes that only go one way and build from objects marked as "Drop Off"
+
+- Allow the user to adjust the drop distance.
+
+- Add Jump nodes that build across gaps of 10 units.
+
+- Allow the user to adjust the jump distance.
+
+
+Total Marks 50

@@ -1,0 +1,168 @@
+fileFormatVersion: 2
+guid: 2185da3f2a266ce4d8d418e09d4ddc65
+timeCreated: 1511558106
+licenseType: Pro
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: bn_back01
+    100002: bn_belly01
+    100004: bn_chest01
+    100006: bn_head01
+    100008: bn_headEnd01
+    100010: bn_hips01
+    100012: bn_l_ankle01
+    100014: bn_l_arm01
+    100016: bn_l_hand01
+    100018: bn_l_leg01
+    100020: bn_l_shoulder01
+    100022: bn_l_toeBase01
+    100024: bn_l_wrist01
+    100026: bn_neck01
+    100028: bn_r_ankle01
+    100030: bn_r_arm01
+    100032: bn_r_hand01
+    100034: bn_r_leg01
+    100036: bn_r_shoulder01
+    100038: bn_r_toeBase01
+    100040: bn_r_wrist01
+    100042: body
+    100044: pSphere1
+    100046: pTorus2
+    100048: //RootNode
+    400000: bn_back01
+    400002: bn_belly01
+    400004: bn_chest01
+    400006: bn_head01
+    400008: bn_headEnd01
+    400010: bn_hips01
+    400012: bn_l_ankle01
+    400014: bn_l_arm01
+    400016: bn_l_hand01
+    400018: bn_l_leg01
+    400020: bn_l_shoulder01
+    400022: bn_l_toeBase01
+    400024: bn_l_wrist01
+    400026: bn_neck01
+    400028: bn_r_ankle01
+    400030: bn_r_arm01
+    400032: bn_r_hand01
+    400034: bn_r_leg01
+    400036: bn_r_shoulder01
+    400038: bn_r_toeBase01
+    400040: bn_r_wrist01
+    400042: body
+    400044: pSphere1
+    400046: pTorus2
+    400048: //RootNode
+    2300000: pSphere1
+    2300002: pTorus2
+    3300000: pSphere1
+    3300002: pTorus2
+    4300000: pSphere1
+    4300002: pTorus2
+    4300004: body
+    6400000: pSphere1
+    6400002: pTorus2
+    7400000: Walking
+    7400002: Idle
+    9500000: //RootNode
+    13700000: body
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Walking
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 32
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

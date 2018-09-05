@@ -1,0 +1,61 @@
+Marking Guide
+
+For each element you will receive one mark if your build works occasionally and a second mark if it work consistently.
+
+- Add survivor AI that will detect a zombie that is in line of sight (Done)
+
+- Add a Flee behavior to the survivor AI that rotates away from the detected zombie (Done)
+
+- Add an Attack behavior to the zombie AI that has it attack its target when within two units (Done)
+
+- Have the zombie only attack once every second (Done)
+
+- Add health to the survivor that is decreased every time it is attacked (Done)
+
+- Have the survivor destroy itself when its health reaches zero (Done)
+
+- Add a soldier AI that will target a zombie that is in line of sight (Done)
+
+- Add an Attack behavior to the soldier AI that has it shoot at the zombie when it is within 6 units (Done)
+
+- The soldier fires a burst of three shots every second while a target is in range (Done)
+
+- Add health to the zombie that is decreased every time it is attacked (Done)
+
+- Have the zombie destroy itself when its health reaches zero (Done)
+
+- Add a Cover behavior to the survivor AI that has it move toward a soldier that is in line of sight (Half-Done)
+
+- Add a Protect behavior to the soldier that targets any zombies that are attacking nearby survivors (Half-Done)
+
+//Use a physics sphere cast to broadcast noise to nearby entities and then have them target origin of noise
+
+- Add a Callout behavior to the soldier that let's any nearby soldiers know when a zombie is spotted
+
+- Add a Response behavior to the soldier that moves toward a soldier that called out and is in line of sight
+
+- Add a Noise behavior to the Zombies that has them move toward a zombie or soldier attack if in range. Zombie range is five units, Soldier range is ten units
+
+- Add a Noise behavior to the Soldiers as well with the same ranges
+
+- Add a Pause behavior to the zombie AI that pauses for two seconds after killing a survivor before moving on
+
+- Make sure that survivors and soldiers can both be hurt by all damage (Zombie or Soldier) (Done)
+
+- Add soldiers to the possible targets for zombies (Done)
+
+
+
+- When a zombie is moving toward a noise have it try to move around the walls to get to the source
+
+- When a soldier hears a noise or a call out have it try to move around the walls to get to the source
+
+- When survivors see each other have them flock together if there are no zombies around
+
+- Have the soldiers pick a leader. The others will follow the leader when looking for zombies
+
+- Have soldiers keep their distance from zombies when attacking
+
+
+
+Total Marks 50

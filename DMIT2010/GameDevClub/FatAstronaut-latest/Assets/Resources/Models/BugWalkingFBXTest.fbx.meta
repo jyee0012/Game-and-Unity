@@ -1,0 +1,361 @@
+fileFormatVersion: 2
+guid: 2ad72ccd8ea2d124194ecdcc4a82b126
+timeCreated: 1511815038
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: abdomen
+    100002: bn_endBody01
+    100004: bn_endBody02
+    100006: bn_head01
+    100008: bn_l_antenna01
+    100010: bn_l_arm01
+    100012: bn_l_backAnkle01
+    100014: bn_l_backLeg01
+    100016: bn_l_backLeg02
+    100018: bn_l_backLeg03
+    100020: bn_l_backToe01
+    100022: bn_l_elbow01
+    100024: bn_l_frontAnkle01
+    100026: bn_l_frontLeg01
+    100028: bn_l_frontLeg01 1
+    100030: bn_l_frontLeg03
+    100032: bn_l_frontToe01
+    100034: bn_l_hand01
+    100036: bn_l_midAnkle01
+    100038: bn_l_midLeg01
+    100040: bn_l_midLeg02
+    100042: bn_l_midLeg03
+    100044: bn_l_midToe01
+    100046: bn_midBody01
+    100048: bn_noseEnd01
+    100050: bn_noseEnd02
+    100052: bn_r_antenna01
+    100054: bn_r_arm01
+    100056: bn_r_backAnkle01
+    100058: bn_r_backLeg01
+    100060: bn_r_backLeg02
+    100062: bn_r_backLeg03
+    100064: bn_r_backToe01
+    100066: bn_r_elbow01
+    100068: bn_r_frontAnkle01
+    100070: bn_r_frontLeg01
+    100072: bn_r_frontLeg01 1
+    100074: bn_r_frontLeg03
+    100076: bn_r_frontToe01
+    100078: bn_r_hand01
+    100080: bn_r_midAnkle01
+    100082: bn_r_midLeg01
+    100084: bn_r_midLeg02
+    100086: bn_r_midLeg03
+    100088: bn_r_midToe01
+    100090: bug
+    100092: //RootNode
+    100094: fullBody
+    100096: head
+    100098: left
+    100100: left_antenna
+    100102: left_antenna 1
+    100104: left_calf1
+    100106: left_calf1 1
+    100108: left_calf2
+    100110: left_calf2 1
+    100112: left_calf3
+    100114: left_calf3 1
+    100116: left_eye1
+    100118: left_eye1 1
+    100120: left_eye2
+    100122: left_eye2 1
+    100124: left_eye3
+    100126: left_eye3 1
+    100128: left_eyes
+    100130: left_glove
+    100132: left_glove 1
+    100134: left_leg1
+    100136: left_leg2
+    100138: left_leg3
+    100140: left_shoe1
+    100142: left_shoe1 1
+    100144: left_shoe2
+    100146: left_shoe2 1
+    100148: left_shoe3
+    100150: left_shoe3 1
+    100152: left_thigh1
+    100154: left_thigh1 1
+    100156: left_thigh2
+    100158: left_thigh2 1
+    100160: left_thigh3
+    100162: left_thigh3 1
+    100164: mandible
+    100166: mandible 1
+    100168: mandible2
+    100170: nose
+    100172: right
+    100174: right_antenna2
+    100176: right_calf4
+    100178: right_calf5
+    100180: right_calf7
+    100182: right_eye4
+    100184: right_eye5
+    100186: right_eye6
+    100188: right_eyes
+    100190: right_glove2
+    100192: right_leg1
+    100194: right_leg2
+    100196: right_leg3
+    100198: right_shoe4
+    100200: right_shoe5
+    100202: right_shoe6
+    100204: right_thigh4
+    100206: right_thigh5
+    100208: right_thigh7
+    100210: thorax
+    100212: transform1
+    100214: transform10
+    100216: transform11
+    100218: transform12
+    100220: transform13
+    100222: transform14
+    100224: transform15
+    100226: transform16
+    100228: transform17
+    100230: transform18
+    100232: transform19
+    100234: transform2
+    100236: transform20
+    100238: transform21
+    100240: transform22
+    100242: transform23
+    100244: transform24
+    100246: transform25
+    100248: transform26
+    100250: transform27
+    100252: transform28
+    100254: transform29
+    100256: transform3
+    100258: transform30
+    100260: transform31
+    100262: transform32
+    100264: transform33
+    100266: transform34
+    100268: transform4
+    100270: transform5
+    100272: transform6
+    100274: transform7
+    100276: transform8
+    100278: transform9
+    400000: abdomen
+    400002: bn_endBody01
+    400004: bn_endBody02
+    400006: bn_head01
+    400008: bn_l_antenna01
+    400010: bn_l_arm01
+    400012: bn_l_backAnkle01
+    400014: bn_l_backLeg01
+    400016: bn_l_backLeg02
+    400018: bn_l_backLeg03
+    400020: bn_l_backToe01
+    400022: bn_l_elbow01
+    400024: bn_l_frontAnkle01
+    400026: bn_l_frontLeg01
+    400028: bn_l_frontLeg01 1
+    400030: bn_l_frontLeg03
+    400032: bn_l_frontToe01
+    400034: bn_l_hand01
+    400036: bn_l_midAnkle01
+    400038: bn_l_midLeg01
+    400040: bn_l_midLeg02
+    400042: bn_l_midLeg03
+    400044: bn_l_midToe01
+    400046: bn_midBody01
+    400048: bn_noseEnd01
+    400050: bn_noseEnd02
+    400052: bn_r_antenna01
+    400054: bn_r_arm01
+    400056: bn_r_backAnkle01
+    400058: bn_r_backLeg01
+    400060: bn_r_backLeg02
+    400062: bn_r_backLeg03
+    400064: bn_r_backToe01
+    400066: bn_r_elbow01
+    400068: bn_r_frontAnkle01
+    400070: bn_r_frontLeg01
+    400072: bn_r_frontLeg01 1
+    400074: bn_r_frontLeg03
+    400076: bn_r_frontToe01
+    400078: bn_r_hand01
+    400080: bn_r_midAnkle01
+    400082: bn_r_midLeg01
+    400084: bn_r_midLeg02
+    400086: bn_r_midLeg03
+    400088: bn_r_midToe01
+    400090: bug
+    400092: //RootNode
+    400094: fullBody
+    400096: head
+    400098: left
+    400100: left_antenna
+    400102: left_antenna 1
+    400104: left_calf1
+    400106: left_calf1 1
+    400108: left_calf2
+    400110: left_calf2 1
+    400112: left_calf3
+    400114: left_calf3 1
+    400116: left_eye1
+    400118: left_eye1 1
+    400120: left_eye2
+    400122: left_eye2 1
+    400124: left_eye3
+    400126: left_eye3 1
+    400128: left_eyes
+    400130: left_glove
+    400132: left_glove 1
+    400134: left_leg1
+    400136: left_leg2
+    400138: left_leg3
+    400140: left_shoe1
+    400142: left_shoe1 1
+    400144: left_shoe2
+    400146: left_shoe2 1
+    400148: left_shoe3
+    400150: left_shoe3 1
+    400152: left_thigh1
+    400154: left_thigh1 1
+    400156: left_thigh2
+    400158: left_thigh2 1
+    400160: left_thigh3
+    400162: left_thigh3 1
+    400164: mandible
+    400166: mandible 1
+    400168: mandible2
+    400170: nose
+    400172: right
+    400174: right_antenna2
+    400176: right_calf4
+    400178: right_calf5
+    400180: right_calf7
+    400182: right_eye4
+    400184: right_eye5
+    400186: right_eye6
+    400188: right_eyes
+    400190: right_glove2
+    400192: right_leg1
+    400194: right_leg2
+    400196: right_leg3
+    400198: right_shoe4
+    400200: right_shoe5
+    400202: right_shoe6
+    400204: right_thigh4
+    400206: right_thigh5
+    400208: right_thigh7
+    400210: thorax
+    400212: transform1
+    400214: transform10
+    400216: transform11
+    400218: transform12
+    400220: transform13
+    400222: transform14
+    400224: transform15
+    400226: transform16
+    400228: transform17
+    400230: transform18
+    400232: transform19
+    400234: transform2
+    400236: transform20
+    400238: transform21
+    400240: transform22
+    400242: transform23
+    400244: transform24
+    400246: transform25
+    400248: transform26
+    400250: transform27
+    400252: transform28
+    400254: transform29
+    400256: transform3
+    400258: transform30
+    400260: transform31
+    400262: transform32
+    400264: transform33
+    400266: transform34
+    400268: transform4
+    400270: transform5
+    400272: transform6
+    400274: transform7
+    400276: transform8
+    400278: transform9
+    4300000: fullBody
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: fullBody
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 1
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
