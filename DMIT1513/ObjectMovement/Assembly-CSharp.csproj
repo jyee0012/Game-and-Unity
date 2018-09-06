@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\ObjectMover.cs" />
      <Compile Include="Assets\Scripts\ObjectRotation.cs" />
+     <Compile Include="Assets\Scripts\ShootingComponent.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/jyee12/Documents/GitHub/Game-and-Unity/DMIT1513/ObjectMovement/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>

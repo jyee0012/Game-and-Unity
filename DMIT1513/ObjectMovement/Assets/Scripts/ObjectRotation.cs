@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObjectRotation : MonoBehaviour {
 
     public float movementSpeed = 2f;
+    public bool bConstantRotation = true;
 	// Use this for initialization
 	void Start () {
 		
@@ -12,6 +13,20 @@ public class ObjectRotation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Rotate(Vector3.up * movementSpeed);
+        if (bConstantRotation)
+        {
+            transform.Rotate(Vector3.up * movementSpeed);
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.Q))
+            {
+                transform.Rotate(Vector3.up * -movementSpeed);
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                transform.Rotate(Vector3.up * movementSpeed);
+            }
+        }
 	}
 }

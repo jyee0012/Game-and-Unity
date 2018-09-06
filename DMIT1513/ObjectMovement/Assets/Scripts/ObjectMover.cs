@@ -1,23 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObjectMover : MonoBehaviour {
 
-    public float movementSpeed = 5f, rotationSpeed = 2f; 
-	// Use this for initialization
-	void Start () {
-		
+    public float movementSpeed = 5f, rotationSpeed = 2f;
+    float vInput, hInput;
+    public Text speedText = null;
+    bool bHasText = false;
+    public bool bCanJump = false, bCanAdjustSpeed = true;
+    // Use this for initialization
+    void Start () {
+		if (speedText != null)
+        {
+            bHasText = true;
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
         Movement();
+        if (bHasText)
+        {
+            speedText.text = "Speed = " + movementSpeed;
+        }
+        Debug.Log("Current Location: " + transform.position);
         //Debug.Log(speed);
 	}
     #region Movement
     void Movement()
     {
+        vInput = Input.GetAxis("Vertical");
+        hInput = Input.GetAxis("Horizontal");
         if (Input.GetKey(KeyCode.W))
         {
             transform.position += transform.forward * Time.deltaTime * movementSpeed;
@@ -30,13 +45,24 @@ public class ObjectMover : MonoBehaviour {
         {
             transform.Rotate(Vector3.up * rotationSpeed);
         }
-        if (Input.GetKey(KeyCode.Q))
+        if (bCanAdjustSpeed)
         {
-            movementSpeed++;
+            if (Input.GetKey(KeyCode.Q))
+            {
+                movementSpeed++;
+            }
+            if (Input.GetKey(KeyCode.E))
+            {
+                movementSpeed--;
+            }
         }
-        if (Input.GetKey(KeyCode.E))
+        if (bCanJump)
         {
-            movementSpeed--;
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                //transform.Translate(Vector3.up * Time.deltaTime * movementSpeed);
+                this.GetComponent<Rigidbody>().AddForce(Vector3.up * 500f);
+            }
         }
 
 
