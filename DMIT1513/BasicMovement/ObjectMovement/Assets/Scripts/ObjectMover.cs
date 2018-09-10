@@ -25,7 +25,7 @@ public class ObjectMover : MonoBehaviour {
         {
             speedText.text = "Speed = " + movementSpeed;
         }
-        Debug.Log("Current Location: " + transform.position);
+        //Debug.Log("Current Location: " + transform.position);
         //Debug.Log(speed);
 	}
     #region Movement
@@ -36,6 +36,10 @@ public class ObjectMover : MonoBehaviour {
         if (Input.GetKey(KeyCode.W))
         {
             transform.position += transform.forward * Time.deltaTime * movementSpeed;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.position += transform.forward * Time.deltaTime * -movementSpeed;
         }
         if (Input.GetKey(KeyCode.A))
         {
