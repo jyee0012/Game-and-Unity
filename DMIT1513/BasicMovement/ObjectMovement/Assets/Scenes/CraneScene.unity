@@ -189,7 +189,7 @@ MonoBehaviour:
 
     Down = Rotates Crane Arm Down
 
-    Crane Arm is Clamped'
+    Crane Arm & Body is Clamped'
 --- !u!222 &8565698
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -323,14 +323,21 @@ MonoBehaviour:
   movementSpeed: 2
   verticalClampMin: 0
   verticalClampMax: 0
-  horizontalClampMin: 0
+  horizontalClampMin: -180
   horizontalClampMax: 0
+  maxCraneVertical: 0
+  minCraneVertical: 0
   bConstantRotation: 0
   bHorizontalRotation: 1
   bVerticalRotation: 0
-  bHorizontalClamp: 0
+  bHorizontalClamp: 1
   bVerticalClamp: 0
+  bEnableCraneControls: 0
   CraneHand: {fileID: 0}
+  upKey: 0
+  downKey: 0
+  lowerCraneKey: 0
+  raiseCraneKey: 0
 --- !u!1 &154726823
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,12 +565,19 @@ MonoBehaviour:
   verticalClampMax: 15
   horizontalClampMin: 0
   horizontalClampMax: 0
+  maxCraneVertical: -0.3
+  minCraneVertical: -20
   bConstantRotation: 0
   bHorizontalRotation: 0
   bVerticalRotation: 1
   bHorizontalClamp: 0
   bVerticalClamp: 1
-  CraneHand: {fileID: 0}
+  bEnableCraneControls: 0
+  CraneHand: {fileID: 1156555408}
+  upKey: 0
+  downKey: 0
+  lowerCraneKey: 0
+  raiseCraneKey: 0
 --- !u!1 &408887238
 GameObject:
   m_ObjectHideFlags: 0

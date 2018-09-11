@@ -79,8 +79,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\MoveBall.cs" />
     <Compile Include="Assets\Scripts\ObjectMover.cs" />
     <Compile Include="Assets\Scripts\ObjectRotation.cs" />
+    <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\ShootingComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

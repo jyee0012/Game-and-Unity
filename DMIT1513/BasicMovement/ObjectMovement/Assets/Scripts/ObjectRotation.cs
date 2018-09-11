@@ -4,12 +4,21 @@ using UnityEngine;
 
 public class ObjectRotation : MonoBehaviour {
 
-    public float movementSpeed = 2f, verticalClampMin, verticalClampMax, horizontalClampMin, horizontalClampMax;
-    public bool bConstantRotation = true, bHorizontalRotation = true, bVerticalRotation = true, bHorizontalClamp = false, bVerticalClamp = false;
+    #region Variables
+    public float movementSpeed = 2f, 
+        verticalClampMin, verticalClampMax, horizontalClampMin, horizontalClampMax,
+        maxCraneVertical, minCraneVertical;
+    public bool bConstantRotation = true, 
+        bHorizontalRotation = true, bVerticalRotation = true, 
+        bHorizontalClamp = false, bVerticalClamp = false,
+        bEnableCraneControls = false;
     public GameObject CraneHand = null;
-    public KeyCode upKey, downKey;
-	// Use this for initialization
-	void Start () {
+    public KeyCode upKey, downKey, lowerCraneKey, raiseCraneKey;
+    #endregion
+
+    #region Start
+    // Use this for initialization
+    void Start () {
 		if (verticalClampMin < 0)
         {
             verticalClampMin = 360 + verticalClampMin;
@@ -26,36 +35,58 @@ public class ObjectRotation : MonoBehaviour {
         {
             downKey = KeyCode.DownArrow;
         }
+        if (bEnableCraneControls)
+        {
+            if (lowerCraneKey == KeyCode.None)
+            {
+                lowerCraneKey = KeyCode.L;
+            }
+            if (raiseCraneKey == KeyCode.None)
+            {
+                raiseCraneKey = KeyCode.O;
+            }
+        }
 	}
-	
-	// Update is called once per frame
-	void Update () {
+    #endregion
+
+    #region Update
+    // Update is called once per frame
+    void Update () {
         ControlledRotation();
         if (CraneHand != null && bVerticalRotation) 
         {
-            Quaternion newRotation = new Quaternion(CraneHand.transform.rotation.x, CraneHand.transform.rotation.y, transform.rotation.z * -1, CraneHand.transform.rotation.w);
+            Quaternion newRotation = CraneHand.transform.rotation;
+            newRotation.z = 360 - transform.rotation.z;
             CraneHand.transform.rotation = newRotation;
+            CraneControls(bEnableCraneControls);
         }
 	}
+    #endregion
+
     #region Controlled Rotation
     void ControlledRotation()
     {
+        if (!bConstantRotation && !bHorizontalRotation && !bVerticalRotation)
+        {
+            return;
+        }
+
         if (bConstantRotation)
         {
             transform.Rotate(Vector3.up * movementSpeed);
         }
         else if (bHorizontalRotation)
         {
+            Vector3 angles = transform.rotation.eulerAngles;
             if (Input.GetKey(KeyCode.Q))
             {
                 transform.Rotate(Vector3.up * -movementSpeed);
                 if (bHorizontalClamp)
                 {
-                    if (transform.rotation.y >= horizontalClampMax)
+                    angles = transform.rotation.eulerAngles;
+                    if (angles.y <= horizontalClampMin && angles.y > 90)
                     {
-                        Quaternion clampedRotation = transform.rotation;
-                        clampedRotation.y = horizontalClampMax;
-                        transform.rotation = clampedRotation;
+                        transform.rotation = Quaternion.Euler(angles.x, horizontalClampMin, angles.z);
                     }
                 }
             }
@@ -64,11 +95,10 @@ public class ObjectRotation : MonoBehaviour {
                 transform.Rotate(Vector3.up * movementSpeed);
                 if (bHorizontalClamp)
                 {
-                    if (transform.rotation.y <= horizontalClampMin)
+                    angles = transform.rotation.eulerAngles;
+                    if (angles.y >= horizontalClampMax && angles.y < 90)
                     {
-                        Quaternion clampedRotation = transform.rotation;
-                        clampedRotation.y = horizontalClampMin;
-                        transform.rotation = clampedRotation;
+                        transform.rotation = Quaternion.Euler(angles.x, horizontalClampMax, angles.z);
                     }
                 }
             }
@@ -100,6 +130,40 @@ public class ObjectRotation : MonoBehaviour {
                     {
                         transform.rotation = Quaternion.Euler(angles.x, angles.y, verticalClampMin);
                     }
+                }
+            }
+        }
+    }
+    #endregion
+
+    #region Crane Controls
+    void CraneControls(bool canControl)
+    {
+        if (!canControl)
+        {
+            return;
+        }
+        else
+        {
+            if (Input.GetKey(lowerCraneKey))
+            {
+                CraneHand.transform.Translate(Vector3.up * Time.deltaTime * -movementSpeed);
+                if (CraneHand.transform.position.y <= minCraneVertical && CraneHand.transform.position.y >= (minCraneVertical + minCraneVertical))
+                {
+                    Vector3 newLocation = CraneHand.transform.position;
+                    newLocation.y = minCraneVertical;
+                    CraneHand.transform.position = newLocation;
+                }
+                
+            }
+            if (Input.GetKey(raiseCraneKey))
+            {
+                CraneHand.transform.Translate(Vector3.up * Time.deltaTime * movementSpeed);
+                if (CraneHand.transform.position.y >= maxCraneVertical && CraneHand.transform.position.y <= (maxCraneVertical *-1))
+                {
+                    Vector3 newLocation = CraneHand.transform.position;
+                    newLocation.y = maxCraneVertical;
+                    CraneHand.transform.position = newLocation;
                 }
             }
         }
