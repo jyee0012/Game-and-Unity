@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\RaycastCamera.cs" />
      <Compile Include="Assets\Scripts\ShootingComponent.cs" />
+     <Compile Include="Assets\Scripts\StalkerScript.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/jyee12/Documents/GitHub/Game-and-Unity/DMIT1513/BasicMovement/ObjectMovement/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
