@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class NewPlayerMovement : MonoBehaviour {
 
     [SerializeField]
-    GameObject camera1, camera2;
+    GameObject camera1, camera2, winObjective;
     float vInput, hInput, rInput;
     [SerializeField]
     float movementSpeed = 2, rotationSpeed = 100, multiJump = 2, forceModifier = 1;
@@ -16,7 +16,7 @@ public class NewPlayerMovement : MonoBehaviour {
     Rigidbody rbody;
     Vector3 ground;
     [SerializeField]
-    Text jumpText;
+    Text jumpText, winText;
     // Use this for initialization
     void Start () {
         rbody = GetComponent<Rigidbody>();
@@ -37,6 +37,7 @@ public class NewPlayerMovement : MonoBehaviour {
         }
         Movement();
         Jump();
+        DetectObjective(winObjective);
         if (Input.GetKeyDown(cameraSwapKey))
         {
             if (camera1.active)
@@ -85,6 +86,23 @@ public class NewPlayerMovement : MonoBehaviour {
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawSphere(ground, 1f);
+        //Gizmos.DrawSphere(ground, 1f);
+    }
+    void DetectObjective(GameObject objective)
+    {
+        RaycastHit hit;
+        //if (Physics.Raycast(transform.position, Vector3.forward, out hit))
+        //{
+
+        //}
+
+        Collider[] objectArray = Physics.OverlapSphere(transform.position, 5f);
+        for(int i = 0; i < objectArray.Length; i++)
+        {
+            if (objectArray[i].transform.gameObject == objective)
+            {
+                winText.text = "Yay you win";
+            }
+        }
     }
 }

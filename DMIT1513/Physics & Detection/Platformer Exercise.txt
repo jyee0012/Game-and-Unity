@@ -1,0 +1,27 @@
+For this exercise you will be required to display your knowledge of the following:
+
+- Parenting Objects
+Done
+- Object Movement
+Done
+- Object Rotation
+Done
+- Applying Force
+Done
+- Object Collision
+Done
+- Collision Detection (Raycast, Linecast, Spherecast)
+Done
+
+--------------------------------------------------------------------------------------------
+Player object can move forward, back, left, and right.
+Done
+Player object can jump once when on the ground.
+Done
+Player object can jump once while in the air. (Double Jump)
+Done
+Level layout contains multiple sizes of shapes to demonstrate movement.
+Done
+At least two moving platforms allow the player to get to areas that are otherwise inaccessible.
+Done
+Final objective is marked with a flag.
