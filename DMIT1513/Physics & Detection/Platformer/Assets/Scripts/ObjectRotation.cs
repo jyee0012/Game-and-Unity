@@ -77,16 +77,16 @@ public class ObjectRotation : MonoBehaviour {
         }
         else if (bHorizontalRotation)
         {
-            Vector3 angles = transform.rotation.eulerAngles;
+            Vector3 angles = transform.localRotation.eulerAngles;
             if (Input.GetKey(KeyCode.Q))
             {
                 transform.Rotate(Vector3.up * -movementSpeed);
                 if (bHorizontalClamp)
                 {
-                    angles = transform.rotation.eulerAngles;
+                    angles = transform.localRotation.eulerAngles;
                     if (angles.y <= horizontalClampMin && angles.y > 90)
                     {
-                        transform.rotation = Quaternion.Euler(angles.x, horizontalClampMin, angles.z);
+                        transform.localRotation = Quaternion.Euler(angles.x, horizontalClampMin, angles.z);
                     }
                 }
             }
@@ -95,10 +95,10 @@ public class ObjectRotation : MonoBehaviour {
                 transform.Rotate(Vector3.up * movementSpeed);
                 if (bHorizontalClamp)
                 {
-                    angles = transform.rotation.eulerAngles;
+                    angles = transform.localRotation.eulerAngles;
                     if (angles.y >= horizontalClampMax && angles.y < 90)
                     {
-                        transform.rotation = Quaternion.Euler(angles.x, horizontalClampMax, angles.z);
+                        transform.localRotation = Quaternion.Euler(angles.x, horizontalClampMax, angles.z);
                     }
                 }
             }
@@ -113,10 +113,10 @@ public class ObjectRotation : MonoBehaviour {
                 transform.Rotate(Vector3.forward * movementSpeed);
                 if (bVerticalClamp)
                 {
-                    angles = transform.rotation.eulerAngles;
+                    angles = transform.localRotation.eulerAngles;
                     if (angles.z >= verticalClampMax && angles.z < 90)
                     {
-                        transform.rotation = Quaternion.Euler(angles.x, angles.y, verticalClampMax);
+                        transform.localRotation = Quaternion.Euler(angles.x, angles.y, verticalClampMax);
                     }
                 }
             }
@@ -125,17 +125,17 @@ public class ObjectRotation : MonoBehaviour {
                 transform.Rotate(Vector3.forward * -movementSpeed);
                 if (bVerticalClamp)
                 {
-                    angles = transform.rotation.eulerAngles;
+                    angles = transform.localRotation.eulerAngles;
                     if (angles.z <= verticalClampMin && angles.z > 270)
                     {
-                        transform.rotation = Quaternion.Euler(angles.x, angles.y, verticalClampMin);
+                        transform.localRotation = Quaternion.Euler(angles.x, angles.y, verticalClampMin);
                     }
                 }
             }
         }
     }
     #endregion
-
+    
     #region Crane Controls
     void CraneControls(bool canControl)
     {

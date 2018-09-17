@@ -8,7 +8,7 @@ public class MovingPlatform : MonoBehaviour {
     float xMaxClamp, xMinClamp, yMaxClamp, yMinClamp, zMaxClamp, zMinClamp, movementSpeed = 2;
 
     [SerializeField]
-    bool xMove, yMove, zMove;
+    bool xMove, yMove, zMove, bIsAttached;
 
     Vector3 startPos;
 
@@ -77,5 +77,13 @@ public class MovingPlatform : MonoBehaviour {
                 }
                 break;
         }
+    }
+    void OnCollisionEnter(Collision collision)
+    {
+        if (bIsAttached) collision.transform.parent = this.transform;
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        if (bIsAttached)  collision.transform.parent = null;
     }
 }

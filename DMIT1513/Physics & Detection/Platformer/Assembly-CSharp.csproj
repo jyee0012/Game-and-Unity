@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\MovingPlatform.cs" />
      <Compile Include="Assets\Scripts\NewPlayerMovement.cs" />
      <Compile Include="Assets\Scripts\ObjectMover.cs" />
      <Compile Include="Assets\Scripts\ObjectRotation.cs" />
