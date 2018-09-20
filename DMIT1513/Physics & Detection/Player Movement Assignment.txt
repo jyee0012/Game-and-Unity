@@ -1,23 +1,46 @@
 - The base for the mech can move forward and backward.
+(Done)
 - The base can rotate left and right.
+(Done)
 - The torso can rotation left and right separate from the base.
+(Done)
 - The torso can only rotate 90 degrees to either side.
+(Done)
 - The two arms can rotate up and down.
+(Done)
 - The arms rotate from the shoulders.
+(Done)
 - The arms can only rotate 45 degrees up or down.
+(Done)
 - Grenade projectile can be fired from the arms.
+
 - Grenade alternates firing between the left and right arms.
+
 - Grenades can be fired every 0.5 seconds.
+
 - Grenades are destroyed when they collide with an object.
+
 - Grenades are destroyed after 3 seconds if no collision occurs.
+
 - Rocket projectile can be fired from a box on the shoulder.
+
 - Rockets can be fired every 0.25 seconds.
+
 - The box contains a limit of 16 rockets.
+
 - Each rocket fires from a different location within the box.
+
 - Rockets are destroyed when they collide with an object.
+
 - Rockets are destroyed after 3 seconds if no collision occurs.
+
 - A third person camera views the mech from behind.
+(Done)
 - A first person camera views from inside the "cockpit".
+(Done)
 - The camera views can be switched by pressing the "C" key.
+(Done)
 - Ammo boxes reload the rockets when the mech runs over then.
+
 - Stationary targets are destroyed when hit by a projectile.
+

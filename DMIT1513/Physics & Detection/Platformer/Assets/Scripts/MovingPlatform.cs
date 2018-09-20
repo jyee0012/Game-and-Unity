@@ -41,12 +41,12 @@ public class MovingPlatform : MonoBehaviour {
                 transform.Translate(Vector3.right * Time.deltaTime * movementSpeed);
                 if (transform.position.x >= startPos.x + max && transform.position.x < startPos.x + (max *2))
                 {
-                    transform.position = new Vector3(startPos.x + max, transform.position.y, transform.position.z);
+                    // transform.position = new Vector3(startPos.x + max, transform.position.y, transform.position.z);
                     movementSpeed *= -1;
                 }
                 if (transform.position.x <= startPos.x + min && transform.position.x < startPos.x + (min + min))
                 {
-                    transform.position = new Vector3(startPos.x + min, transform.position.y, transform.position.z);
+                    //transform.position = new Vector3(startPos.x + min, transform.position.y, transform.position.z);
                     movementSpeed *= -1;
                 }
                 break;
@@ -54,12 +54,12 @@ public class MovingPlatform : MonoBehaviour {
                 transform.Translate(Vector3.up * Time.deltaTime * movementSpeed);
                 if (transform.position.y >= startPos.y + max && transform.position.y < startPos.y + (max * 2))
                 {
-                    transform.position = new Vector3( transform.position.x, startPos.y + max, transform.position.z);
+                    //transform.position = new Vector3( transform.position.x, startPos.y + max, transform.position.z);
                     movementSpeed *= -1;
                 }
                 if (transform.position.y <= startPos.y + min && transform.position.y < startPos.y + (min + min))
                 {
-                    transform.position = new Vector3(transform.position.x, startPos.y + min, transform.position.z);
+                    //transform.position = new Vector3(transform.position.x, startPos.y + min, transform.position.z);
                     movementSpeed *= -1;
                 }
                 break;
@@ -67,12 +67,12 @@ public class MovingPlatform : MonoBehaviour {
                 transform.Translate(Vector3.forward * Time.deltaTime * movementSpeed);
                 if (transform.position.z >= startPos.z + max && transform.position.z < startPos.z + (max * 2))
                 {
-                    transform.position = new Vector3(transform.position.x, transform.position.y, startPos.z + max);
+                    //transform.position = new Vector3(transform.position.x, transform.position.y, startPos.z + max);
                     movementSpeed *= -1;
                 }
                 if (transform.position.z <= startPos.z + min && transform.position.z < startPos.z + (min + min))
                 {
-                    transform.position = new Vector3(transform.position.x, transform.position.y, startPos.z + min);
+                    //transform.position = new Vector3(transform.position.x, transform.position.y, startPos.z + min);
                     movementSpeed *= -1;
                 }
                 break;

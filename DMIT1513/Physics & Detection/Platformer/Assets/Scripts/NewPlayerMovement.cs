@@ -27,17 +27,14 @@ public class NewPlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        jumpText.text = "Jump: " + jumpCount + "/" + multiJump;
+        if (jumpText != null) jumpText.text = "Jump: " + jumpCount + "/" + multiJump;
+        
         ground = transform.position;
         ground.y -= 1f;
-        if (Physics.Linecast(transform.position, ground))
-        {
-            bGrounded = true;
-            jumpCount = 0;
-        }
+        bGrounded = CheckGround(ground);
+
         Movement();
         Jump();
-        DetectObjective(winObjective);
         if (Input.GetKeyDown(cameraSwapKey))
         {
             if (camera1.active)
@@ -50,6 +47,17 @@ public class NewPlayerMovement : MonoBehaviour {
             }
         }
     }
+
+    bool CheckGround(Vector3 ground)
+    {
+        if (Physics.Linecast(transform.position, ground))
+        {
+            jumpCount = 0;
+            return true;
+        }
+        return false;
+    }
+
     #region Movement
     void Movement()
     {
@@ -61,6 +69,7 @@ public class NewPlayerMovement : MonoBehaviour {
         transform.Translate(new Vector3(hInput * Time.deltaTime * movementSpeed, 0, vInput * Time.deltaTime * movementSpeed));
     }
     #endregion 
+
     #region Swap Camera
     void SwapCamera(GameObject camera1, GameObject camera2)
     {
@@ -73,6 +82,8 @@ public class NewPlayerMovement : MonoBehaviour {
         //}
     }
     #endregion
+
+    #region Jump
     void Jump()
     {
         if (Input.GetKeyDown(jumpKey) && (bGrounded || jumpCount < multiJump))
@@ -84,10 +95,16 @@ public class NewPlayerMovement : MonoBehaviour {
             jumpCount++;
         }
     }
+    #endregion
+
+    #region Draw Gizmos
     private void OnDrawGizmos()
     {
         //Gizmos.DrawSphere(ground, 1f);
     }
+    #endregion
+
+    #region Detect Objective
     void DetectObjective(GameObject objective)
     {
         RaycastHit hit;
@@ -101,8 +118,9 @@ public class NewPlayerMovement : MonoBehaviour {
         {
             if (objectArray[i].transform.gameObject == objective)
             {
-                winText.text = "Yay you win";
+                if (winText != null) winText.text = "Yay you win";
             }
         }
     }
+    #endregion
 }

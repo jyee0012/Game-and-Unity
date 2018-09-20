@@ -5,46 +5,42 @@ using UnityEngine;
 public class ObjectRotation : MonoBehaviour {
 
     #region Variables
-    public float movementSpeed = 2f, 
+    [SerializeField]
+    float movementSpeed = 2f, 
         verticalClampMin, verticalClampMax, horizontalClampMin, horizontalClampMax,
         maxCraneVertical, minCraneVertical;
-    public bool bConstantRotation = true, 
+    [SerializeField]
+    bool bConstantRotation = true, 
         bHorizontalRotation = true, bVerticalRotation = true, 
         bHorizontalClamp = false, bVerticalClamp = false,
         bEnableCraneControls = false;
-    public GameObject CraneHand = null;
-    public KeyCode upKey, downKey, lowerCraneKey, raiseCraneKey;
+    [SerializeField]
+    GameObject CraneHand = null;
+    [SerializeField]
+    KeyCode leftKey, rightKey, upKey, downKey, lowerCraneKey, raiseCraneKey;
     #endregion
     
     #region Start
     // Use this for initialization
     void Start () {
-		if (verticalClampMin < 0)
-        {
-            verticalClampMin = 360 + verticalClampMin;
-        }
-        if (horizontalClampMin < 0)
-        {
-            horizontalClampMin = 360 + horizontalClampMin;
-        }
-        if (upKey == KeyCode.None)
-        {
-            upKey = KeyCode.UpArrow;
-        }
-        if (downKey == KeyCode.None)
-        {
-            downKey = KeyCode.DownArrow;
-        }
+
+		if (verticalClampMin < 0) verticalClampMin = 360 + verticalClampMin;
+        
+        if (horizontalClampMin < 0) horizontalClampMin = 360 + horizontalClampMin;
+
+        if (upKey == KeyCode.None) upKey = KeyCode.UpArrow;
+        
+        if (downKey == KeyCode.None) downKey = KeyCode.DownArrow;
+
+        if (leftKey == KeyCode.None) leftKey = KeyCode.Q;
+
+        if (rightKey == KeyCode.None) rightKey = KeyCode.E;
+
         if (bEnableCraneControls)
         {
-            if (lowerCraneKey == KeyCode.None)
-            {
-                lowerCraneKey = KeyCode.L;
-            }
-            if (raiseCraneKey == KeyCode.None)
-            {
-                raiseCraneKey = KeyCode.O;
-            }
+            if (lowerCraneKey == KeyCode.None) lowerCraneKey = KeyCode.L;
+            
+            if (raiseCraneKey == KeyCode.None) raiseCraneKey = KeyCode.O;
         }
 	}
     #endregion
@@ -78,7 +74,7 @@ public class ObjectRotation : MonoBehaviour {
         else if (bHorizontalRotation)
         {
             Vector3 angles = transform.localRotation.eulerAngles;
-            if (Input.GetKey(KeyCode.Q))
+            if (Input.GetKey(leftKey))
             {
                 transform.Rotate(Vector3.up * -movementSpeed);
                 if (bHorizontalClamp)
@@ -90,13 +86,13 @@ public class ObjectRotation : MonoBehaviour {
                     }
                 }
             }
-            if (Input.GetKey(KeyCode.E))
+            if (Input.GetKey(rightKey))
             {
                 transform.Rotate(Vector3.up * movementSpeed);
                 if (bHorizontalClamp)
                 {
                     angles = transform.localRotation.eulerAngles;
-                    if (angles.y >= horizontalClampMax && angles.y < 90)
+                    if (angles.y >= horizontalClampMax && angles.y < 270)
                     {
                         transform.localRotation = Quaternion.Euler(angles.x, horizontalClampMax, angles.z);
                     }

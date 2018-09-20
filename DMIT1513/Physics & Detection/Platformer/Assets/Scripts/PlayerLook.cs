@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class PlayerLook : MonoBehaviour {
 
+    [SerializeField]
+    bool bVerticalClamp;
     float vInput;
-    public float rotationSpeed = 100;
+    [SerializeField]
+    float rotationSpeed = 100, verticalClampMax, verticalClampMin;
     Vector3 angles;
 	// Use this for initialization
-	void Start () {
-		
-	}
+	void Start ()
+    {
+        if (verticalClampMin < 0) verticalClampMin = 360 + verticalClampMin;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -19,9 +24,17 @@ public class PlayerLook : MonoBehaviour {
         transform.Rotate(Vector3.right, vInput * Time.deltaTime * -rotationSpeed);
         angles = transform.rotation.eulerAngles;
 
-        if (angles.x > 30 && angles.x < 90)
+        if (bVerticalClamp)
         {
-            transform.rotation = Quaternion.Euler(30, angles.y, angles.z);
+            angles = transform.localRotation.eulerAngles;
+            if (angles.x >= verticalClampMax && angles.x < 90)
+            {
+                transform.localRotation = Quaternion.Euler(verticalClampMax , angles.y, angles.z);
+            }
+            if (angles.x <= verticalClampMin && angles.x > 270)
+            {
+                transform.localRotation = Quaternion.Euler(verticalClampMin, angles.y, angles.z);
+            }
         }
 	}
 }
