@@ -10,6 +10,8 @@ public class NewPlayerMovement : MonoBehaviour {
     float vInput, hInput, rInput;
     [SerializeField]
     float movementSpeed = 2, rotationSpeed = 100, multiJump = 2, forceModifier = 1;
+    [SerializeField]
+    bool canJump = true, canMove = true;
     public KeyCode jumpKey, cameraSwapKey;
     float force = 100, jumpCount;
     bool bGrounded = true;
@@ -33,8 +35,9 @@ public class NewPlayerMovement : MonoBehaviour {
         ground.y -= 1f;
         bGrounded = CheckGround(ground);
 
-        Movement();
-        Jump();
+        if (canMove) Movement();
+        if (canJump) Jump();
+
         if (Input.GetKeyDown(cameraSwapKey))
         {
             if (camera1.active)

@@ -13,15 +13,15 @@
 - The arms can only rotate 45 degrees up or down.
 (Done)
 - Grenade projectile can be fired from the arms.
-
+(Done)
 - Grenade alternates firing between the left and right arms.
-
+(Done)
 - Grenades can be fired every 0.5 seconds.
-
+(Done)
 - Grenades are destroyed when they collide with an object.
 
 - Grenades are destroyed after 3 seconds if no collision occurs.
-
+(Done)
 - Rocket projectile can be fired from a box on the shoulder.
 
 - Rockets can be fired every 0.25 seconds.
