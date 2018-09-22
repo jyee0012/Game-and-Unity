@@ -9,10 +9,14 @@ public class BombProjectile : MonoBehaviour
 
     public bool bCanExplode = false;
     public float explodeRadius = 2;
+    public GameObject ignoreObj;
     // Use this for initialization
     void Start()
     {
-
+        if (ignoreObj == null)
+        {
+            if (transform.parent != null) ignoreObj = transform.parent.gameObject;
+        }
     }
 
     // Update is called once per frame
@@ -40,7 +44,7 @@ public class BombProjectile : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject == transform.parent.gameObject) return;
+        if (collision.gameObject == ignoreObj) return;
         Explode();
         if (collision.transform.tag == "Target")
         {

@@ -49,6 +49,10 @@ public class NewPlayerMovement : MonoBehaviour {
                 SwapCamera(camera2, camera1);
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     bool CheckGround(Vector3 ground)

@@ -42,10 +42,10 @@ MonoBehaviour:
     y: 30
     width: 1366
     height: 675
-  m_MinSize: {x: 681, y: 492}
-  m_MaxSize: {x: 14004, y: 14042}
+  m_MinSize: {x: 679, y: 492}
+  m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 74
+  controlID: 47
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -64,8 +64,8 @@ MonoBehaviour:
     y: 0
     width: 277
     height: 675
-  m_MinSize: {x: 277, y: 71}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 75
+  controlID: 61
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -234,7 +234,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 221}
   m_MaxSize: {x: 8004, y: 4021}
   vertical: 0
-  controlID: 76
+  controlID: 62
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -253,8 +253,8 @@ MonoBehaviour:
     y: 0
     width: 887
     height: 404
-  m_MinSize: {x: 204, y: 221}
-  m_MaxSize: {x: 4004, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 17}
   m_Panes:
   - {fileID: 17}
@@ -357,20 +357,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts
+    - Assets/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\shark_000\Documents\GitHub\Game-and-Unity\DMIT1513\Physics
     & Detection\Platformer
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 92260000
-    m_LastClickedID: 9874
-    m_ExpandedIDs: 000000007226000000ca9a3bffffff7f
+    m_SelectedIDs: 90260000
+    m_LastClickedID: 9872
+    m_ExpandedIDs: 000000007626000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -398,7 +398,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000072260000
+    m_ExpandedIDs: 0000000076260000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -514,9 +514,9 @@ MonoBehaviour:
     height: 383
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: e4270000
-    m_LastClickedID: 10212
-    m_ExpandedIDs: c4b8faff04f2ffff1afcffff00000000322700004e2700006827000098270000be270000cc270000d2270000e42700002c2800005c28000076280000
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: 784cf8ff304df8ff3a4ef8ff666df8ff1e6ef8ff286ff8ff3075f8fff275f8ffa877f8fffa8ffaff5aaffcff4ecbffff8ce7ffff1afcffff00000000e42600000a2700004e2700002a28000038280000a2f10000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -566,14 +566,14 @@ MonoBehaviour:
     width: 883
     height: 383
   m_SceneLighting: 1
-  lastFramingTime: 27601.528557804428
+  lastFramingTime: 5807.876538049037
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.82007724, y: 1.9027777, z: 1.7786207}
+    m_Target: {x: -1.3215188, y: -3.5591958, z: -10.31614}
     speed: 2
-    m_Value: {x: -0.82007724, y: 1.9027777, z: 1.7786207}
+    m_Value: {x: -1.3215188, y: -3.5591958, z: -10.31614}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -596,13 +596,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.0074089775, y: -0.99240756, z: 0.09588271, w: -0.07667409}
+    m_Target: {x: 0.031162653, y: -0.03057652, z: -0.0009548518, w: -0.9990461}
     speed: 2
-    m_Value: {x: -0.0074089775, y: -0.99240756, z: 0.09588271, w: -0.07667409}
+    m_Value: {x: 0.031162653, y: -0.03057652, z: -0.0009548518, w: -0.9990461}
   m_Size:
-    m_Target: 0.4286826
+    m_Target: 2.8578837
     speed: 2
-    m_Value: 0.4286826
+    m_Value: 2.8578837
   m_Ortho:
     m_Target: 0
     speed: 2

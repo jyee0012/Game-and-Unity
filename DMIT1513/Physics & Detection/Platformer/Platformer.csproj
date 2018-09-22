@@ -84,6 +84,7 @@
     <Compile Include="Assets\Scripts\NewPlayerMovement.cs" />
     <Compile Include="Assets\Scripts\ObjectMover.cs" />
     <Compile Include="Assets\Scripts\ObjectRotation.cs" />
+    <Compile Include="Assets\Scripts\PickupItem.cs" />
     <Compile Include="Assets\Scripts\PlayerLook.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\ShootingComponent.cs" />

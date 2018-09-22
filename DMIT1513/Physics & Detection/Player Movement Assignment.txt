@@ -19,21 +19,21 @@
 - Grenades can be fired every 0.5 seconds.
 (Done)
 - Grenades are destroyed when they collide with an object.
-
+(Done)
 - Grenades are destroyed after 3 seconds if no collision occurs.
 (Done)
 - Rocket projectile can be fired from a box on the shoulder.
-
+(Done)
 - Rockets can be fired every 0.25 seconds.
-
+(Done)
 - The box contains a limit of 16 rockets.
-
+(Done)
 - Each rocket fires from a different location within the box.
-
+(Done)
 - Rockets are destroyed when they collide with an object.
-
+(Done)
 - Rockets are destroyed after 3 seconds if no collision occurs.
-
+(Done)
 - A third person camera views the mech from behind.
 (Done)
 - A first person camera views from inside the "cockpit".
@@ -41,6 +41,6 @@
 - The camera views can be switched by pressing the "C" key.
 (Done)
 - Ammo boxes reload the rockets when the mech runs over then.
-
+(Done)
 - Stationary targets are destroyed when hit by a projectile.
-
+(Done)

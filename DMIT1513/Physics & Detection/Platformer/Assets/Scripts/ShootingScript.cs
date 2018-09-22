@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShootingScript : MonoBehaviour {
 
@@ -16,7 +17,9 @@ public class ShootingScript : MonoBehaviour {
     GameObject[] projectileArray;
     [SerializeField]
     int projectileAmount = 16;
-
+    [SerializeField]
+    Text ammoText;
+    
     bool bHasProjectile, bShotL;
     float lastShot, ammo;
     // Use this for initialization
@@ -24,7 +27,8 @@ public class ShootingScript : MonoBehaviour {
         bHasProjectile = projectilePrefab != null;
         if (fireKey == KeyCode.None) fireKey = KeyCode.Mouse0;
         ammo = projectileAmount;
-        projectileArray = new GameObject[projectileAmount];
+        PrintAmmoText();
+        //projectileArray = new GameObject[projectileAmount];
     }
 	
 	// Update is called once per frame
@@ -32,20 +36,45 @@ public class ShootingScript : MonoBehaviour {
         Fire();
 	}
 
-    bool Shoot(Transform fireLocation)
+    bool Shoot(Transform fireLocation, string fireDirectionS = "up")
     {
-        Vector3 spawnPos = fireLocation.position;
-        GameObject projectile = Instantiate(projectilePrefab, spawnPos, Quaternion.identity, gameObject.transform);
+        Vector3 spawnPos = fireLocation.position, fireDirection = fireLocation.up;
+        switch (fireDirectionS)
+        {
+            case "up":
+                fireDirection = fireLocation.up;
+                break;
+            case "down":
+                fireDirection = -fireLocation.up;
+                break;
+            case "left":
+                fireDirection = -fireLocation.right;
+                break;
+            case "right":
+                fireDirection = fireLocation.right;
+                break;
+            case "forward":
+                fireDirection = fireLocation.forward;
+                break;
+            case "back":
+                fireDirection = -fireLocation.forward;
+                break;
+            default:
+                fireDirection = fireLocation.up;
+                break;
+        }
+        GameObject projectile = Instantiate(projectilePrefab, spawnPos, fireLocation.rotation, null);
         //Debug.Log("Spawned");
         Rigidbody projectileRBody = projectile.GetComponent<Rigidbody>();
+        BombProjectile bombProj = projectile.GetComponent<BombProjectile>();
+        bombProj.ignoreObj = this.gameObject;
         if (projecileCanExplode)
         {
-            BombProjectile bombProj = projectile.GetComponent<BombProjectile>();
             bombProj.bCanExplode = true;
             bombProj.explodeRadius = projectileExplodeRadius;
         }
         projectileRBody.useGravity = projectileGravity;
-        projectileRBody.AddForce(fireLocation.up * projectileForce);
+        projectileRBody.AddForce(fireDirection * projectileForce);
         Destroy(projectile, 3);
         lastShot = Time.time;
         return true;
@@ -69,11 +98,11 @@ public class ShootingScript : MonoBehaviour {
         if (Input.GetKey(fireKey) && Time.time - lastShot > timeBetweenShot)
         {
             if (alternateFire) AlternateShoot();
-            else if (individualFire) Shoot(transform);
+            else if (individualFire) ShootIndividual();
             else Shoot(fireLocationR.transform);
         }
     }
-    void Reload()
+    public void Reload()
     {
         foreach(GameObject proj in projectileArray)
         {
@@ -82,15 +111,39 @@ public class ShootingScript : MonoBehaviour {
                 proj.SetActive(true);
             }
         }
+        PrintAmmoText();
     }
     void ShootIndividual()
     {
         foreach (GameObject proj in projectileArray)
         {
-            if (!proj.activeInHierarchy)
+            if (proj.activeInHierarchy)
             {
-                //proj.SetActive(true);
+                Shoot(proj.transform, "forward");
+                proj.SetActive(false);
+                break;
             }
+        }
+        PrintAmmoText();
+    }
+    int GetAmmoCount()
+    {
+        int ammo = 0;
+        for (int i = 0;i< projectileArray.Length; i++)
+        {
+            if (projectileArray[i].activeInHierarchy)
+            {
+                ammo++;
+            }
+        }
+        return ammo;
+    }
+    void PrintAmmoText()
+    {
+        if (ammoText != null)
+        {
+            int currentAmmo = GetAmmoCount();
+            ammoText.text = "Ammo: " + currentAmmo + "/" + projectileAmount;
         }
     }
 }
