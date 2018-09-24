@@ -1,0 +1,12 @@
+Canvas
+ScrollRect/ScrollView
+Mask
+ScrollBar
+Panel
+Image
+
+Take a look at
+Mask
+Transitions
+Events
+https://unity3d.com/learn/tutorials/s/user-interface-ui
