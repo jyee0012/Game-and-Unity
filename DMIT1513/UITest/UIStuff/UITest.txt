@@ -5,6 +5,14 @@ ScrollBar
 Panel
 Image
 
+******Work******
+By using the ScrollView it will create a scrollRect with 2 attached Scrollbars along with a content element.
+I have changed the content to become an image so you may click and drag the scroll bar or the image itself to move.
+The viewport part in the scroll view is what causes the masking to be done. 
+I have placed all the above in a panel so it may be easily organized in the future along with other UI elements.
+
+
+
 Take a look at
 Mask
 Transitions
