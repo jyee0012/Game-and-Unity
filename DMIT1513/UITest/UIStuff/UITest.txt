@@ -1,20 +1,16 @@
 Canvas
-ScrollRect/ScrollView
+ScrollRect
 Mask
 ScrollBar
 Panel
 Image
+Slider
+Text
 
 ******Work******
 By using the ScrollView it will create a scrollRect with 2 attached Scrollbars along with a content element.
 I have changed the content to become an image so you may click and drag the scroll bar or the image itself to move.
 The viewport part in the scroll view is what causes the masking to be done. 
 I have placed all the above in a panel so it may be easily organized in the future along with other UI elements.
-
-
-
-Take a look at
-Mask
-Transitions
-Events
-https://unity3d.com/learn/tutorials/s/user-interface-ui
+I have also attached a slider to modify the scale of the image, so it looks like it zooms in
+And also some text to tell you how much you are zoomed in

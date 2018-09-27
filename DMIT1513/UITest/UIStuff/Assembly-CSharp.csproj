@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\ZoomScript.cs" />
      <Compile Include="Assets\UIAssets\Scripts\ActiveStateToggler.cs" />
      <Compile Include="Assets\UIAssets\Scripts\ApplicationManager.cs" />
      <Compile Include="Assets\UIAssets\Scripts\ChangeColor.cs" />
@@ -65,7 +66,6 @@
      <Compile Include="Assets\UIAssets\Scripts\ShowSliderValue.cs" />
      <Compile Include="Assets\UIAssets\Scripts\TiltWindow.cs" />
      <None Include="Assets\UIAssets\Fonts\Jupiter\LICENSE.txt" />
-     <None Include="Assets\AniWallpaper\Anilist.txt" />
      <None Include="Assets\UIAssets\Textures and Sprites\SF UI\Background\LICENSE.txt" />
      <None Include="Assets\UIAssets\Materials\UI-Default-No-Alpha.shader" />
  <Reference Include="UnityEditor.StandardEvents">
