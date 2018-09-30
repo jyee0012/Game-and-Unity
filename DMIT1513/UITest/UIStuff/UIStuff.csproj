@@ -79,6 +79,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\MenuScript.cs" />
+    <Compile Include="Assets\Scripts\ZoomScript.cs" />
     <Compile Include="Assets\UIAssets\Scripts\ActiveStateToggler.cs" />
     <Compile Include="Assets\UIAssets\Scripts\ApplicationManager.cs" />
     <Compile Include="Assets\UIAssets\Scripts\ChangeColor.cs" />

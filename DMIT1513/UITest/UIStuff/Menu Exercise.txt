@@ -1,0 +1,41 @@
+For this exercise you will create a basic menu that you can use as a template for your projects.
+
+You must create a Game Screen that has the following:
+
+- background image
+
+- game title
+
+- play button (Clicking this button should load your game scene)
+
+- options button (Clicking this button should activate your options screen/panel)
+
+- exit/quit button (Clicking this button should quit your application when in build mode)
+
+
+
+You must create an Options screen/panel that has the following:
+
+- label for music volume
+
+- slider for music volume (does not yet need to change volume)
+
+- label for sound FX volume
+
+- slider for sound volume (does not yet need to change volume)
+
+- back/close button (Clicking this button will deactivate the options screen/panel)
+
+
+
+You must create a pause menu:
+
+- pressing ESC in your game scene should activate the pause panel
+
+- label that lets the player know the game is paused
+
+- continue button (Clicking on this button with deactivate the pause panel
+
+- pressing ESC again will also deactivate the pause panel
+
+- exit/quit button (Clicking on this button will return to the main menu
