@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
@@ -24,7 +25,14 @@ public class MenuScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OpenClosePauseMenu();
+        }
+        if (CheckMusicSoundText())
+        {
+            UpdateMusicSoundText();
+        }
     }
 
     #region Open/Close Menu
@@ -43,6 +51,18 @@ public class MenuScript : MonoBehaviour
     public void ClosePauseMenu()
     {
         pauseMenu.SetActive(false);
+        CloseOptions();
+    }
+    public void OpenClosePauseMenu()
+    {
+        if (!pauseMenu.active)
+        {
+            OpenPauseMenu();
+        }
+        else
+        {
+            ClosePauseMenu();
+        }
     }
     public void OpenOptions()
     {
@@ -56,12 +76,22 @@ public class MenuScript : MonoBehaviour
 
     public void PlayGame()
     {
-
+        SceneManager.LoadScene(1);
+        CloseStartMenu();
+        CloseOptions();
+    }
+    public void CustomLoadScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
     }
     public void UpdateMusicSoundText()
     {
         musicText.text = "Music: " + musicSlider.value + "%";
         soundText.text = "Sound: " + soundSlider.value + "%";
+    }
+    public bool CheckMusicSoundText()
+    {
+        return musicText.isActiveAndEnabled && musicSlider.isActiveAndEnabled && soundSlider.isActiveAndEnabled && soundText.isActiveAndEnabled;
     }
     public void CloseGame()
     {
