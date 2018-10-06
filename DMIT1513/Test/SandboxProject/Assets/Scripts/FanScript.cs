@@ -10,12 +10,10 @@ public class FanScript : MonoBehaviour
     GameObject rotatingPart;
     [SerializeField]
     float windDist = 5, forceMod = 500, rotateSpeed = 2;
-
-    [SerializeField]
-    bool turnOnFan = false;
+    
 
     Rigidbody ownRbody;
-    public bool reverse;
+    public bool reverse, turnOnFan = false;
     // Use this for initialization
     void Start()
     {
@@ -39,7 +37,12 @@ public class FanScript : MonoBehaviour
             if (hit.transform.root == this.gameObject) continue;
             float dist = Vector3.Distance(transform.position, hit.transform.position),
                 calculatedForce = forceMod * (1 - (dist / windDist));
-            Rigidbody hitRBody = hit.transform.gameObject.GetComponent<Rigidbody>();
+            Rigidbody hitRBody = null;
+            if (hit.transform.root.gameObject.GetComponent<Rigidbody>() != null) hitRBody = hit.transform.root.gameObject.GetComponent<Rigidbody>();
+            if (hitRBody == null)
+            {
+                if (hit.transform.root.gameObject.GetComponentInChildren<Rigidbody>() != null) hitRBody = hit.transform.root.gameObject.GetComponentInChildren<Rigidbody>();
+            }
             // 1 = 100%
             // windDist = 1%;
             // calculate dist %;
