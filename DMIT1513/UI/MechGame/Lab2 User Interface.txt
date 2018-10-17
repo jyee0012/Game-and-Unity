@@ -10,7 +10,7 @@ Marking Guide
 For each element you will receive one mark if your build works occasionally and a second mark if it work consistently.
 
 - Create a game screen that contains an image that represents your game.
-
+(Done)
 - The game screen should have a Play button that starts the game.
 (Done)
 - The game screen should have an Options button that opens the options screen.
@@ -24,13 +24,13 @@ For each element you will receive one mark if your build works occasionally and 
 - Add a looping sound that plays when the mech is moving.
 (Done)
 - Add a one shot sound that plays when the primary weapon is fired.
-
+(Done)
 - Add a muzzle particle system that plays when the primary weapon is fired.
-
+(Done)
 - Add an explosion sound that plays when the grenade collides with something.
-
+(Done)
 - Add an explosion particle system that plays when the grenade collides with something.
-
+(Done)
 - Add a HUD element that displays the primary weapon name.
 (Done)
 - Add a HUD element that displays the amount of ammo for the primary weapon.
@@ -40,9 +40,9 @@ For each element you will receive one mark if your build works occasionally and 
 - The primary weapon should shoot in the direction that the crosshair is located.
 (Done)
 - Add a different sound that plays when the secondary weapon is fired.
-
+(Done)
 - Add a different muzzle particle system that plays when the secondary weapon is fired.
-
+(Done)
 - Add a HUD element that displays the current secondary weapon name.
 (Done)
 - Add a HUD element that displays the current secondary weapon ammo amount.
@@ -60,7 +60,7 @@ For each element you will receive one mark if your build works occasionally and 
 - Opening the pause menu should stop all action in the game.
 (Done) (turned off)
 - Allow the player to change the volume from the pause menu.
-
+(Done)
 - Add music to the game.
 (Done)
 - Add a second volume slider to control music volume.
@@ -68,11 +68,11 @@ For each element you will receive one mark if your build works occasionally and 
 
 
 - Add a HUD element that displays the players health.
-
+(Done)
 - Add a HUD element on each hostile target that displays the health of the hostile.
-
+(Done)
 - Make sure the target health HUD element is always facing the player.
-
+(Done)
 
 
 Total Marks 60

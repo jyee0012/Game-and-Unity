@@ -479,6 +479,63 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 224942903587356478, guid: f1059d05820b2d84eb374787bf29e25e,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.9999084
+      objectReference: {fileID: 0}
+    - target: {fileID: 114460927386371396, guid: f1059d05820b2d84eb374787bf29e25e,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 724db5ee880759b4e87fd88e94714a90,
+        type: 3}
+    - target: {fileID: 114460927386371396, guid: f1059d05820b2d84eb374787bf29e25e,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0.49803922
+      objectReference: {fileID: 0}
+    - target: {fileID: 114402609441117762, guid: f1059d05820b2d84eb374787bf29e25e,
+        type: 2}
+      propertyPath: mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: 9cfeebea74eaadd408c5d64b506acf65,
+        type: 2}
+    - target: {fileID: 114402609441117762, guid: f1059d05820b2d84eb374787bf29e25e,
+        type: 2}
+      propertyPath: startCursor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224850200926476498, guid: f1059d05820b2d84eb374787bf29e25e,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1.2510389
+      objectReference: {fileID: 0}
+    - target: {fileID: 224850200926476498, guid: f1059d05820b2d84eb374787bf29e25e,
+        type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1.2510388
+      objectReference: {fileID: 0}
+    - target: {fileID: 224850200926476498, guid: f1059d05820b2d84eb374787bf29e25e,
+        type: 2}
+      propertyPath: m_LocalScale.z
+      value: 1.2510388
+      objectReference: {fileID: 0}
+    - target: {fileID: 224850200926476498, guid: f1059d05820b2d84eb374787bf29e25e,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 224850200926476498, guid: f1059d05820b2d84eb374787bf29e25e,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 12.964
+      objectReference: {fileID: 0}
+    - target: {fileID: 114402609441117762, guid: f1059d05820b2d84eb374787bf29e25e,
+        type: 2}
+      propertyPath: hasBgm
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f1059d05820b2d84eb374787bf29e25e, type: 2}
   m_IsPrefabAsset: 0

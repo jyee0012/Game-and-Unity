@@ -70,7 +70,7 @@ Transform:
   m_GameObject: {fileID: 1274246004542118}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.16882, y: 0.16882, z: 0.16882}
+  m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
   m_Children:
   - {fileID: 4075870403533750}
   m_Father: {fileID: 0}
@@ -187,8 +187,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bTest: 0
+  bDestroyInstant: 1
+  boomSound: {fileID: 0}
+  explosionEffect: {fileID: 0}
   bCanExplode: 0
   explodeRadius: 2
+  explodeDmg: 5
   ignoreObj: {fileID: 0}
 --- !u!135 &135374872748559898
 SphereCollider:

@@ -21,10 +21,15 @@ public class ShootingScript : MonoBehaviour {
     Text ammoText, weaponText;
     [SerializeField]
     string weaponName;
+    [SerializeField]
+    AudioSource fireSound, explodeSound;
+    [SerializeField]
+    ParticleSystem fireParticle, explodeParticle;
 
     bool bHasProjectile = false, bShotL = false;
     float lastShot = 0, ammo = 0;
-    
+
+    public bool canFire = true;
     #region Start
     // Use this for initialization
     void Start () {
@@ -34,14 +39,18 @@ public class ShootingScript : MonoBehaviour {
         if (useAmmo) ammo = maxAmmo;
         PrintAmmoText();
         PrintWeaponText();
+        SetExplodeParticles();
         //projectileArray = new GameObject[projectileAmount];
     }
     #endregion
     #region Update
     // Update is called once per frame
     void Update () {
-        Fire();
 	}
+    private void FixedUpdate()
+    {
+        Fire();
+    }
     #endregion
     #region Shoot
     bool Shoot(Transform fireLocation, string fireDirectionS = "up")
@@ -83,6 +92,7 @@ public class ShootingScript : MonoBehaviour {
         {
             bombProj.bCanExplode = true;
             bombProj.explodeRadius = projectileExplodeRadius;
+            if (explodeSound != null) bombProj.boomSound = explodeSound;
         }
         projectileRBody.useGravity = projectileGravity;
         projectileRBody.AddForce(fireDirection * projectileForce);
@@ -111,7 +121,7 @@ public class ShootingScript : MonoBehaviour {
     void Fire()
     {
         //Debug.Log(Time.time + " - " + lastShot + " = " + (Time.time - lastShot));
-        if (Input.GetKey(fireKey) && Time.time - lastShot > timeBetweenShot)
+        if (Input.GetKey(fireKey) && Time.time - lastShot > timeBetweenShot && canFire)
         {
             if (alternateFire) AlternateShoot();
             else if (individualFire) ShootIndividual();
@@ -122,6 +132,8 @@ public class ShootingScript : MonoBehaviour {
                     Shoot(fireLocationR.transform);
                     ammo--;
                     PrintAmmoText();
+                    PlayFireAudio();
+                    PlayFireParticle();
                 }
             }
             else Shoot(fireLocationR.transform);
@@ -204,4 +216,25 @@ public class ShootingScript : MonoBehaviour {
         }
     }
     #endregion
+    #region Audio
+    void PlayFireAudio()
+    {
+        if (fireSound == null) return;
+        fireSound.loop = false;
+        fireSound.Play();
+    }
+    #endregion
+    #region Particles
+    void PlayFireParticle()
+    {
+        if (fireParticle == null) return;
+        fireParticle.Play();
+    }
+    void SetExplodeParticles()
+    {
+        if (explodeParticle == null) return;
+        projectilePrefab.GetComponent<BombProjectile>().explosionEffect = explodeParticle;
+    }
+    #endregion
 }
+

@@ -23,16 +23,21 @@ public class MenuScript : MonoBehaviour
     [SerializeField]
     Dropdown bgmDropDown;
     bool bgmOn = false;
-    public bool useTimeScale = true, startBgmOn = true;
+    public bool useTimeScale = true, startBgmOn = true, hasBgm = true, startCursor = false;
+
     // Use this for initialization
     void Start()
     {
         if (optionsMenu != null) optionsMenu.SetActive(false);
         if (pauseMenu != null) pauseMenu.SetActive(false);
-        ToggleBGM();
-        if (!startBgmOn)
+        SetCursor(startCursor);
+        if (hasBgm)
         {
             ToggleBGM();
+            if (!startBgmOn)
+            {
+                ToggleBGM();
+            }
         }
     }
 
@@ -60,12 +65,14 @@ public class MenuScript : MonoBehaviour
     }
     public void OpenPauseMenu()
     {
+        SetCursor(true);
         pauseMenu.SetActive(true);
         PauseEverything(true);
     }
     public void ClosePauseMenu()
     {
         PauseEverything(false);
+        SetCursor(false);
         pauseMenu.SetActive(false);
         CloseOptions();
     }
@@ -89,25 +96,33 @@ public class MenuScript : MonoBehaviour
         optionsMenu.SetActive(false);
     }
     #endregion
-
+    #region Game Control
     public void PlayGame()
     {
+        PauseEverything(false);
         SceneManager.LoadScene(1);
         CloseStartMenu();
         CloseOptions();
     }
     public void CustomLoadScene(int sceneIndex)
     {
+        PauseEverything(false);
         SceneManager.LoadScene(sceneIndex);
     }
+    public void CloseGame()
+    {
+        Application.Quit();
+    }
+    #endregion
+    #region Text
     public void UpdateMusicSound()
     {
         UpdateText(musicText, musicSlider, "Music");
         UpdateText(soundText, soundSlider, "Sound");
         UpdateText(masterText, masterSlider, "Master");
-        mixer.SetFloat("Music", musicSlider.value - 80);
-        mixer.SetFloat("Sound", soundSlider.value - 80);
-        mixer.SetFloat("Master", masterSlider.value - 80);
+        mixer.SetFloat("MusicVolume", musicSlider.value - 80);
+        mixer.SetFloat("SoundVolume", soundSlider.value - 80);
+        mixer.SetFloat("MasterVolume", masterSlider.value - 80);
 
         Debug.Log(mixer.name);
     }
@@ -119,20 +134,20 @@ public class MenuScript : MonoBehaviour
     {
         return musicText.isActiveAndEnabled && musicSlider.isActiveAndEnabled && soundSlider.isActiveAndEnabled && soundText.isActiveAndEnabled;
     }
-    public void CloseGame()
-    {
-        Application.Quit();
-    }
+    #endregion
+    #region Pause
     public void PauseEverything(bool pause)
     { 
         if (!pauseMenu.activeInHierarchy && pauseMenu != null) return;
         if (useTimeScale)
         {
             //Debug.Log(Time.timeScale + ":" + Time.fixedDeltaTime);
-            Time.timeScale = (pause) ? 0.0001f : 1;
-            Time.fixedDeltaTime = (pause) ? 0.0001f : 0.02f;
+            Time.timeScale = (pause) ? 0 : 1;
+            Time.fixedDeltaTime = (pause) ? 0 : 0.02f;
         }
     }
+    #endregion
+    #region BGM
     public void SetBGM()
     {
         int bgmIndex = bgmDropDown.value;
@@ -159,4 +174,20 @@ public class MenuScript : MonoBehaviour
             }
         }
     }
+    #endregion
+    #region Cursor
+    public void SetCursor(bool cursorOn = true)
+    {
+        if (cursorOn)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+    #endregion
 }

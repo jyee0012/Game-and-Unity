@@ -16,7 +16,10 @@ public class PickupItem : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Projectile") return;
-        collision.gameObject.GetComponent<ShootingScript>().Reload();
+        foreach (ShootingScript script in collision.gameObject.GetComponents<ShootingScript>())
+        {
+            script.Reload();
+        }
         Destroy(this.gameObject);
     }
 }
