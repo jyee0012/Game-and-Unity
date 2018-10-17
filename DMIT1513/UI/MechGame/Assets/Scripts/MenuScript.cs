@@ -23,7 +23,9 @@ public class MenuScript : MonoBehaviour
     [SerializeField]
     Dropdown bgmDropDown;
     bool bgmOn = false;
-    public bool useTimeScale = true, startBgmOn = true, hasBgm = true, startCursor = false;
+    public bool useTimeScale = true, startBgmOn = true, hasBgm = true, startCursor = false, useDefaultSound = false, useGlobalVolume = false, useMixerSettings = true;
+    [SerializeField]
+    float masterVolume = 80, musicVolume = 80, soundVolume = 80;
 
     // Use this for initialization
     void Start()
@@ -31,6 +33,8 @@ public class MenuScript : MonoBehaviour
         if (optionsMenu != null) optionsMenu.SetActive(false);
         if (pauseMenu != null) pauseMenu.SetActive(false);
         SetCursor(startCursor);
+        if (useMixerSettings) GetMixerVolume();
+        if (useDefaultSound) SetVolumeSettings(masterVolume, musicVolume, soundVolume, useGlobalVolume);
         if (hasBgm)
         {
             ToggleBGM();
@@ -148,6 +152,31 @@ public class MenuScript : MonoBehaviour
     }
     #endregion
     #region BGM
+    public void GetMixerVolume()
+    {
+        float masterValue, musicValue, soundValue;
+        mixer.GetFloat("MasterVolume", out masterValue);
+        mixer.GetFloat("MusicVolume", out musicValue);
+        mixer.GetFloat("SoundVolume", out soundValue);
+        masterSlider.value = masterValue;
+        musicSlider.value = musicValue;
+        soundSlider.value = soundValue;
+    }
+    public void SetVolumeSettings(float master = 80, float music = 80, float sound = 80, bool useGlobal = true)
+    {
+        float useVolume = 0;
+        if (useGlobal)
+        {
+            useVolume = master;
+            masterSlider.value = useVolume;
+        }
+        else
+        {
+            masterSlider.value = master;
+            musicSlider.value = music;
+            soundSlider.value = sound;
+        }
+    }
     public void SetBGM()
     {
         int bgmIndex = bgmDropDown.value;
@@ -157,6 +186,8 @@ public class MenuScript : MonoBehaviour
         }
         bgmArray[bgmIndex].Play();
         bgmArray[bgmIndex].Pause();
+
+        if (bgmOn) bgmArray[bgmIndex].Play();
     }
     public void ToggleBGM()
     {
@@ -190,4 +221,5 @@ public class MenuScript : MonoBehaviour
         }
     }
     #endregion
+
 }

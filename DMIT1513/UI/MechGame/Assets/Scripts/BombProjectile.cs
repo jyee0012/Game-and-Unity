@@ -62,7 +62,7 @@ public class BombProjectile : MonoBehaviour
     }
     private void OnDestroy()
     {
-        Explode();
+        //Explode();
     }
     private void OnDrawGizmos()
     {
