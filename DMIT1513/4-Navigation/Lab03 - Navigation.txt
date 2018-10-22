@@ -1,0 +1,83 @@
+Marking Guide
+
+For each element you will receive one mark if your build works occasionally and a second mark if it work consistently. Marks will be deducted for any bugs found. 0.5% for any bugs that affect gameplay. 1% for any bugs that block the ability to complete the objective. 
+
+Requirements
+
+- Create an area that has a navmesh built for navigation.
+
+- Crate at least three types of friendly units that will be controlled by the player.
+
+- Friendly units move by selecting the unit and then selecting the location for it to move on the navmesh.
+
+- There should needs to be a visual cue that the unit is currently selected.
+
+- Friendly units attack by selecting the unit and then selecting the enemy unit to target.
+
+- When a friendly unit is moving toward a target it should stop some distance from the target.
+
+- When a friendly unit is within attack range it should "fire" at the target.
+
+- Add a simple particle system for the attack. (ex. muzzle flash)
+
+- Add a sound for the attack.
+
+- Create at least one type of enemy unit for the player to attack.
+
+- When the enemy is hit reduce its health.
+
+- When the enemy unit's health is at zero then destroy/deactivate the unit.
+
+- Add a simple particle system for the hit. (ex. sparks, small explosion)
+
+- Add a sound for the hit.
+
+- Add a simple particle system for the destruction of the unit. (ex. large explosion, debris)
+
+- Add a sound for the destruction.
+
+- The player should be able to move the camera up, down, left, and right.
+
+- Include a game screen with Play, Options, and Exit buttons. Make sure there is some level of polish to the menus such as a different font, color scheme, and appropriate background images.
+
+- The Options screen should allow the player to set music volume and view the controls for the game.
+
+- Include a Pause menu with Continue, Options, and Quit buttons.
+
+- When an Enemy unit is attacked it should target the attacker and fight back.
+
+- Create an objective that ends the game when the player wins/loses.
+
+- Add the ability to select multiple Friendly units when holding the control key.
+
+- When a Friendly or Enemy unit is selected show how much health it has.
+
+- When a Friendly unit is selected that is moving to a location give some indication as to where the destination is.
+
+
+
+Extras
+
+- Add some type of group select such as box or marquee select.
+
+- Add Enemy units that patrol waypoints.
+
+- Have Enemy units attack any Friendly units that get within range.
+
+- Have a Friendly unit that can shoot in a different direction than it is moving.
+
+- Have some sort of ammo/health pickup for the Friendly units.
+
+- Allow the Enemy units to go after the pickups if needed.
+
+- Add an Enemy unit that seek out the Friendly units.
+
+- Add formations for groups that are moving to the same location.
+
+- Add the ability for the player to put units into groups that can be selected with a key. (Ex. F1, F2)
+
+- Add a mini map in the bottom left corner of the screen that shows the entire area.
+
+
+
+Total Marks 60

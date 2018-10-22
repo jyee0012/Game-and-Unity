@@ -1,0 +1,12 @@
+1-Jump infinitely
+2-projectile bounces off body
+3-rotate body in pause
+4-audio isnt suppose to start at 0
+5-audio settings isnt transfered between scenes
+6-can change camera in pause
+7-can look 360 vertically
+8-cannot damage self
+9-sounds can play even when set to 0 before opening menu
+10-Destroys upon destroy
+11-spawn immortal explosions
+12-

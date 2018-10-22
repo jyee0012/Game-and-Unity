@@ -11,7 +11,7 @@ public class BombProjectile : MonoBehaviour
 
     public bool bCanExplode = false;
     public float explodeRadius = 2, explodeDmg = 5;
-    public GameObject ignoreObj;
+    public GameObject ignoreObj, spawnOther;
     // Use this for initialization
     void Start()
     {
@@ -63,6 +63,9 @@ public class BombProjectile : MonoBehaviour
     private void OnDestroy()
     {
         //Explode();
+        if (spawnOther == null) return;
+        GameObject thing = Instantiate(spawnOther, transform.position, Quaternion.identity);
+        Destroy(thing, 3);
     }
     private void OnDrawGizmos()
     {

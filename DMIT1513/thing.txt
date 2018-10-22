@@ -1,6 +1,0 @@
-Each student will create a seperate scene
--Unique tool/weapon
--Use Unique tool/weapon to complete objective
--Upon completing objective, load next scene
-Required
--Opening Game Scene, Play button, completion Scene

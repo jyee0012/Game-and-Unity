@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\AudioScript.cs" />
+     <Compile Include="Assets\Scripts\BlackHoleScript.cs" />
      <Compile Include="Assets\Scripts\BombProjectile.cs" />
      <Compile Include="Assets\Scripts\HealthScript.cs" />
      <Compile Include="Assets\Scripts\MenuScript.cs" />
@@ -67,16 +68,16 @@
      <Compile Include="Assets\Scripts\ShootingScript.cs" />
      <Compile Include="Assets\Scripts\ZoomScript.cs" />
  <Reference Include="UnityEditor.StandardEvents">
- <HintPath>C:/Users/jyee12/Documents/GitHub/Game-and-Unity/DMIT1513/UI/MechGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
+ <HintPath>C:/Users/jyee12/Documents/GitHub/Game-and-Unity/DMIT1513/3-UI/MechGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
- <HintPath>C:/Users/jyee12/Documents/GitHub/Game-and-Unity/DMIT1513/UI/MechGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+ <HintPath>C:/Users/jyee12/Documents/GitHub/Game-and-Unity/DMIT1513/3-UI/MechGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.PackageManagerUI.Editor">
- <HintPath>C:/Users/jyee12/Documents/GitHub/Game-and-Unity/DMIT1513/UI/MechGame/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
+ <HintPath>C:/Users/jyee12/Documents/GitHub/Game-and-Unity/DMIT1513/3-UI/MechGame/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
- <HintPath>C:/Users/jyee12/Documents/GitHub/Game-and-Unity/DMIT1513/UI/MechGame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+ <HintPath>C:/Users/jyee12/Documents/GitHub/Game-and-Unity/DMIT1513/3-UI/MechGame/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.AIModule">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
