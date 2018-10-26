@@ -5,13 +5,13 @@ For each element you will receive one mark if your build works occasionally and 
 Requirements
 
 - Create an area that has a navmesh built for navigation.
-
+(Done)
 - Crate at least three types of friendly units that will be controlled by the player.
 
 - Friendly units move by selecting the unit and then selecting the location for it to move on the navmesh.
-
+(Done)
 - There should needs to be a visual cue that the unit is currently selected.
-
+(Done)
 - Friendly units attack by selecting the unit and then selecting the enemy unit to target.
 
 - When a friendly unit is moving toward a target it should stop some distance from the target.
@@ -23,7 +23,7 @@ Requirements
 - Add a sound for the attack.
 
 - Create at least one type of enemy unit for the player to attack.
-
+(Done)
 - When the enemy is hit reduce its health.
 
 - When the enemy unit's health is at zero then destroy/deactivate the unit.
