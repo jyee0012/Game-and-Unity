@@ -6,13 +6,23 @@ using UnityEngine.AI;
 public class MoveCharacter : MonoBehaviour
 {
     [SerializeField]
-    GameObject selectedUnit, selectedIndicator, movementIndicator, mainCam;
+    GameObject selectedUnit, targetUnit, selectedIndicator, movementIndicator, mainCam;
     RaycastHit hit;
     [SerializeField]
     int waypointDist = 10;
+    [SerializeField]
+    bool canMoveCamera = true, cameraHasBoundary = false;
+    [SerializeField]
+    float movementSpeed = 20, rotationSpeed = 20;
+
+    Vector3 cameraStartPos;
+    Quaternion cameraStartRot;
+    float vInput, hInput, rxInput, ryInput;
 
     void Start()
     {
+        cameraStartPos = transform.position;
+        cameraStartRot = transform.rotation;
         if (mainCam == null) mainCam = GameObject.Find("Main Camera");
     }
 
@@ -20,6 +30,9 @@ public class MoveCharacter : MonoBehaviour
     void Update()
     {
         PlaceIndicators();
+        SelectUnit();
+        DeselectUnit();
+        CameraControls(canMoveCamera);
     }
     #region Placed Indicators
     void PlaceIndicators()
@@ -42,6 +55,13 @@ public class MoveCharacter : MonoBehaviour
                 movementIndicator.transform.position = hitPointMarker;
             }
             #endregion
+            #region Playable Unit Script
+            if (GetComponent<PlayableUnits>() != null)
+            {
+                GetComponent<PlayableUnits>().isSelected = true;
+            }
+            #endregion
+
         }
     }
     #endregion
@@ -65,11 +85,42 @@ public class MoveCharacter : MonoBehaviour
                 {
                     selectedUnit = hit.transform.gameObject;
                 }
+                else if (selectedUnit != null && hit.transform.tag == "EnemyUnit")
+                {
+                    //Debug.Log(hit.transform.gameObject.name);
+                    targetUnit = hit.transform.gameObject;
+                    selectedUnit.GetComponent<PlayableUnits>().target = hit.transform.gameObject;
+                }
                 else if (selectedUnit != null)
                 {
                     selectedUnit.GetComponent<NavMeshAgent>().SetDestination(hit.point);
                 }
             }
+        }
+    }
+    void CameraControls(bool canMove = true)
+    {
+        if (!canMove) return;
+
+        Cursor.lockState = CursorLockMode.Confined;
+
+        vInput = Input.GetAxis("Vertical");
+        hInput = Input.GetAxis("Horizontal");
+        rxInput = Input.GetAxis("Mouse X");
+        ryInput = Input.GetAxis("Mouse Y");
+        Vector3 newPos = new Vector3(hInput * Time.deltaTime * movementSpeed, vInput * Time.deltaTime * movementSpeed, 0);
+        transform.Translate(newPos);
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            transform.Translate(new Vector3(0,0,ryInput * Time.deltaTime * movementSpeed));
+            //transform.Rotate(Vector3.up, rxInput * Time.deltaTime * rotationSpeed);
+            //transform.Rotate(Vector3.left, ryInput * Time.deltaTime * rotationSpeed);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            transform.position = cameraStartPos;
+            transform.rotation = cameraStartRot;
         }
     }
 }

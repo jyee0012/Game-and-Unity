@@ -60,6 +60,14 @@ public class BombProjectile : MonoBehaviour
         //Debug.Log(collision.gameObject.name);
         TrueDestroy();
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject == ignoreObj) return;
+        Explode();
+        if (!bCanExplode) HitTarget(other.transform);
+        //Debug.Log(collision.gameObject.name);
+        TrueDestroy();
+    }
     private void OnDestroy()
     {
         //Explode();

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ShootingScript : MonoBehaviour {
+
     #region Variables
     [SerializeField]
     GameObject projectilePrefab = null, fireLocationL = null, fireLocationR = null;
@@ -31,6 +32,7 @@ public class ShootingScript : MonoBehaviour {
 
     public bool canFire = true, isAI = false;
     #endregion
+
     #region Start
     // Use this for initialization
     void Start () {

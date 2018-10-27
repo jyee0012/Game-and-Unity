@@ -13,11 +13,11 @@ Requirements
 - There should needs to be a visual cue that the unit is currently selected.
 (Done)
 - Friendly units attack by selecting the unit and then selecting the enemy unit to target.
-
+(Done)
 - When a friendly unit is moving toward a target it should stop some distance from the target.
-
+(Done)
 - When a friendly unit is within attack range it should "fire" at the target.
-
+(Done)
 - Add a simple particle system for the attack. (ex. muzzle flash)
 
 - Add a sound for the attack.
@@ -37,7 +37,7 @@ Requirements
 - Add a sound for the destruction.
 
 - The player should be able to move the camera up, down, left, and right.
-
+(Done)
 - Include a game screen with Play, Options, and Exit buttons. Make sure there is some level of polish to the menus such as a different font, color scheme, and appropriate background images.
 
 - The Options screen should allow the player to set music volume and view the controls for the game.
@@ -53,7 +53,7 @@ Requirements
 - When a Friendly or Enemy unit is selected show how much health it has.
 
 - When a Friendly unit is selected that is moving to a location give some indication as to where the destination is.
-
+(Done)
 
 
 Extras
@@ -78,6 +78,6 @@ Extras
 
 - Add a mini map in the bottom left corner of the screen that shows the entire area.
 
-
+10/35
 
 Total Marks 60
