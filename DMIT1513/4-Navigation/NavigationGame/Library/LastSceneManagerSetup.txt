@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/SampleScene.unity
+- path: C:/Users/shark_000/Documents/GitHub/Game-and-Unity/DMIT1513/3-UI/MechGame/Assets/Scenes/MechScene.unity
   isLoaded: 1
   isActive: 1
