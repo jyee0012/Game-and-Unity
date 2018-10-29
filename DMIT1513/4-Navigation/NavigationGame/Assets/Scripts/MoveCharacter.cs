@@ -24,6 +24,8 @@ public class MoveCharacter : MonoBehaviour
         cameraStartPos = transform.position;
         cameraStartRot = transform.rotation;
         if (mainCam == null) mainCam = GameObject.Find("Main Camera");
+        selectedIndicator.SetActive(false);
+        movementIndicator.SetActive(false);
     }
 
     // Update is called once per frame
@@ -37,8 +39,12 @@ public class MoveCharacter : MonoBehaviour
     #region Placed Indicators
     void PlaceIndicators()
     {
+
         if (selectedUnit != null)
         {
+            if (!selectedIndicator.activeInHierarchy) selectedIndicator.SetActive(true);
+            if (!movementIndicator.activeInHierarchy) movementIndicator.SetActive(true);
+
             #region Selected Unit
             if (selectedIndicator != null)
             {

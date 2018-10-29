@@ -3,28 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthScript : MonoBehaviour {
+public class HealthScript : MonoBehaviour
+{
 
     public float health = 100, maxHealth = 100;
     public bool canDestory = false, useSliderHp = false, bTestDmg = false;
     [SerializeField]
     Slider healthDisplay;
     [SerializeField]
-    GameObject greenHealth, redHealth, lookAtTarget;
-	// Use this for initialization
-	void Start () {
+    GameObject greenHealth, redHealth, lookAtTarget, lookAtFrom = null;
+    // Use this for initialization
+    void Start()
+    {
         health = maxHealth;
         UpdateHealth();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (bTestDmg && Input.GetKey(KeyCode.T))
         {
             Damage();
         }
-        if (lookAtTarget != null) HealthLookAt(lookAtTarget.transform);
-	}
+        if (lookAtTarget != null)
+        {
+            if (lookAtFrom != null)
+            {
+                HealthLookAt(lookAtTarget.transform, lookAtFrom.transform);
+            }
+            else
+            {
+                HealthLookAt(lookAtTarget.transform);
+            }
+        }
+    }
     public void Damage(float dmg = 1, bool useUI = true)
     {
         health -= dmg;
@@ -70,14 +83,22 @@ public class HealthScript : MonoBehaviour {
         }
         else
         {
-            if (greenHealth == null || redHealth == null) return; 
+            if (greenHealth == null || redHealth == null) return;
         }
         UpdateHealth();
     }
-    void HealthLookAt(Transform target)
+    void HealthLookAt(Transform target, Transform lookAtFrom = null)
     {
         if (greenHealth == null || redHealth == null) return;
-        greenHealth.transform.parent.parent.LookAt(target);
-        //redHealth.transform.LookAt(target);
+
+        if (lookAtFrom != null)
+        {
+            lookAtFrom.LookAt(target);
+        }
+        else
+        {
+            greenHealth.transform.parent.parent.LookAt(target);
+            //redHealth.transform.LookAt(target);
+        }
     }
 }
