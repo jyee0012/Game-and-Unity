@@ -12,11 +12,18 @@ public class HealthScript : MonoBehaviour
     Slider healthDisplay;
     [SerializeField]
     GameObject greenHealth, redHealth, lookAtTarget, lookAtFrom = null;
+    [SerializeField]
+    bool lockPos = false, lookAt = false;
+
+    Quaternion startRot;
+    Vector3 startPos;
     // Use this for initialization
     void Start()
     {
         health = maxHealth;
         UpdateHealth();
+        startRot = greenHealth.transform.parent.parent.rotation;
+        startPos = greenHealth.transform.parent.parent.localPosition;
     }
 
     // Update is called once per frame
@@ -26,7 +33,7 @@ public class HealthScript : MonoBehaviour
         {
             Damage();
         }
-        if (lookAtTarget != null)
+        if (lookAtTarget != null && lookAt)
         {
             if (lookAtFrom != null)
             {
@@ -36,6 +43,11 @@ public class HealthScript : MonoBehaviour
             {
                 HealthLookAt(lookAtTarget.transform);
             }
+        }
+        if (lockPos)
+        {
+            greenHealth.transform.parent.parent.rotation = startRot;
+            greenHealth.transform.parent.parent.localPosition = startPos;
         }
     }
     public void Damage(float dmg = 1, bool useUI = true)
