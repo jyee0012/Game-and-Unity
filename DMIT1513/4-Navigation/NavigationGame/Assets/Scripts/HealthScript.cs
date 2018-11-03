@@ -7,23 +7,27 @@ public class HealthScript : MonoBehaviour
 {
 
     public float health = 100, maxHealth = 100;
-    public bool canDestory = false, useSliderHp = false, bTestDmg = false;
+    public bool canDestory = false, canDeactivate = false, useSliderHp = false, bTestDmg = false;
     [SerializeField]
     Slider healthDisplay;
     [SerializeField]
     GameObject greenHealth, redHealth, lookAtTarget, lookAtFrom = null;
     [SerializeField]
-    bool lockPos = false, lookAt = false;
+    bool lockPos = false, lockRot = false, lookAt = false;
+    [SerializeField]
+    float healthbarOffset = 3;
+    [SerializeField]
+    ParticleSystem deathParticle;
+    [SerializeField]
+    AudioSource deathSound;
 
     Quaternion startRot;
-    Vector3 startPos;
     // Use this for initialization
     void Start()
     {
         health = maxHealth;
         UpdateHealth();
         startRot = greenHealth.transform.parent.parent.rotation;
-        startPos = greenHealth.transform.parent.parent.localPosition;
     }
 
     // Update is called once per frame
@@ -44,33 +48,53 @@ public class HealthScript : MonoBehaviour
                 HealthLookAt(lookAtTarget.transform);
             }
         }
-        if (lockPos)
-        {
-            greenHealth.transform.parent.parent.rotation = startRot;
-            greenHealth.transform.parent.parent.localPosition = startPos;
-        }
+        HealthbarLock();
     }
+    #region Change Health
     public void Damage(float dmg = 1, bool useUI = true)
     {
         health -= dmg;
         if (health < 0) health = 0;
-        if (canDestory && health <= 0)
+        if (health <= 0)
+        {
+            Die();
+        }
+        UpdateHealth();
+    }
+    void Die()
+    {
+        if (deathParticle != null)
+        {
+            ParticleSystem dieParticle = Instantiate(deathParticle, transform.position, transform.rotation, null);
+            dieParticle.Play();
+            Destroy(dieParticle, 3f);
+        }
+        if (deathSound != null)
+        {
+            AudioSource dieSound = Instantiate(deathSound, transform.position, transform.rotation, null);
+            dieSound.Play();
+            Destroy(dieSound, 3f);
+        }
+
+        if (canDestory)
         {
             if (healthDisplay != null) Destroy(healthDisplay);
             Destroy(gameObject);
         }
-        UpdateHealth(useUI);
-    }
-    void UpdateHealth(bool useUI = true)
-    {
-        if (useUI)
+        if (canDeactivate)
         {
-            if (healthDisplay == null) return;
+            if (healthDisplay != null) healthDisplay.gameObject.SetActive(false);
+            gameObject.SetActive(false);
+        }
+    }
+    void UpdateHealth()
+    {
+        if (healthDisplay != null)
+        {
             healthDisplay.value = health;
         }
-        else
+        if (greenHealth != null || redHealth != null)
         {
-            if (greenHealth == null || redHealth == null) return;
             Vector3 greenPos = greenHealth.transform.localPosition, greenScale = greenHealth.transform.localScale;
             greenScale.x = health / 100;
             greenPos.x = ((1 - greenScale.x) / 2) * -1;
@@ -78,11 +102,17 @@ public class HealthScript : MonoBehaviour
             greenHealth.transform.localPosition = greenPos;
         }
     }
-    public void SetHealth(float newHealth)
+    void SetHealth(float newHealth)
     {
         health = newHealth;
         if (health < 0) health = 0;
         if (health > maxHealth) health = maxHealth;
+        UpdateHealth();
+    }
+    public void AddHealth(float moreHealth = 1, bool useUI = true)
+    {
+        health += moreHealth;
+        if (health < maxHealth) health = maxHealth;
         UpdateHealth();
     }
     public void DefaultHealth()
@@ -99,6 +129,11 @@ public class HealthScript : MonoBehaviour
         }
         UpdateHealth();
     }
+    public void FullHeal()
+    {
+        SetHealth(maxHealth);
+    }
+    #endregion
     void HealthLookAt(Transform target, Transform lookAtFrom = null)
     {
         if (greenHealth == null || redHealth == null) return;
@@ -111,6 +146,20 @@ public class HealthScript : MonoBehaviour
         {
             greenHealth.transform.parent.parent.LookAt(target);
             //redHealth.transform.LookAt(target);
+        }
+    }
+    void HealthbarLock()
+    {
+        if (lockPos)
+        {
+            Vector3 lockPos = greenHealth.transform.root.position;
+            lockPos.z += healthbarOffset;
+            greenHealth.transform.parent.parent.position = lockPos;
+        }
+        if (lockRot)
+        {
+            startRot.w = greenHealth.transform.parent.parent.rotation.w;
+            greenHealth.transform.parent.parent.rotation = startRot;
         }
     }
 }

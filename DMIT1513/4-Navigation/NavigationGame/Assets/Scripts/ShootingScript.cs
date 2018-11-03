@@ -11,7 +11,7 @@ public class ShootingScript : MonoBehaviour {
     [SerializeField]
     KeyCode fireKey = KeyCode.Mouse0; 
     [SerializeField]
-    bool projectileGravity = true, projecileCanExplode = false, alternateFire = false, individualFire = false, useAmmo = false;
+    bool projectileGravity = true, projecileCanExplode = false, alternateFire = false, individualFire = false, useAmmo = false, passOwner = false;
     [SerializeField]
     float projectileExplodeRadius, projectileForce = 100, timeBetweenShot = 0.5f;
     [SerializeField]
@@ -29,6 +29,7 @@ public class ShootingScript : MonoBehaviour {
 
     bool bHasProjectile = false, bShotL = false;
     float lastShot = 0, ammo = 0;
+    GameObject shootOwner = null;
 
     public bool canFire = true, isAI = false;
     #endregion
@@ -43,6 +44,7 @@ public class ShootingScript : MonoBehaviour {
         PrintAmmoText();
         PrintWeaponText();
         SetExplodeParticles();
+        if (shootOwner == null) shootOwner = gameObject;
         //projectileArray = new GameObject[projectileAmount];
     }
     #endregion
@@ -93,7 +95,8 @@ public class ShootingScript : MonoBehaviour {
         //Debug.Log("Spawned");
         Rigidbody projectileRBody = projectile.GetComponent<Rigidbody>();
         BombProjectile bombProj = projectile.GetComponent<BombProjectile>();
-        bombProj.ignoreObj = this.gameObject;
+        bombProj.ignoreObj = gameObject.transform.root.gameObject;
+        if (shootOwner != null && passOwner) bombProj.bombOwner = shootOwner;
         if (projecileCanExplode)
         {
             bombProj.bCanExplode = true;
@@ -138,11 +141,12 @@ public class ShootingScript : MonoBehaviour {
                     Shoot(fireLocationR.transform);
                     ammo--;
                     PrintAmmoText();
-                    PlayFireAudio();
-                    PlayFireParticle();
                 }
             }
             else Shoot(fireLocationR.transform);
+
+            PlayFireAudio();
+            PlayFireParticle();
         }
     }
     public void AIFire()
@@ -158,11 +162,11 @@ public class ShootingScript : MonoBehaviour {
                     Shoot(fireLocationR.transform);
                     ammo--;
                     PrintAmmoText();
-                    PlayFireAudio();
-                    PlayFireParticle();
                 }
             }
             else Shoot(fireLocationR.transform);
+            PlayFireAudio();
+            PlayFireParticle();
         }
     }
     #endregion

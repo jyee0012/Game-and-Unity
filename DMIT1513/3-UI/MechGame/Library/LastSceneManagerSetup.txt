@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/MechScene.unity
+- path: C:/Users/shark_000/Documents/GitHub/Game-and-Unity/DMIT1513/4-Navigation/NavigationGame/Assets/Scenes/SampleScene.unity
   isLoaded: 1
   isActive: 1

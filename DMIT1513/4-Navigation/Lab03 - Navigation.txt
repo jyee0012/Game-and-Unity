@@ -7,7 +7,7 @@ Requirements
 - Create an area that has a navmesh built for navigation.
 (Done)
 - Crate at least three types of friendly units that will be controlled by the player.
-
+(Done)
 - Friendly units move by selecting the unit and then selecting the location for it to move on the navmesh.
 (Done)
 - There should needs to be a visual cue that the unit is currently selected.
@@ -19,39 +19,39 @@ Requirements
 - When a friendly unit is within attack range it should "fire" at the target.
 (Done)
 - Add a simple particle system for the attack. (ex. muzzle flash)
-
+(Done)
 - Add a sound for the attack.
-
+(Done)
 - Create at least one type of enemy unit for the player to attack.
 (Done)
 - When the enemy is hit reduce its health.
-
+(Done)
 - When the enemy unit's health is at zero then destroy/deactivate the unit.
-
+(Done)
 - Add a simple particle system for the hit. (ex. sparks, small explosion)
-
+(Done)
 - Add a sound for the hit.
-
+(Done)
 - Add a simple particle system for the destruction of the unit. (ex. large explosion, debris)
-
+(Done)
 - Add a sound for the destruction.
-
+(Done)
 - The player should be able to move the camera up, down, left, and right.
 (Done)
 - Include a game screen with Play, Options, and Exit buttons. Make sure there is some level of polish to the menus such as a different font, color scheme, and appropriate background images.
-
+(Done) (Style it)
 - The Options screen should allow the player to set music volume and view the controls for the game.
-
+(Done)
 - Include a Pause menu with Continue, Options, and Quit buttons.
-
+(Done)
 - When an Enemy unit is attacked it should target the attacker and fight back.
-
+(Done)
 - Create an objective that ends the game when the player wins/loses.
-
+(Done)
 - Add the ability to select multiple Friendly units when holding the control key.
 
 - When a Friendly or Enemy unit is selected show how much health it has.
-
+(Done)
 - When a Friendly unit is selected that is moving to a location give some indication as to where the destination is.
 (Done)
 
@@ -61,23 +61,23 @@ Extras
 - Add some type of group select such as box or marquee select.
 
 - Add Enemy units that patrol waypoints.
-
+(Done)
 - Have Enemy units attack any Friendly units that get within range.
-
+(Done)
 - Have a Friendly unit that can shoot in a different direction than it is moving.
-
+(Done)
 - Have some sort of ammo/health pickup for the Friendly units.
-
+(Done)
 - Allow the Enemy units to go after the pickups if needed.
 
 - Add an Enemy unit that seek out the Friendly units.
-
+(Done)
 - Add formations for groups that are moving to the same location.
 
 - Add the ability for the player to put units into groups that can be selected with a key. (Ex. F1, F2)
 
 - Add a mini map in the bottom left corner of the screen that shows the entire area.
 
-10/35
+29.5/35 (25 required)
 
 Total Marks 60

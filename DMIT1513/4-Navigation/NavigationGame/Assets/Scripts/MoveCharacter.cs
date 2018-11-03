@@ -14,6 +14,8 @@ public class MoveCharacter : MonoBehaviour
     bool canMoveCamera = true, cameraHasBoundary = false;
     [SerializeField]
     float movementSpeed = 20, rotationSpeed = 20;
+    [SerializeField]
+    Vector2 minBoundary = Vector2.zero, maxBoundary = Vector2.zero;
 
     Vector3 cameraStartPos;
     Quaternion cameraStartRot;
@@ -31,10 +33,19 @@ public class MoveCharacter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (selectedUnit == null || !selectedUnit.activeInHierarchy)
+        {
+            selectedUnit = null;
+            selectedIndicator.SetActive(false);
+            movementIndicator.SetActive(false);
+        }
+    }
+    private void FixedUpdate()
+    {
         PlaceIndicators();
         SelectUnit();
         DeselectUnit();
-        CameraControls(canMoveCamera);
+        CameraControls(canMoveCamera, cameraHasBoundary);
     }
     #region Placed Indicators
     void PlaceIndicators()
@@ -56,7 +67,7 @@ public class MoveCharacter : MonoBehaviour
             #region Movement/Waypoint Indicator
             if (movementIndicator != null)
             {
-                Vector3 hitPointMarker = hit.point;
+                Vector3 hitPointMarker = selectedUnit.GetComponent<NavMeshAgent>().destination;
                 hitPointMarker.y += waypointDist;
                 movementIndicator.transform.position = hitPointMarker;
             }
@@ -75,6 +86,9 @@ public class MoveCharacter : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(1) && selectedUnit != null)
         {
+            selectedUnit.GetComponent<PlayableUnits>().isSelected = false;
+            selectedIndicator.SetActive(false);
+            movementIndicator.SetActive(false);
             selectedUnit = null;
         }
     }
@@ -90,6 +104,8 @@ public class MoveCharacter : MonoBehaviour
                 if (hit.transform.tag == "Moveable")
                 {
                     selectedUnit = hit.transform.gameObject;
+                    selectedUnit.GetComponent<PlayableUnits>().isSelected = true;
+                    selectedUnit.GetComponent<PlayableUnits>().WakeUp();
                 }
                 else if (selectedUnit != null && hit.transform.tag == "EnemyUnit")
                 {
@@ -104,7 +120,7 @@ public class MoveCharacter : MonoBehaviour
             }
         }
     }
-    void CameraControls(bool canMove = true)
+    void CameraControls(bool canMove = true, bool hasBoundaries = false)
     {
         if (!canMove) return;
 
@@ -116,6 +132,20 @@ public class MoveCharacter : MonoBehaviour
         ryInput = Input.GetAxis("Mouse Y");
         Vector3 newPos = new Vector3(hInput * Time.deltaTime * movementSpeed, vInput * Time.deltaTime * movementSpeed, 0);
         transform.Translate(newPos);
+
+        Vector3 boundedPos = transform.position;
+
+        if (transform.position.x > maxBoundary.x)
+            boundedPos.x = maxBoundary.x;
+        if (transform.position.x < minBoundary.x)
+            boundedPos.x = minBoundary.x;
+        if (transform.position.z > maxBoundary.y)
+            boundedPos.z = maxBoundary.y;
+        if (transform.position.z < minBoundary.y)
+            boundedPos.z = minBoundary.y;
+
+        transform.position = boundedPos;
+
 
         if (Input.GetKey(KeyCode.LeftShift))
         {

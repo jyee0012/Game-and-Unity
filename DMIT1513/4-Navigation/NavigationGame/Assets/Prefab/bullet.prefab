@@ -113,10 +113,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bTest: 0
-  bDestroyInstant: 1
+  bDestroyInstant: 0
   boomSound: {fileID: 0}
   explosionEffect: {fileID: 0}
-  bCanExplode: 0
+  bCanExplode: 1
   explodeRadius: 2
   explodeDmg: 5
   ignoreObj: {fileID: 0}

@@ -23,7 +23,7 @@ public class MenuScript : MonoBehaviour
     [SerializeField]
     Dropdown bgmDropDown;
     bool bgmOn = false;
-    public bool useTimeScale = true, startBgmOn = true, hasBgm = true, startCursor = false, useDefaultSound = false, useGlobalVolume = false, useMixerSettings = true;
+    public bool useTimeScale = true, startBgmOn = true, hasBgm = true, startCursor = false, useDefaultSound = false, useGlobalVolume = false, useMixerSettings = true, alwaysOnCursor = false;
     [SerializeField]
     float masterVolume = 80, musicVolume = 80, soundVolume = 80;
 
@@ -37,6 +37,7 @@ public class MenuScript : MonoBehaviour
         if (useDefaultSound) SetVolumeSettings(masterVolume, musicVolume, soundVolume, useGlobalVolume);
         if (hasBgm)
         {
+            bgmArray[0].Play();
             ToggleBGM();
             if (!startBgmOn)
             {
@@ -128,7 +129,7 @@ public class MenuScript : MonoBehaviour
         mixer.SetFloat("SoundVolume", soundSlider.value - 80);
         mixer.SetFloat("MasterVolume", masterSlider.value - 80);
 
-        Debug.Log(mixer.name);
+        //Debug.Log(mixer.name);
     }
     public void UpdateText(Text text, Slider slider, string title)
     {
@@ -142,7 +143,7 @@ public class MenuScript : MonoBehaviour
     #region Pause
     public void PauseEverything(bool pause)
     { 
-        if (!pauseMenu.activeInHierarchy && pauseMenu != null) return;
+        //if (!pauseMenu.activeInHierarchy && pauseMenu != null) return;
         if (useTimeScale)
         {
             //Debug.Log(Time.timeScale + ":" + Time.fixedDeltaTime);
@@ -209,7 +210,8 @@ public class MenuScript : MonoBehaviour
     #region Cursor
     public void SetCursor(bool cursorOn = true)
     {
-        if (cursorOn)
+
+        if (cursorOn || alwaysOnCursor)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;

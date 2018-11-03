@@ -3,92 +3,229 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayableUnits : MonoBehaviour {
+public class PlayableUnits : MonoBehaviour
+{
 
-    public GameObject target, shootingBase;
+    public enum UnitAI
+    {
+        Sleep, Attack, Wander, Move
+    }
+    public UnitAI aichan = UnitAI.Sleep;
+    public GameObject target, shootingBase, healthController;
     public bool isSelected = false;
+
     ShootingScript shootScript = null;
     NavMeshAgent navAgent;
+    HealthScript healthScript = null;
+
     [SerializeField]
-    float shootDist = 5, detectRad=5;
+    float shootDist = 5, detectRad = 5;
     [SerializeField]
     bool lockOnTarget = false, // once target != null, set destination to target and eliminate 
-        canInterrupt = false; // if shooting @ target, if true then can move and ignore target
+        canInterrupt = false, // if shooting @ target, if true then can move and ignore target
+        isEnemy = false,
+        hasPatrol = false,
+        drawDetect = true,
+        asleep = false;
+    [SerializeField]
+    Vector2[] patrolPoints;
+
 
     bool firstEncounter = true;
+    int currentPatrol = 0;
+    Vector3 currentPatrolPoint;
     // Use this for initialization
-    void Start () {
-		if (shootScript == null)
-        {
-            if (GetComponent<ShootingScript>() != null)
-            {
-                shootScript = GetComponent<ShootingScript>();
-            }
-        }
-        if (navAgent == null)
-        {
-            if (GetComponent<NavMeshAgent>() != null)
-            {
-                navAgent = GetComponent<NavMeshAgent>();
-            }
-        }
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    void Start()
     {
-        if (CheckTarget(target, "hasTarget"))
+        #region Variable Defaults
+        if (shootScript == null)
+            if (GetComponent<ShootingScript>() != null)
+                shootScript = GetComponent<ShootingScript>();
+
+        if (navAgent == null)
+            if (GetComponent<NavMeshAgent>() != null)
+                navAgent = GetComponent<NavMeshAgent>();
+
+        if (healthScript == null)
+            if (GetComponent<HealthScript>() != null)
+                healthScript = GetComponent<HealthScript>();
+
+        if (!isEnemy)
+            if (transform.tag == "EnemyUnit")
+                isEnemy = true;
+        #endregion
+
+        // set first patrol point
+        if (hasPatrol)
+            currentPatrolPoint = new Vector3(patrolPoints[currentPatrol].x, transform.position.y, patrolPoints[currentPatrol].y);
+
+        if (canInterrupt)
+            navAgent.stoppingDistance = shootDist - 1;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        bool healthControlActive = (isSelected || isEnemy) ? true : false;
+        if (healthController.activeInHierarchy != healthControlActive)
         {
-            if (CheckTarget(target))
-            {
-                if (TargetWithinRange(shootDist))
+            healthController.SetActive(healthControlActive);
+        }
+
+        AiState();
+    }
+    void AiState()
+    {
+        switch (aichan)
+        {
+            #region Sleep
+            case UnitAI.Sleep:
+                if (!asleep)
+                    aichan = UnitAI.Wander;
+                break;
+            #endregion
+            #region Attack
+            case UnitAI.Attack:
+                // double check if my target is there
+                if (CheckTarget(target))
                 {
-                    if (!canInterrupt || firstEncounter)
+                    // if my target is within my shoot radius
+                    if (TargetWithinRange(shootDist))
                     {
-                        //navAgent.isStopped = true;
-                        firstEncounter = false;
-                    }
-                    ShooterBaseLookAt(target);
-                    if (shootScript != null)
-                    {
-                        //Debug.Log(gameObject.name + ": Ai has shot");
-                        shootScript.AIFire();
+                        // can i interrupt and is it my first encounter?
+                        if (!canInterrupt || firstEncounter)
+                        {
+                            navAgent.isStopped = true;
+                            firstEncounter = false;
+                        }
+                        ShooterBaseLookAt(target);
+                        if (shootScript != null)
+                        {
+                            //Debug.Log(gameObject.name + ": Ai has shot");
+                            shootScript.AIFire();
+                        }
                     }
                 }
-            }
+                else
+                {
+                    firstEncounter = true;
+                    navAgent.isStopped = false;
+                    aichan = UnitAI.Move;
+                }
+                break;
+            #endregion
+            #region Wander
+            case UnitAI.Wander:
+                aichan = UnitAI.Move;
+                break;
+            #endregion
+            #region Move
+            case UnitAI.Move:
+                #region Check Target
+                // if i have a target
+                if (CheckTarget(target, "hasTarget"))
+                {
+                    // if i have a target and it is within my detect radius
+                    if (CheckTarget(target))
+                    {
+                        aichan = UnitAI.Attack;
+                    }
+                    else
+                    {
+                        navAgent.SetDestination(target.transform.position);
+                    }
+                }
+                else
+                {
+                    if (isEnemy) target = EnemyDetection("Moveable");
+                    else target = EnemyDetection();
+                }
+                #endregion
+                #region Patrol
+                if (hasPatrol)
+                {
+                    //Debug.Log(gameObject.name + ": I'm patroling");
+                    if (navAgent.remainingDistance < 0.2)
+                    {
+                        //Debug.Log(gameObject.name + ": Got to my destination");
+                        currentPatrol++;
+                        if (currentPatrol >= patrolPoints.Length)
+                        {
+                            currentPatrol = 0;
+                        }
+                        currentPatrolPoint = new Vector3(patrolPoints[currentPatrol].x, transform.position.y, patrolPoints[currentPatrol].y);
+                        //Debug.Log(gameObject.name + ": My new destination is " + currentPatrolPoint);
+                        navAgent.SetDestination(currentPatrolPoint);
+                    }
+                    else
+                    {
+                        //Debug.Log(gameObject.name + ": My current destination is " + navAgent.destination);
+                    }
+                }
+                #endregion
+                break;
+                #endregion
         }
-	}
+    }
+    public void WakeUp()
+    {
+        aichan = UnitAI.Move;
+    }
     bool CheckTarget(GameObject currentTarget, string checkText = "")
     {
         bool hasTarget = false;
         if (currentTarget != null)
         {
+            //Debug.Log(currentTarget.transform.root.name + ":" + currentTarget.transform.root.gameObject.activeInHierarchy);
+
+            if (!currentTarget.transform.root.gameObject.activeInHierarchy)
+            {
+                return false;
+            }
             if (checkText == "hasTarget")
             {
                 return true;
             }
             if (Physics.Linecast(transform.position, currentTarget.transform.position))
             {
-                hasTarget = true;
+                if (Vector3.Distance(transform.position, currentTarget.transform.position) < shootDist)
+                {
+                    hasTarget = true;
+                }
             }
+
         }
         return hasTarget;
     }
-    GameObject EnemyDetection()
+    GameObject EnemyDetection(string targetTag = "EnemyUnit")
     {
         GameObject newTarget = null;
+        // create an overlap sphere for detection
         Collider[] detectionSphere = Physics.OverlapSphere(transform.position, detectRad);
+        // set first element in overlap sphere as default distance check
         float currentTargetDist = Vector3.Distance(transform.position, detectionSphere[0].transform.position);
         foreach (Collider detected in detectionSphere)
         {
+            // check if new detected is closer than old
             float newDist = Vector3.Distance(transform.position, detected.transform.position);
             bool shorterDist = newDist < currentTargetDist;
-            if (detected.tag == "EnemyUnit" && shorterDist)
+            if (detected.transform.tag == targetTag && newTarget == null)
             {
                 newTarget = detected.gameObject;
                 currentTargetDist = newDist;
             }
+            //Debug.Log(gameObject.name + ": " + currentTargetDist + ":" + newDist + " - " + detected.gameObject.name);
+            if ((detected.transform.tag == targetTag && shorterDist))
+            {
+                // check if active
+                if (!detected.transform.root.gameObject.activeInHierarchy) continue;
+
+                // if so then set the new target and new distance check
+                newTarget = detected.gameObject;
+                currentTargetDist = newDist;
+            }
         }
+        //Debug.Log(gameObject.name +": " + detectionSphere[0].gameObject.name +" | "+currentTargetDist);
         return newTarget;
     }
     bool TargetWithinRange(float range = 5)
@@ -106,9 +243,19 @@ public class PlayableUnits : MonoBehaviour {
 
         shootingBase.transform.LookAt(lookTarget.transform);
     }
-    private void OnDrawGizmos()
+    private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position, detectRad);
+        if (drawDetect) Gizmos.DrawSphere(transform.position, detectRad);
+
+        if (patrolPoints.Length > 0)
+        {
+            Gizmos.color = Color.yellow;
+            foreach (Vector2 patrolPt in patrolPoints)
+            {
+                Vector3 patrolPos = new Vector3(patrolPt.x, transform.position.y + 2, patrolPt.y);
+                Gizmos.DrawSphere(patrolPos, 0.5f);
+            }
+        }
     }
 }
