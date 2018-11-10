@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class MoveCharacter : MonoBehaviour
 {
+    #region Variables
     [SerializeField]
     GameObject selectedUnit, targetUnit, selectedIndicator, movementIndicator, mainCam;
     RaycastHit hit;
@@ -16,11 +17,16 @@ public class MoveCharacter : MonoBehaviour
     float movementSpeed = 20, rotationSpeed = 20;
     [SerializeField]
     Vector2 minBoundary = Vector2.zero, maxBoundary = Vector2.zero;
-
+    [SerializeField]
+    List<GameObject> selectedUnits;
+    [SerializeField]
+    KeyCode selectUnitBtn = KeyCode.Mouse0, deselectUnitBtn = KeyCode.Mouse1, multiSelectBtn = KeyCode.LeftControl;
     Vector3 cameraStartPos;
     Quaternion cameraStartRot;
     float vInput, hInput, rxInput, ryInput;
+    #endregion
 
+    #region Start
     void Start()
     {
         cameraStartPos = transform.position;
@@ -29,7 +35,8 @@ public class MoveCharacter : MonoBehaviour
         selectedIndicator.SetActive(false);
         movementIndicator.SetActive(false);
     }
-
+    #endregion
+    #region Update
     // Update is called once per frame
     void Update()
     {
@@ -40,6 +47,8 @@ public class MoveCharacter : MonoBehaviour
             movementIndicator.SetActive(false);
         }
     }
+    #endregion
+    #region Fixed Update
     private void FixedUpdate()
     {
         PlaceIndicators();
@@ -47,6 +56,8 @@ public class MoveCharacter : MonoBehaviour
         DeselectUnit();
         CameraControls(canMoveCamera, cameraHasBoundary);
     }
+    #endregion
+
     #region Placed Indicators
     void PlaceIndicators()
     {
@@ -82,44 +93,68 @@ public class MoveCharacter : MonoBehaviour
         }
     }
     #endregion
+    #region Deselect Unit
     void DeselectUnit()
     {
-        if (Input.GetMouseButtonDown(1) && selectedUnit != null)
+        if (Input.GetKeyDown(deselectUnitBtn) && selectedUnit != null)
         {
             selectedUnit.GetComponent<PlayableUnits>().isSelected = false;
             selectedIndicator.SetActive(false);
             movementIndicator.SetActive(false);
             selectedUnit = null;
+            selectedUnits.Clear();
         }
     }
+    #endregion
+    #region Select Unit
     void SelectUnit()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(selectUnitBtn))
         {
             Ray ray = mainCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit))
             {
-                // Debug.Log(hit.transform.tag);
-                if (hit.transform.tag == "Moveable")
+                if (Input.GetKey(multiSelectBtn) && hit.transform.tag == "Moveable")
                 {
                     selectedUnit = hit.transform.gameObject;
                     selectedUnit.GetComponent<PlayableUnits>().isSelected = true;
                     selectedUnit.GetComponent<PlayableUnits>().WakeUp();
+                    selectedUnits.Add(selectedUnit);
+                }
+                // Debug.Log(hit.transform.tag);
+                else if (hit.transform.tag == "Moveable")
+                {
+                    selectedUnit = hit.transform.gameObject;
+                    selectedUnit.GetComponent<PlayableUnits>().isSelected = true;
+                    selectedUnit.GetComponent<PlayableUnits>().WakeUp();
+                    selectedUnits[0] = selectedUnit;
                 }
                 else if (selectedUnit != null && hit.transform.tag == "EnemyUnit")
                 {
                     //Debug.Log(hit.transform.gameObject.name);
                     targetUnit = hit.transform.gameObject;
-                    selectedUnit.GetComponent<PlayableUnits>().target = hit.transform.gameObject;
+                    selectedUnit.GetComponent<PlayableUnits>().target = targetUnit;
+
+                    foreach (GameObject unit in selectedUnits)
+                    {
+                        unit.GetComponent<PlayableUnits>().target = targetUnit;
+                    }
                 }
                 else if (selectedUnit != null)
                 {
                     selectedUnit.GetComponent<NavMeshAgent>().SetDestination(hit.point);
+
+                    foreach (GameObject unit in selectedUnits)
+                    {
+                        unit.GetComponent<NavMeshAgent>().SetDestination(hit.point);
+                    }
                 }
             }
         }
     }
+    #endregion
+    #region Camera Controls
     void CameraControls(bool canMove = true, bool hasBoundaries = false)
     {
         if (!canMove) return;
@@ -159,4 +194,5 @@ public class MoveCharacter : MonoBehaviour
             transform.rotation = cameraStartRot;
         }
     }
+    #endregion
 }
