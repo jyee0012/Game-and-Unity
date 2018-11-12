@@ -18,7 +18,7 @@ public class MoveCharacter : MonoBehaviour
     [SerializeField]
     Vector2 minBoundary = Vector2.zero, maxBoundary = Vector2.zero;
     [SerializeField]
-    List<GameObject> selectedUnits;
+    List<GameObject> selectedUnits, selectedIndicators;
     [SerializeField]
     KeyCode selectUnitBtn = KeyCode.Mouse0, deselectUnitBtn = KeyCode.Mouse1, multiSelectBtn = KeyCode.LeftControl;
     Vector3 cameraStartPos;
@@ -64,15 +64,46 @@ public class MoveCharacter : MonoBehaviour
 
         if (selectedUnit != null)
         {
-            if (!selectedIndicator.activeInHierarchy) selectedIndicator.SetActive(true);
+            //if (!selectedIndicator.activeInHierarchy) selectedIndicator.SetActive(true);
             if (!movementIndicator.activeInHierarchy) movementIndicator.SetActive(true);
 
             #region Selected Unit
             if (selectedIndicator != null)
             {
-                Vector3 selectedUnitBase = selectedUnit.transform.position;
-                selectedUnitBase.y -= (selectedUnit.transform.position.y / 2);
-                selectedIndicator.transform.position = selectedUnitBase;
+                //Vector3 selectedUnitBase = selectedUnit.transform.position;
+                //selectedUnitBase.y -= (selectedUnit.transform.position.y / 2);
+                //selectedIndicator.transform.position = selectedUnitBase;
+                if (selectedUnits.Count > 0)
+                {
+                    selectedIndicators = new List<GameObject>(selectedUnits.Count);
+                    for (int i = 0; i <= selectedUnits.Count; i++)
+                    {
+                        Debug.Log(i);
+                        if (selectedIndicators[i] == null)
+                            selectedIndicators[i] = Instantiate(selectedIndicator, selectedUnits[i].transform.position, selectedUnits[i].transform.rotation);
+
+                        Vector3 selectedUnitBase = selectedUnits[i].transform.position;
+                        selectedUnitBase.y -= (selectedUnits[i].transform.position.y / 2);
+                        selectedIndicators[i].transform.position = selectedUnitBase;
+
+                        if (!selectedIndicators[i].activeInHierarchy) selectedIndicators[i].SetActive(true);
+
+
+                        if (selectedUnits[i] != selectedUnits[0] && i > 0)
+                        {
+                            //Debug.Log(i + ":" + selectedUnits[i].name + " = " + selectedIndicators[i-1].name);
+                            //selectedIndicators[i-1] = Instantiate(selectedIndicator, selectedUnits[i].transform.position, selectedUnits[i].transform.rotation);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < selectedIndicators.Count; i++)
+                {
+                    Destroy(selectedIndicators[i]);
+                }
+                selectedIndicators.Clear();
             }
             #endregion
             #region Movement/Waypoint Indicator
@@ -117,6 +148,9 @@ public class MoveCharacter : MonoBehaviour
             {
                 if (Input.GetKey(multiSelectBtn) && hit.transform.tag == "Moveable")
                 {
+                    if (selectedUnit != null && !selectedUnits.Contains(selectedUnit))
+                        selectedUnits.Add(selectedUnit);
+
                     selectedUnit = hit.transform.gameObject;
                     selectedUnit.GetComponent<PlayableUnits>().isSelected = true;
                     selectedUnit.GetComponent<PlayableUnits>().WakeUp();
@@ -128,7 +162,8 @@ public class MoveCharacter : MonoBehaviour
                     selectedUnit = hit.transform.gameObject;
                     selectedUnit.GetComponent<PlayableUnits>().isSelected = true;
                     selectedUnit.GetComponent<PlayableUnits>().WakeUp();
-                    selectedUnits[0] = selectedUnit;
+                    selectedUnits.Clear();
+                    selectedUnits.Add(selectedUnit);
                 }
                 else if (selectedUnit != null && hit.transform.tag == "EnemyUnit")
                 {
@@ -184,7 +219,7 @@ public class MoveCharacter : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            transform.Translate(new Vector3(0,0,ryInput * Time.deltaTime * movementSpeed));
+            transform.Translate(new Vector3(0, 0, ryInput * Time.deltaTime * movementSpeed));
             //transform.Rotate(Vector3.up, rxInput * Time.deltaTime * rotationSpeed);
             //transform.Rotate(Vector3.left, ryInput * Time.deltaTime * rotationSpeed);
         }
