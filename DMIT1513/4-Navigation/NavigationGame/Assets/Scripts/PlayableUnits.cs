@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class PlayableUnits : MonoBehaviour
 {
-
+    #region Variables
     public enum UnitAI
     {
         Sleep, Attack, Wander, Move
@@ -29,11 +29,15 @@ public class PlayableUnits : MonoBehaviour
         asleep = false;
     [SerializeField]
     Vector2[] patrolPoints;
-
+    [SerializeField]
+    GameObject selectedIndicator;
 
     bool firstEncounter = true;
     int currentPatrol = 0;
     Vector3 currentPatrolPoint;
+    #endregion
+
+    #region Start
     // Use this for initialization
     void Start()
     {
@@ -61,11 +65,16 @@ public class PlayableUnits : MonoBehaviour
 
         if (canInterrupt)
             navAgent.stoppingDistance = shootDist - 1;
-    }
 
+    }
+    #endregion
+    
+    #region Update
     // Update is called once per frame
     void Update()
     {
+        selectedIndicator.SetActive(isSelected && !isEnemy);
+
         bool healthControlActive = (isSelected || isEnemy) ? true : false;
         if (healthController.activeInHierarchy != healthControlActive)
         {
@@ -74,6 +83,9 @@ public class PlayableUnits : MonoBehaviour
 
         AiState();
     }
+    #endregion
+    
+    #region AI State
     void AiState()
     {
         switch (aichan)
@@ -167,10 +179,13 @@ public class PlayableUnits : MonoBehaviour
                 #endregion
         }
     }
+    #endregion
+
     public void WakeUp()
     {
         aichan = UnitAI.Move;
     }
+    #region Targeting
     bool CheckTarget(GameObject currentTarget, string checkText = "")
     {
         bool hasTarget = false;
@@ -243,6 +258,8 @@ public class PlayableUnits : MonoBehaviour
 
         shootingBase.transform.LookAt(lookTarget.transform);
     }
+    #endregion
+    #region Gizmos
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
@@ -258,4 +275,5 @@ public class PlayableUnits : MonoBehaviour
             }
         }
     }
+    #endregion
 }
