@@ -5,7 +5,7 @@ using UnityEngine;
 public class BombProjectile : MonoBehaviour
 {
     [SerializeField]
-    bool bTest = false, bDestroyInstant = false;
+    bool bTest = false, bDestroyInstant = false, useTeamTag = false;
     public AudioSource boomSound;
     public ParticleSystem explosionEffect;
 
@@ -66,17 +66,18 @@ public class BombProjectile : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.root.gameObject == ignoreObj) return;
-        Explode();
-        if (!bCanExplode) HitTarget(collision.transform);
-        //Debug.Log(collision.gameObject.name);
-        TrueDestroy();
+        CollideTarget(collision.transform);
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.root.gameObject == ignoreObj) return;
+        CollideTarget(other.transform);
+    }
+    void CollideTarget(Transform collisionTarget)
+    {
+        if (collisionTarget.root.gameObject == ignoreObj) return;
+        if (useTeamTag && collisionTarget.root.gameObject.tag == ignoreObj.tag) return;
         Explode();
-        if (!bCanExplode) HitTarget(other.transform);
+        if (!bCanExplode) HitTarget(collisionTarget.transform);
         //Debug.Log(collision.gameObject.name);
         TrueDestroy();
     }

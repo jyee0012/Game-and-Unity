@@ -1,0 +1,15 @@
+Estimated Time
+Total Time 					- 700mins			- 
+Import previous RTS 				- 0mins.			- Done
+Spawn Units 					- 30mins 			- Done
+Make a Map 					- 30mins 			- 
+Region the Map 					- 30mins			- 
+Mass Control Units 				- 60mins 			- 
+Selective Control Units 			- 60mins 			- Done
+Spawn Unique Units 				- 30mins			- 
+Time based spawn 				- 15mins			- Done
+Add new Win/Lose conditions			- 30mins			- 
+Add random partol for enemies			- 15mins			- 
+Add Sword Swing attack & animation		- 30mins			- 
+
+Total:   = 330mins (5 & 1/2 hrs)

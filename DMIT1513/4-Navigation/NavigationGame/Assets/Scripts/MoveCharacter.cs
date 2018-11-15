@@ -7,7 +7,7 @@ public class MoveCharacter : MonoBehaviour
 {
     #region Variables
     [SerializeField]
-    GameObject selectedUnit, targetUnit, movementIndicator, mainCam;
+    GameObject selectedUnit, targetUnit, movementIndicator, mainCam, mapCam;
     RaycastHit hit;
     [SerializeField]
     int waypointDist = 10;
@@ -20,10 +20,12 @@ public class MoveCharacter : MonoBehaviour
     [SerializeField]
     List<GameObject> selectedUnits;
     [SerializeField]
-    KeyCode selectUnitBtn = KeyCode.Mouse0, deselectUnitBtn = KeyCode.Mouse1, multiSelectBtn = KeyCode.LeftControl;
+    KeyCode selectUnitBtn = KeyCode.Mouse0, deselectUnitBtn = KeyCode.Mouse1, multiSelectBtn = KeyCode.LeftControl, 
+        speedUpCamBtn = KeyCode.LeftShift, swapCamBtn = KeyCode.C, camZoomBtn = KeyCode.LeftShift;
     Vector3 cameraStartPos;
     Quaternion cameraStartRot;
-    float vInput, hInput, rxInput, ryInput;
+    float vInput, hInput, rxInput, ryInput, baseMoveSpeed;
+    bool bSwapCam = true;
     #endregion
 
     #region Start
@@ -33,6 +35,8 @@ public class MoveCharacter : MonoBehaviour
         cameraStartRot = transform.rotation;
         if (mainCam == null) mainCam = GameObject.Find("Main Camera");
         movementIndicator.SetActive(false);
+        baseMoveSpeed = movementSpeed;
+        SwapCamera(true);
     }
     #endregion
     #region Update
@@ -52,7 +56,7 @@ public class MoveCharacter : MonoBehaviour
         PlaceIndicators();
         SelectUnit();
         DeselectUnit();
-        CameraControls(canMoveCamera, cameraHasBoundary);
+        CameraControls(canMoveCamera, cameraHasBoundary, mainCam);
     }
     #endregion
 
@@ -106,9 +110,12 @@ public class MoveCharacter : MonoBehaviour
         if (Input.GetKeyDown(selectUnitBtn))
         {
             Ray ray = mainCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-
+            
             if (Physics.Raycast(ray, out hit))
             {
+                string debugString = hit.transform.gameObject.name;
+                if (hit.transform.transform.parent != hit.transform) debugString += ":" + hit.transform.parent.gameObject.name;
+                Debug.Log(debugString);
                 if (Input.GetKey(multiSelectBtn) && hit.transform.tag == "Moveable")
                 {
                     if (selectedUnit != null && !selectedUnits.Contains(selectedUnit))
@@ -158,44 +165,56 @@ public class MoveCharacter : MonoBehaviour
     }
     #endregion
     #region Camera Controls
-    void CameraControls(bool canMove = true, bool hasBoundaries = false)
+    void CameraControls(bool canMove = true, bool hasBoundaries = false, GameObject currentCam = null)
     {
-        if (!canMove) return;
+        bSwapCam = (Input.GetKeyDown(swapCamBtn)) ? !bSwapCam : bSwapCam;
+        SwapCamera(bSwapCam);
+        if (!canMove || (currentCam == null || !currentCam.activeInHierarchy)) return;
 
         Cursor.lockState = CursorLockMode.Confined;
+
+        movementSpeed = (Input.GetKey(speedUpCamBtn)) ? baseMoveSpeed * 2 : baseMoveSpeed;
 
         vInput = Input.GetAxis("Vertical");
         hInput = Input.GetAxis("Horizontal");
         rxInput = Input.GetAxis("Mouse X");
         ryInput = Input.GetAxis("Mouse Y");
         Vector3 newPos = new Vector3(hInput * Time.deltaTime * movementSpeed, vInput * Time.deltaTime * movementSpeed, 0);
-        transform.Translate(newPos);
+        currentCam.transform.Translate(newPos);
 
-        Vector3 boundedPos = transform.position;
+        Vector3 boundedPos = currentCam.transform.position;
 
-        if (transform.position.x > maxBoundary.x)
+        if (boundedPos.x > maxBoundary.x)
             boundedPos.x = maxBoundary.x;
-        if (transform.position.x < minBoundary.x)
+        if (boundedPos.x < minBoundary.x)
             boundedPos.x = minBoundary.x;
-        if (transform.position.z > maxBoundary.y)
+        if (boundedPos.z > maxBoundary.y)
             boundedPos.z = maxBoundary.y;
-        if (transform.position.z < minBoundary.y)
+        if (boundedPos.z < minBoundary.y)
             boundedPos.z = minBoundary.y;
 
-        transform.position = boundedPos;
+        if (hasBoundaries)
+            currentCam.transform.position = boundedPos;
 
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(camZoomBtn))
         {
-            transform.Translate(new Vector3(0, 0, ryInput * Time.deltaTime * movementSpeed));
+            currentCam.transform.Translate(new Vector3(0, 0, ryInput * Time.deltaTime * movementSpeed));
             //transform.Rotate(Vector3.up, rxInput * Time.deltaTime * rotationSpeed);
             //transform.Rotate(Vector3.left, ryInput * Time.deltaTime * rotationSpeed);
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            transform.position = cameraStartPos;
-            transform.rotation = cameraStartRot;
+            currentCam.transform.position = cameraStartPos;
+            currentCam.transform.rotation = cameraStartRot;
         }
+    }
+    void SwapCamera(bool swapCam)
+    {
+        if (mainCam == null || mapCam == null) return;
+
+        mainCam.SetActive(swapCam);
+        mapCam.SetActive(!swapCam);
     }
     #endregion
 }

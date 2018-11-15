@@ -19,12 +19,13 @@ public class PlayableUnits : MonoBehaviour
     HealthScript healthScript = null;
 
     [SerializeField]
-    float shootDist = 5, detectRad = 5;
+    float shootDist = 5, detectRad = 5, wakeDelay = 0;
     [SerializeField]
     bool lockOnTarget = false, // once target != null, set destination to target and eliminate 
         canInterrupt = false, // if shooting @ target, if true then can move and ignore target
         isEnemy = false,
         hasPatrol = false,
+        getRandPatrol = false,
         drawDetect = true,
         asleep = false;
     [SerializeField]
@@ -57,6 +58,8 @@ public class PlayableUnits : MonoBehaviour
         if (!isEnemy)
             if (transform.tag == "EnemyUnit")
                 isEnemy = true;
+
+        if (getRandPatrol) hasPatrol = true;
         #endregion
 
         // set first patrol point
@@ -65,6 +68,9 @@ public class PlayableUnits : MonoBehaviour
 
         if (canInterrupt)
             navAgent.stoppingDistance = shootDist - 1;
+
+
+        wakeDelay += Time.time;
 
     }
     #endregion
@@ -92,7 +98,7 @@ public class PlayableUnits : MonoBehaviour
         {
             #region Sleep
             case UnitAI.Sleep:
-                if (!asleep)
+                if (!asleep && wakeDelay < Time.time)
                     aichan = UnitAI.Wander;
                 break;
             #endregion
@@ -257,6 +263,18 @@ public class PlayableUnits : MonoBehaviour
         if (shootingBase == null) return;
 
         shootingBase.transform.LookAt(lookTarget.transform);
+    }
+    #endregion
+    #region Patrol
+    Vector3 GetRandomPatrol()
+    {
+        Vector3 randPatrolPoint = transform.position;
+        return randPatrolPoint;
+    }
+    Vector3 GetRandomPatrolWithinRange()
+    {
+        Vector3 randPatrolPoint = transform.position;
+        return randPatrolPoint;
     }
     #endregion
     #region Gizmos

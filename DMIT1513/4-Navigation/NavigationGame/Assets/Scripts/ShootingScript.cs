@@ -7,11 +7,12 @@ public class ShootingScript : MonoBehaviour {
 
     #region Variables
     [SerializeField]
-    GameObject projectilePrefab = null, fireLocationL = null, fireLocationR = null;
+    GameObject projectilePrefab = null, fireLocationL = null, fireLocationR = null, animJoint = null;
     [SerializeField]
     KeyCode fireKey = KeyCode.Mouse0; 
     [SerializeField]
-    bool projectileGravity = true, projecileCanExplode = false, alternateFire = false, individualFire = false, useAmmo = false, passOwner = false;
+    bool projectileGravity = true, projecileCanExplode = false, alternateFire = false, individualFire = false, 
+        useAmmo = false, passOwner = false, animateJoint = false;
     [SerializeField]
     float projectileExplodeRadius, projectileForce = 100, timeBetweenShot = 0.5f;
     [SerializeField]
@@ -26,7 +27,8 @@ public class ShootingScript : MonoBehaviour {
     AudioSource fireSound, explodeSound;
     [SerializeField]
     ParticleSystem fireParticle, explodeParticle;
-
+    [SerializeField]
+    Vector2[] animDest = new Vector2[1];
     bool bHasProjectile = false, bShotL = false;
     float lastShot = 0, ammo = 0;
     GameObject shootOwner = null;
@@ -46,6 +48,7 @@ public class ShootingScript : MonoBehaviour {
         SetExplodeParticles();
         if (shootOwner == null) shootOwner = gameObject;
         //projectileArray = new GameObject[projectileAmount];
+        animDest[0] = new Vector2(transform.position.x, transform.position.y);
     }
     #endregion
     #region Update
@@ -103,6 +106,7 @@ public class ShootingScript : MonoBehaviour {
             bombProj.explodeRadius = projectileExplodeRadius;
             if (explodeSound != null) bombProj.boomSound = explodeSound;
         }
+        if (animateJoint && animJoint != null) PlayJointAnimation();
         projectileRBody.useGravity = projectileGravity;
         projectileRBody.AddForce(fireDirection * projectileForce);
         Destroy(projectile, 3);
@@ -264,6 +268,15 @@ public class ShootingScript : MonoBehaviour {
     {
         if (explodeParticle == null) return;
         projectilePrefab.GetComponent<BombProjectile>().explosionEffect = explodeParticle;
+    }
+    #endregion
+    #region Animation
+    void PlayJointAnimation()
+    {
+        string debug1 = timeBetweenShot.ToString(),
+        debug2 = animDest[animDest.Length-1].ToString();
+
+        Debug.Log("Get to " + debug2 + " (Index:" + (animDest.Length-1).ToString() + ") by " + debug1);
     }
     #endregion
 }

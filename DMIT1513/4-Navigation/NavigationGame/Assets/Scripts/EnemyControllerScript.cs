@@ -25,6 +25,7 @@ public class EnemyControllerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        FindAllEnemies();
         enemyAlive = CheckAllEnemy();
         lose = CheckAllUnits();
         UpdateText();
@@ -62,6 +63,7 @@ public class EnemyControllerScript : MonoBehaviour {
     }
     void FindAllEnemies()
     {
+        ClearEnemyList();
         GameObject[] allFoundEnemies = GameObject.FindGameObjectsWithTag("EnemyUnit");
         foreach (GameObject enemy in allFoundEnemies)
         {
@@ -75,6 +77,10 @@ public class EnemyControllerScript : MonoBehaviour {
 
         if (allEnemies.Contains(enemyRoot)) return;
         else allEnemies.Add(enemyRoot);
+    }
+    void ClearEnemyList()
+    {
+        allEnemies.Clear();
     }
     bool CheckAllUnits()
     {
