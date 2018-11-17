@@ -133,11 +133,17 @@ public class MenuScript : MonoBehaviour
     }
     public void UpdateText(Text text, Slider slider, string title)
     {
+        if (text == null || slider == null) return;
+
         text.text = title + ": " + slider.value + "%";
     }
     public bool CheckMusicSoundText()
     {
-        return musicText.isActiveAndEnabled && musicSlider.isActiveAndEnabled && soundSlider.isActiveAndEnabled && soundText.isActiveAndEnabled;
+        return (musicText.gameObject.activeInHierarchy || musicSlider.gameObject.activeInHierarchy || 
+            soundText.gameObject.activeInHierarchy || soundSlider.gameObject.activeInHierarchy) 
+            || 
+            (musicText.isActiveAndEnabled && musicSlider.isActiveAndEnabled && 
+            soundSlider.isActiveAndEnabled && soundText.isActiveAndEnabled);
     }
     #endregion
     #region Pause

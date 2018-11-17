@@ -12,9 +12,9 @@ public class ShootingScript : MonoBehaviour {
     KeyCode fireKey = KeyCode.Mouse0; 
     [SerializeField]
     bool projectileGravity = true, projecileCanExplode = false, alternateFire = false, individualFire = false, 
-        useAmmo = false, passOwner = false, animateJoint = false;
+        useAmmo = false, passOwner = false, animateJoint = false, passProjectileDmg = false;
     [SerializeField]
-    float projectileExplodeRadius, projectileForce = 100, timeBetweenShot = 0.5f;
+    float projectileExplodeRadius, projectileForce = 100, timeBetweenShot = 0.5f, projectileDmg = 5;
     [SerializeField]
     GameObject[] projectileArray;
     [SerializeField]
@@ -64,6 +64,7 @@ public class ShootingScript : MonoBehaviour {
     }
     #endregion
     #region Shoot
+    #region Base Shoot
     bool Shoot(Transform fireLocation, string fireDirectionS = "up")
     {
         #region Set Fire Direction
@@ -106,6 +107,7 @@ public class ShootingScript : MonoBehaviour {
             bombProj.explodeRadius = projectileExplodeRadius;
             if (explodeSound != null) bombProj.boomSound = explodeSound;
         }
+        if (passProjectileDmg) bombProj.explodeDmg = projectileDmg;
         if (animateJoint && animJoint != null) PlayJointAnimation();
         projectileRBody.useGravity = projectileGravity;
         projectileRBody.AddForce(fireDirection * projectileForce);
@@ -129,6 +131,22 @@ public class ShootingScript : MonoBehaviour {
         }
         bShotL = !bShotL;
     }
+    #endregion
+    #region Shoot Single
+    void ShootIndividual()
+    {
+        foreach (GameObject proj in projectileArray)
+        {
+            if (proj.activeInHierarchy)
+            {
+                Shoot(proj.transform, "forward");
+                proj.SetActive(false);
+                break;
+            }
+        }
+        PrintAmmoText();
+    }
+    #endregion
     #endregion
     #region Fire
     void Fire()
@@ -190,21 +208,6 @@ public class ShootingScript : MonoBehaviour {
         if (useAmmo)
         {
             ammo = maxAmmo;
-        }
-        PrintAmmoText();
-    }
-    #endregion
-    #region Shoot Single
-    void ShootIndividual()
-    {
-        foreach (GameObject proj in projectileArray)
-        {
-            if (proj.activeInHierarchy)
-            {
-                Shoot(proj.transform, "forward");
-                proj.SetActive(false);
-                break;
-            }
         }
         PrintAmmoText();
     }

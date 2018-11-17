@@ -63,7 +63,7 @@ public class EnemyControllerScript : MonoBehaviour {
     }
     void FindAllEnemies()
     {
-        ClearEnemyList();
+        //ClearEnemyList();
         GameObject[] allFoundEnemies = GameObject.FindGameObjectsWithTag("EnemyUnit");
         foreach (GameObject enemy in allFoundEnemies)
         {

@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\MoveCharacter.cs" />
     <Compile Include="Assets\Scripts\PickupScript.cs" />
     <Compile Include="Assets\Scripts\PlayableUnits.cs" />
+    <Compile Include="Assets\Scripts\RegionManager.cs" />
     <Compile Include="Assets\Scripts\ShootingScript.cs" />
     <Compile Include="Assets\Scripts\UnitSpawner.cs" />
     <Reference Include="UnityEditor.StandardEvents">

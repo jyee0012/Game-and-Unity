@@ -2,14 +2,22 @@ Estimated Time
 Total Time 					- 700mins			- 
 Import previous RTS 				- 0mins.			- Done
 Spawn Units 					- 30mins 			- Done
-Make a Map 					- 30mins 			- 
-Region the Map 					- 30mins			- 
-Mass Control Units 				- 60mins 			- 
+Make a Map 					- 30mins 			- Done
+Region the Map 					- 30mins			- Done
+Mass Control Units 				- 60mins 			- I put the time that should've been spent on this onto the win/lose
 Selective Control Units 			- 60mins 			- Done
 Spawn Unique Units 				- 30mins			- 
 Time based spawn 				- 15mins			- Done
-Add new Win/Lose conditions			- 30mins			- 
-Add random partol for enemies			- 15mins			- 
-Add Sword Swing attack & animation		- 30mins			- 
+Add new Win/Lose conditions			- 30mins			- Taking Alot Longer (Reworking Mechanics for Win/Lose)
+Add random partol for enemies			- 15mins			- Done
+X-Add Sword Swing attack & animation		- 30mins			- Not Doing Yet
 
 Total:   = 330mins (5 & 1/2 hrs)
+
+Current Task:
+Create & Attach Region Scenes to the Region Manager.
+
+pritorize player controls
+if (not selected && no destination)
+else
+everything

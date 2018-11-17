@@ -7,7 +7,7 @@ public class MoveCharacter : MonoBehaviour
 {
     #region Variables
     [SerializeField]
-    GameObject selectedUnit, targetUnit, movementIndicator, mainCam, mapCam;
+    GameObject selectedUnit, targetUnit, movementIndicator, mainCam, mapCam, regionMang;
     RaycastHit hit;
     [SerializeField]
     int waypointDist = 10;
@@ -31,9 +31,11 @@ public class MoveCharacter : MonoBehaviour
     #region Start
     void Start()
     {
-        cameraStartPos = transform.position;
-        cameraStartRot = transform.rotation;
         if (mainCam == null) mainCam = GameObject.Find("Main Camera");
+        if (regionMang == null) regionMang = GameObject.Find("RegionManager");
+
+        cameraStartPos = mainCam.transform.position;
+        cameraStartRot = mainCam.transform.rotation;
         movementIndicator.SetActive(false);
         baseMoveSpeed = movementSpeed;
         SwapCamera(true);
@@ -114,8 +116,15 @@ public class MoveCharacter : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 string debugString = hit.transform.gameObject.name;
-                if (hit.transform.transform.parent != hit.transform) debugString += ":" + hit.transform.parent.gameObject.name;
+                if (hit.transform.transform.parent != null && hit.transform.transform.parent != hit.transform) debugString += ":" + hit.transform.parent.gameObject.name;
                 Debug.Log(debugString);
+                if (regionMang != null && regionMang.GetComponent<RegionManager>() != null)
+                {
+                    RegionManager tempRegMang = regionMang.GetComponent<RegionManager>();
+                    if (hit.transform.gameObject != null) tempRegMang.CheckIfRegion(hit.transform.gameObject);
+                    if (hit.transform.parent.gameObject != null) tempRegMang.CheckIfRegion(hit.transform.parent.gameObject);
+                    if (hit.transform.root.gameObject != null) tempRegMang.CheckIfRegion(hit.transform.root.gameObject);
+                }
                 if (Input.GetKey(multiSelectBtn) && hit.transform.tag == "Moveable")
                 {
                     if (selectedUnit != null && !selectedUnits.Contains(selectedUnit))
@@ -184,6 +193,12 @@ public class MoveCharacter : MonoBehaviour
 
         Vector3 boundedPos = currentCam.transform.position;
 
+        if (boundedPos.y > 200)
+            boundedPos.y = 200;
+        if (boundedPos.y < 0)
+            boundedPos.y = 0;
+        currentCam.transform.position = boundedPos;
+
         if (boundedPos.x > maxBoundary.x)
             boundedPos.x = maxBoundary.x;
         if (boundedPos.x < minBoundary.x)
@@ -195,7 +210,7 @@ public class MoveCharacter : MonoBehaviour
 
         if (hasBoundaries)
             currentCam.transform.position = boundedPos;
-
+        
 
         if (Input.GetKey(camZoomBtn))
         {

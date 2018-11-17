@@ -19,7 +19,7 @@ public class PlayableUnits : MonoBehaviour
     HealthScript healthScript = null;
 
     [SerializeField]
-    float shootDist = 5, detectRad = 5, wakeDelay = 0;
+    float shootDist = 5, detectRad = 5, wakeDelay = 0, patrolRange = 0;
     [SerializeField]
     bool lockOnTarget = false, // once target != null, set destination to target and eliminate 
         canInterrupt = false, // if shooting @ target, if true then can move and ignore target
@@ -29,7 +29,7 @@ public class PlayableUnits : MonoBehaviour
         drawDetect = true,
         asleep = false;
     [SerializeField]
-    Vector2[] patrolPoints;
+    List<Vector2> patrolPoints;
     [SerializeField]
     GameObject selectedIndicator;
 
@@ -59,7 +59,14 @@ public class PlayableUnits : MonoBehaviour
             if (transform.tag == "EnemyUnit")
                 isEnemy = true;
 
-        if (getRandPatrol) hasPatrol = true;
+        if (getRandPatrol)
+        {
+            hasPatrol = true;
+            if (patrolRange == 0)
+                AddPatrolPoint(GetRandomPatrol());
+            else
+                AddPatrolPoint(GetRandomPatrolWithinRange(patrolRange));
+        }
         #endregion
 
         // set first patrol point
@@ -167,7 +174,7 @@ public class PlayableUnits : MonoBehaviour
                     {
                         //Debug.Log(gameObject.name + ": Got to my destination");
                         currentPatrol++;
-                        if (currentPatrol >= patrolPoints.Length)
+                        if (currentPatrol >= patrolPoints.Count)
                         {
                             currentPatrol = 0;
                         }
@@ -266,15 +273,36 @@ public class PlayableUnits : MonoBehaviour
     }
     #endregion
     #region Patrol
-    Vector3 GetRandomPatrol()
+    Vector3 GetRandomPatrol(float walkRadius = 100)
     {
-        Vector3 randPatrolPoint = transform.position;
+        Vector3 randPatrolPoint = transform.position, randomDirection = Random.insideUnitSphere * walkRadius;
+        randomDirection += transform.position;
+        NavMeshHit navhit;
+        NavMesh.SamplePosition(randomDirection, out navhit, walkRadius, 1);
+        randPatrolPoint = navhit.position;
         return randPatrolPoint;
     }
-    Vector3 GetRandomPatrolWithinRange()
+    Vector3 GetRandomPatrolWithinRange(float range)
     {
         Vector3 randPatrolPoint = transform.position;
+        float randx = Random.Range(-range, range + 1), randy = Random.Range(-range, range + 1);
+        randPatrolPoint.x += randx;
+        randPatrolPoint.z += randy;
         return randPatrolPoint;
+    }
+    void AddPatrolPoint(Vector3 patrolPt)
+    {
+        Vector2 newPatrolPt = new Vector2(patrolPt.x, patrolPt.z);
+        AddPatrolPoint(newPatrolPt);
+    }
+    void AddPatrolPoint(Vector2 patrolPt)
+    {
+        if (!patrolPoints.Contains(patrolPt))
+            patrolPoints.Add(patrolPt);
+    }
+    void ClearPatrolPoints()
+    {
+        patrolPoints.Clear();
     }
     #endregion
     #region Gizmos
@@ -283,7 +311,7 @@ public class PlayableUnits : MonoBehaviour
         Gizmos.color = Color.green;
         if (drawDetect) Gizmos.DrawSphere(transform.position, detectRad);
 
-        if (patrolPoints.Length > 0)
+        if (patrolPoints.Count > 0)
         {
             Gizmos.color = Color.yellow;
             foreach (Vector2 patrolPt in patrolPoints)
