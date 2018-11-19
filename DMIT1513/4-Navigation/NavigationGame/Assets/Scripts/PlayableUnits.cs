@@ -12,7 +12,8 @@ public class PlayableUnits : MonoBehaviour
     }
     public UnitAI aichan = UnitAI.Sleep;
     public GameObject target, shootingBase, healthController;
-    public bool isSelected = false;
+    public bool isSelected = false,
+        asleep = false;
 
     ShootingScript shootScript = null;
     NavMeshAgent navAgent;
@@ -26,8 +27,8 @@ public class PlayableUnits : MonoBehaviour
         isEnemy = false,
         hasPatrol = false,
         getRandPatrol = false,
-        drawDetect = true,
-        asleep = false;
+        hasStartPosPatrol = false,
+        drawDetect = true;
     [SerializeField]
     List<Vector2> patrolPoints;
     [SerializeField]
@@ -67,6 +68,11 @@ public class PlayableUnits : MonoBehaviour
             else
                 AddPatrolPoint(GetRandomPatrolWithinRange(patrolRange));
         }
+        if (hasStartPosPatrol)
+        {
+            patrolPoints[0] = new Vector2(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
+            currentPatrol = 1;
+        }
         #endregion
 
         // set first patrol point
@@ -76,12 +82,13 @@ public class PlayableUnits : MonoBehaviour
         if (canInterrupt)
             navAgent.stoppingDistance = shootDist - 1;
 
+        GetComponent<Rigidbody>().drag = 1;
 
         wakeDelay += Time.time;
 
     }
     #endregion
-    
+
     #region Update
     // Update is called once per frame
     void Update()
@@ -97,7 +104,7 @@ public class PlayableUnits : MonoBehaviour
         AiState();
     }
     #endregion
-    
+
     #region AI State
     void AiState()
     {
@@ -111,6 +118,11 @@ public class PlayableUnits : MonoBehaviour
             #endregion
             #region Attack
             case UnitAI.Attack:
+                if (navAgent.remainingDistance > shootDist)
+                {
+                    aichan = UnitAI.Move;
+                }
+                if (target.tag == gameObject.tag) target = null;
                 // double check if my target is there
                 if (CheckTarget(target))
                 {
@@ -147,8 +159,12 @@ public class PlayableUnits : MonoBehaviour
             #region Move
             case UnitAI.Move:
                 #region Check Target
+                if (isSelected && navAgent.remainingDistance > shootDist) // 1 + navAgent.stoppingDistance
+                {
+                    navAgent.isStopped = false;
+                }
                 // if i have a target
-                if (CheckTarget(target, "hasTarget"))
+                else if (CheckTarget(target, "hasTarget"))
                 {
                     // if i have a target and it is within my detect radius
                     if (CheckTarget(target))
@@ -164,6 +180,8 @@ public class PlayableUnits : MonoBehaviour
                 {
                     if (isEnemy) target = EnemyDetection("Moveable");
                     else target = EnemyDetection();
+
+                    ShooterBaseLookAt(target);
                 }
                 #endregion
                 #region Patrol
@@ -268,8 +286,10 @@ public class PlayableUnits : MonoBehaviour
     void ShooterBaseLookAt(GameObject lookTarget)
     {
         if (shootingBase == null) return;
-
-        shootingBase.transform.LookAt(lookTarget.transform);
+        if (lookTarget != null)
+            shootingBase.transform.LookAt(lookTarget.transform);
+        else
+            shootingBase.transform.localRotation = Quaternion.identity;
     }
     #endregion
     #region Patrol

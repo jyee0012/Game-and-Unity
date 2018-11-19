@@ -107,6 +107,11 @@ public class ShootingScript : MonoBehaviour {
             bombProj.explodeRadius = projectileExplodeRadius;
             if (explodeSound != null) bombProj.boomSound = explodeSound;
         }
+        else
+        {
+            bombProj.bCanExplode = false;
+            bombProj.explodeRadius = 0;
+        }
         if (passProjectileDmg) bombProj.explodeDmg = projectileDmg;
         if (animateJoint && animJoint != null) PlayJointAnimation();
         projectileRBody.useGravity = projectileGravity;

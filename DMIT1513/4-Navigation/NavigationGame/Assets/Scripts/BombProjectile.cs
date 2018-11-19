@@ -5,12 +5,12 @@ using UnityEngine;
 public class BombProjectile : MonoBehaviour
 {
     [SerializeField]
-    bool bTest = false, bDestroyInstant = false, useTeamTag = false;
+    bool bTest = false, bDestroyInstant = false, useTeamTag = false, useRoot = false;
     public AudioSource boomSound;
     public ParticleSystem explosionEffect;
 
     public bool bCanExplode = false;
-    public float explodeRadius = 2, explodeDmg = 5;
+    public float explodeRadius = 2, explodeDmg = 5, destroyDelay = 3;
     public GameObject ignoreObj, spawnOther, bombOwner = null;
     Vector3 ownerPos;
     // Use this for initialization
@@ -36,20 +36,30 @@ public class BombProjectile : MonoBehaviour
     {
         return ownerPos;
     }
-    public void Explode()
+    public void Explode(Transform explodeTarget = null)
     {
         if (!bCanExplode) return;
         //transform.localScale *= explodeRadius;
-        bool hitSomething = false;
-        Collider[] explosionHit = Physics.OverlapSphere(transform.position, explodeRadius);
-        foreach(Collider obj in explosionHit)
+        if (explodeTarget == null)
         {
-            string objTag = "";
-            if (obj.tag == "Moveable" || obj.tag == "EnemyUnit") objTag = obj.tag;
-            HitTarget(obj.transform, objTag);
-            if (objTag != "") hitSomething = true;
+            bool hitSomething = false;
+            Collider[] explosionHit = Physics.OverlapSphere(transform.position, explodeRadius);
+            foreach (Collider obj in explosionHit)
+            {
+                string objTag = "";
+                Debug.Log(obj.name);
+                Debug.Log("I am " + bombOwner + " and I hit " + obj.transform.gameObject.name + " and they have a tag of " + obj.transform.tag);
+                if (obj.tag == "Moveable" || obj.tag == "EnemyUnit")
+                {
+                    objTag = obj.tag;
+                    HitTarget(obj.transform, objTag);
+                }
+                if (objTag != "") hitSomething = true;
+            }
+            if (!hitSomething) return;
         }
-        if (!hitSomething) return;
+        else
+            HitTarget(explodeTarget);
 
         if (boomSound != null)
         {
@@ -74,12 +84,17 @@ public class BombProjectile : MonoBehaviour
     }
     void CollideTarget(Transform collisionTarget)
     {
-        if (collisionTarget.root.gameObject == ignoreObj) return;
-        if (useTeamTag && collisionTarget.root.gameObject.tag == ignoreObj.tag) return;
-        Explode();
-        if (!bCanExplode) HitTarget(collisionTarget.transform);
+        //Debug.Log(collisionTarget.parent.gameObject.name + " ignores " + ignoreObj.name);
+        //collisionTarget.GetComponentInParent<PlayableUnits>().gameObject != null;
+        //if (collisionTarget.root.gameObject == ignoreObj) return;
+        //if (useTeamTag && collisionTarget.root.gameObject.tag == ignoreObj.tag) return;
+        Transform playUnit = FindPlayableUnit(collisionTarget).transform;
+        //Debug.Log("I am " + bombOwner + " and I hit " + collisionTarget.parent.gameObject.name);
+        
+        if (!bCanExplode) HitTarget(collisionTarget.parent);
+        else Explode(collisionTarget.parent);
         //Debug.Log(collision.gameObject.name);
-        TrueDestroy();
+        //TrueDestroy();
     }
     private void OnDestroy()
     {
@@ -107,13 +122,20 @@ public class BombProjectile : MonoBehaviour
         {
             GetComponent<SphereCollider>().enabled = false;
         }
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, destroyDelay);
         gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
     void HitTarget(Transform obj, string targetTag = "Target")
     {
-        if (obj.transform.tag != targetTag || obj.root.tag != targetTag) return;
-        if (obj.root.tag == targetTag) obj = obj.root;
+        //Debug.Log(bombOwner.name + " hit -> " + obj.name);
+        obj = FindPlayableUnit(obj).transform;
+        if (obj == null) return;
+        //if (obj.transform.tag != targetTag) return;
+        if (useRoot)
+        {
+            if (obj.root.tag != targetTag) return;
+            if (obj.root.tag == targetTag) obj = obj.root;
+        }
         //Debug.Log(obj.name);
         //Debug.Log("I hit something");
 
@@ -124,5 +146,24 @@ public class BombProjectile : MonoBehaviour
         if (hp != null) hp.Damage(explodeDmg, false);
         else Destroy(obj.gameObject);
         //Destroy(obj);
+    }
+    GameObject FindPlayableUnit(Transform transform)
+    {
+        GameObject playableUnit = null;
+        PlayableUnits tempUnit = transform.GetComponentInParent<PlayableUnits>();
+        if (tempUnit != null)
+
+            playableUnit = tempUnit.gameObject;
+        else
+        {
+            tempUnit = transform.GetComponentInChildren<PlayableUnits>();
+            if (tempUnit != null)
+                playableUnit = tempUnit.gameObject;
+        }
+        return playableUnit;
+    }
+    GameObject FindPlayableUnit(GameObject obj)
+    {
+        return FindPlayableUnit(obj.transform);
     }
 }

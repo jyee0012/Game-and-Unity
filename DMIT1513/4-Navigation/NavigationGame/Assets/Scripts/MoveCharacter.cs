@@ -12,7 +12,7 @@ public class MoveCharacter : MonoBehaviour
     [SerializeField]
     int waypointDist = 10;
     [SerializeField]
-    bool canMoveCamera = true, cameraHasBoundary = false;
+    bool canMoveCamera = true, cameraHasBoundary = false, isRegionMap = false, autoSwapCam = false;
     [SerializeField]
     float movementSpeed = 20, rotationSpeed = 20;
     [SerializeField]
@@ -22,10 +22,11 @@ public class MoveCharacter : MonoBehaviour
     [SerializeField]
     KeyCode selectUnitBtn = KeyCode.Mouse0, deselectUnitBtn = KeyCode.Mouse1, multiSelectBtn = KeyCode.LeftControl, 
         speedUpCamBtn = KeyCode.LeftShift, swapCamBtn = KeyCode.C, camZoomBtn = KeyCode.LeftShift;
-    Vector3 cameraStartPos;
+    Vector3 cameraStartPos, mouseStartPos = Vector3.zero, mouseEndPos = Vector3.zero;
     Quaternion cameraStartRot;
     float vInput, hInput, rxInput, ryInput, baseMoveSpeed;
     bool bSwapCam = true;
+    GameObject currentCam = null;
     #endregion
 
     #region Start
@@ -39,6 +40,10 @@ public class MoveCharacter : MonoBehaviour
         movementIndicator.SetActive(false);
         baseMoveSpeed = movementSpeed;
         SwapCamera(true);
+        if (autoSwapCam)
+        {
+            bSwapCam = !bSwapCam;
+        }
     }
     #endregion
     #region Update
@@ -115,14 +120,14 @@ public class MoveCharacter : MonoBehaviour
             
             if (Physics.Raycast(ray, out hit))
             {
-                string debugString = hit.transform.gameObject.name;
-                if (hit.transform.transform.parent != null && hit.transform.transform.parent != hit.transform) debugString += ":" + hit.transform.parent.gameObject.name;
-                Debug.Log(debugString);
-                if (regionMang != null && regionMang.GetComponent<RegionManager>() != null)
+                //string debugString = hit.transform.gameObject.name;
+                //if (hit.transform.transform.parent != null && hit.transform.transform.parent != hit.transform) debugString += ":" + hit.transform.parent.gameObject.name;
+                //Debug.Log(debugString);
+                if (regionMang != null && regionMang.GetComponent<RegionManager>() != null && isRegionMap)
                 {
                     RegionManager tempRegMang = regionMang.GetComponent<RegionManager>();
                     if (hit.transform.gameObject != null) tempRegMang.CheckIfRegion(hit.transform.gameObject);
-                    if (hit.transform.parent.gameObject != null) tempRegMang.CheckIfRegion(hit.transform.parent.gameObject);
+                    if (hit.transform.parent != null) tempRegMang.CheckIfRegion(hit.transform.parent.gameObject);
                     if (hit.transform.root.gameObject != null) tempRegMang.CheckIfRegion(hit.transform.root.gameObject);
                 }
                 if (Input.GetKey(multiSelectBtn) && hit.transform.tag == "Moveable")
@@ -169,6 +174,29 @@ public class MoveCharacter : MonoBehaviour
                         unit.GetComponent<NavMeshAgent>().SetDestination(hit.point);
                     }
                 }
+            }
+        }
+    }
+    void MassSelectUnit()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Ray ray = mainCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                mouseStartPos = hit.transform.position;
+                Debug.Log(mouseStartPos);
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            Ray ray = mainCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                mouseEndPos = hit.transform.position;
+                Debug.Log(mouseEndPos);
             }
         }
     }
@@ -232,4 +260,17 @@ public class MoveCharacter : MonoBehaviour
         mapCam.SetActive(!swapCam);
     }
     #endregion
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        /* lets say mouse start is 113,512 and mouse end is 142,300
+         * mouseStartX - mouseEndX = -30
+         */
+        //Vector3 mouseCenter = Vector3.Lerp(mouseStartPos, mouseEndPos, 0.5f),
+        //    mouseSize = mouseStartPos - mouseEndPos;
+        //mouseCenter.y = mouseStartPos.y;
+        //mouseSize = new Vector3(Mathf.Abs(mouseSize.x), mouseStartPos.y, Mathf.Abs(mouseSize.z));
+        //Gizmos.DrawCube(mouseCenter,mouseSize);
+
+    }
 }

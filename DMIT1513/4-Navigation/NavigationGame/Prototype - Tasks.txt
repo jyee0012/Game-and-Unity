@@ -6,18 +6,28 @@ Make a Map 					- 30mins 			- Done
 Region the Map 					- 30mins			- Done
 Mass Control Units 				- 60mins 			- I put the time that should've been spent on this onto the win/lose
 Selective Control Units 			- 60mins 			- Done
-Spawn Unique Units 				- 30mins			- 
+Spawn Unique Units 				- 30mins			- Didn't Have time
 Time based spawn 				- 15mins			- Done
 Add new Win/Lose conditions			- 30mins			- Taking Alot Longer (Reworking Mechanics for Win/Lose)
 Add random partol for enemies			- 15mins			- Done
 X-Add Sword Swing attack & animation		- 30mins			- Not Doing Yet
+Fixed playable unit controls			- 30mins			- Done
 
-Total:   = 330mins (5 & 1/2 hrs)
+
+Total:   = 360mins (6 hrs)
 
 Current Task:
 Create & Attach Region Scenes to the Region Manager.
 
-pritorize player controls
-if (not selected && no destination)
-else
-everything
+WASD = Move Camera
+LeftShift + Vertical Mouse = Camera Zoom
+
+LeftCtrl + LeftClick = Multi-Select
+
+LeftClick = Single Select 
+
+
+
+Objective: Eliminate All Red Enemies
+
+Reinforcements are Purple Elite Enemies

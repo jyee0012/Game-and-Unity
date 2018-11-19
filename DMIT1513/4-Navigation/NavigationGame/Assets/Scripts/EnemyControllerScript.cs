@@ -14,11 +14,18 @@ public class EnemyControllerScript : MonoBehaviour {
     [SerializeField]
     int enemyTotal = 0, enemyAlive = 0, unitAlive = 0;
     [SerializeField]
-    bool win = false, lose = false;
+    bool win = false, lose = false, universalSleep = false;
+    [SerializeField]
+    List<GameObject> unitControlled = new List<GameObject>();
+
+    bool unitSleeping = false;
 	// Use this for initialization
 	void Start () {
         if (findEnemies) FindAllEnemies();
-
+        if (universalSleep != unitSleeping)
+        {
+            PutAllUnitsToSleep(universalSleep);
+        }
 
         //Debug.Log(enemyTotal + "*");
 	}
@@ -36,8 +43,27 @@ public class EnemyControllerScript : MonoBehaviour {
         {
             int endIndex = (win) ? 2 : 3;
             //Debug.Log(endIndex);
-            SceneManager.LoadScene(endIndex);
+            if (win)
+                RegionManager.Instance.Conqure();
+            if (lose)
+                RegionManager.Instance.Retreat();
+            //SceneManager.LoadScene(endIndex);
         }
+    }
+    void PutAllUnitsToSleep(bool uniSleep)
+    {
+        foreach (GameObject unitController in unitControlled)
+        {
+            foreach(PlayableUnits unit in unitController.GetComponentsInChildren<PlayableUnits>())
+            {
+                unit.asleep = uniSleep;
+            }
+            foreach(UnitSpawner spawner in unitController.GetComponentsInChildren<UnitSpawner>())
+            {
+                spawner.canSpawn = !uniSleep;
+            }
+        }
+        unitSleeping = uniSleep;
     }
     void UpdateText()
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class UnitSpawner : MonoBehaviour {
 
     [SerializeField]
@@ -11,31 +11,60 @@ public class UnitSpawner : MonoBehaviour {
     [SerializeField]
     float spawnAmount = 1, spawnDelay = 3, spawnHeight = 1;
     [SerializeField]
-    bool drawSpawnArea = false;
+    bool drawSpawnArea = false, spawnOnce = false;
     public bool canSpawn = true;
-    float timeStamp = 0;
+    [SerializeField]
+    Text timerText;
+    [SerializeField]
+    string timerString = "Time Remaining";
+
+    float timeStamp = 0, countdownTimeLeft;
+    bool once = true;
 	// Use this for initialization
 	void Start () {
         timeStamp += spawnDelay;
         if (minBoundary == Vector2.zero) minBoundary = Vector2.one;
         if (maxBoundary == Vector2.zero) maxBoundary = Vector2.one;
+        countdownTimeLeft = spawnDelay;
+        HideText();
     }
 	
 	// Update is called once per frame
 	void Update () {
-		if (Time.time > timeStamp && canSpawn)
+        if (canSpawn)
+        {
+            countdownTimeLeft -= Time.deltaTime;
+            UpdateText();
+        }
+        else
+        {
+            HideText();
+        }
+		if (countdownTimeLeft < 1 && canSpawn) // Time.time > timeStamp 
         {
             SpawnUnit();
             timeStamp = Time.time + spawnDelay;
+            countdownTimeLeft = spawnDelay;
+            if (spawnOnce) canSpawn = false;
         }
 	}
+    void HideText()
+    {
+        if (timerText != null) timerText.text = "";
+    }
+    void UpdateText()
+    {
+        string minSec = string.Format("{0}:{1:00}", (int)countdownTimeLeft / 60, (int)countdownTimeLeft % 60);
+        if (timerText != null) timerText.text = timerString + ": " + minSec;
+    }
     void SpawnUnit()
     {
         if (templateUnit == null || !canSpawn) return;
 
         for(int i = 0; i < spawnAmount; i++)
         {
-            Instantiate(templateUnit, GetRandomSpawnLoc(minBoundary, maxBoundary), templateUnit.transform.rotation, null);
+            GameObject tempUnit = Instantiate(templateUnit, GetRandomSpawnLoc(minBoundary, maxBoundary), templateUnit.transform.rotation, null);
+            tempUnit.SetActive(true);
         }
 
     }

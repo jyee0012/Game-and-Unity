@@ -59,7 +59,9 @@ public class RegionManager : MonoBehaviour
     [SerializeField]
     int selectedRegionInt;
     [SerializeField]
-    bool selectedRegionConqure;
+    bool selectedRegionConqure, isRegionMap = false;
+    [SerializeField]
+    int currentSelectedRegionInt;
 
     [SerializeField]
     List<GameObject> regionList;
@@ -87,9 +89,20 @@ public class RegionManager : MonoBehaviour
     void Update()
     {
         UpdateText();
-        for (int i = 0; i < regionList.Count;i++)
+        if (isRegionMap)
         {
-            SetRegionMaterial(i);
+            for (int i = 0; i < regionList.Count; i++)
+            {
+                SetRegionMaterial(i);
+            }
+        }
+        if (CheckWinCondition() || CheckLoseCondition())
+        {
+            GotoEndScene();
+        }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Conqure();
         }
     }
 
@@ -114,6 +127,7 @@ public class RegionManager : MonoBehaviour
         {
             int regionIndex = int.Parse(regionInt.ToString());
             SetSelectedRegion(regionIndex);
+            //Debug.Log(regionIndex);
             LoadRegionScene(regionIndex);
             //ConqureRegion(regionIndex);
 
@@ -122,6 +136,7 @@ public class RegionManager : MonoBehaviour
     }
     public void SetSelectedRegion(int regionIndex)
     {
+        currentSelectedRegionInt = regionIndex;
         selectedRegion = regionList[regionIndex];
         selectedRegionInt = regionSceneInt[regionIndex];
         selectedRegionConqure = conquredRegions[regionIndex];
@@ -135,16 +150,48 @@ public class RegionManager : MonoBehaviour
     {
         conquredRegions[regionIndex] = !conquredRegions[regionIndex];
     }
+    public void UnconqureAllRegions()
+    {
+        for(int i = 0; i < conquredRegions.Length; i++)
+        {
+            conquredRegions[i] = false;
+        }
+    }
     public void LoadRegionScene(int regionIndex)
     {
         CustomLoadScene(regionSceneInt[regionIndex]);
+    }
+    public void FindAndConqureRegionByBuildIndex(int buildIndex)
+    {
+        int? regionBuildIndex = FindRegionByBuildIndex(buildIndex);
+        if (regionBuildIndex != null)
+        {
+            ConqureRegion(int.Parse(regionBuildIndex.ToString()));
+        }
+    }
+    public int? FindRegionByBuildIndex(int buildIndex)
+    {
+        int? regionIndex = null;
+        for(int i = 0;i < regionList.Count; i++)
+        {
+            if (regionSceneInt[i] == buildIndex) regionIndex = i;
+        }
+        return regionIndex;
     }
     public void Retreat()
     {
         retreatCount--;
         CustomLoadScene(1);
     }
-    public bool CheckWinConditions()
+    public void Conqure()
+    {
+        if (isRegionMap) return;
+
+        selectedRegionConqure = true;
+        ConqureRegion(currentSelectedRegionInt);
+        CustomLoadScene(1);
+    }
+    public bool CheckWinCondition()
     {
         bool won = true;
         foreach (bool conqured in conquredRegions)
@@ -159,8 +206,9 @@ public class RegionManager : MonoBehaviour
     }
     public void GotoEndScene()
     {
-        int endIndex = (CheckWinConditions()) ? 2 : 3;
+        int endIndex = (CheckWinCondition()) ? 2 : 3;
         //Debug.Log(endIndex);
+        UnconqureAllRegions();
         CustomLoadScene(endIndex);
     }
     void UpdateText()

@@ -11,7 +11,7 @@ public class HealthScript : MonoBehaviour
     [SerializeField]
     Slider healthDisplay;
     [SerializeField]
-    GameObject greenHealth, redHealth, lookAtTarget, lookAtFrom = null;
+    GameObject greenHealth, redHealth, lookAtTarget, lookAtFrom = null, healthOwner;
     [SerializeField]
     bool lockPos = false, lockRot = false, lookAt = false;
     [SerializeField]
@@ -96,7 +96,7 @@ public class HealthScript : MonoBehaviour
         if (greenHealth != null || redHealth != null)
         {
             Vector3 greenPos = greenHealth.transform.localPosition, greenScale = greenHealth.transform.localScale;
-            greenScale.x = health / 100;
+            greenScale.x = (health / maxHealth);
             greenPos.x = ((1 - greenScale.x) / 2) * -1;
             greenHealth.transform.localScale = greenScale;
             greenHealth.transform.localPosition = greenPos;
@@ -152,7 +152,8 @@ public class HealthScript : MonoBehaviour
     {
         if (lockPos)
         {
-            Vector3 lockPos = greenHealth.transform.root.position;
+            Vector3 lockPos = greenHealth.transform.parent.parent.parent.position;
+            if (healthOwner != null) lockPos = healthOwner.transform.position;
             lockPos.z += healthbarOffset;
             greenHealth.transform.parent.parent.position = lockPos;
         }
