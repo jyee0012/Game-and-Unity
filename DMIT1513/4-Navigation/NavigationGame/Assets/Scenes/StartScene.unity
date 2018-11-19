@@ -4766,7 +4766,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Some RTS
+  m_Text: Ruler of the Abyss
 --- !u!222 &1818721451
 CanvasRenderer:
   m_ObjectHideFlags: 0

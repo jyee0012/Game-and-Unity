@@ -14,7 +14,7 @@ X-Add Sword Swing attack & animation		- 30mins			- Not Doing Yet
 Fixed playable unit controls			- 30mins			- Done
 
 
-Total:   = 360mins (6 hrs)
+Total:   = 360mins (9 1/2 hrs)
 
 Current Task:
 Create & Attach Region Scenes to the Region Manager.
