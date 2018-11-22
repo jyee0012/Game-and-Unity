@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
+// Serialize Region Info for inspector
 #region Region Info
 public struct RegionInfo
 {
@@ -28,6 +30,9 @@ public struct RegionInfo
     }
 }
 #endregion
+
+// Create UnitController and UnitPlaceHolder for spawning
+
 public class RegionManager : MonoBehaviour
 {
     private static RegionManager instance;
