@@ -70,7 +70,9 @@
     <Compile Include="Assets\Scripts\PlayableUnits.cs" />
     <Compile Include="Assets\Scripts\RegionManager.cs" />
     <Compile Include="Assets\Scripts\ShootingScript.cs" />
+    <Compile Include="Assets\Scripts\UnitManager.cs" />
     <Compile Include="Assets\Scripts\UnitSpawner.cs" />
+    <Compile Include="Assets\Scripts\UnitTemplate.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>C:/Users/shark_000/Documents/GitHub/Game-and-Unity/DMIT1513/4-Navigation/NavigationGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

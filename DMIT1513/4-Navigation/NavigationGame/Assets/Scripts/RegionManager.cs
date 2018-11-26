@@ -4,15 +4,16 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
 // Serialize Region Info for inspector
 #region Region Info
-public struct RegionInfo
+[System.Serializable]
+public class RegionInfo 
 {
     private GameObject _regionObj;
     private int _regionSceneIndex;
     private bool _regionConqured;
-
+    #region Old Vars
+    /*
     public GameObject regionObject
     {
         get { return _regionObj; }
@@ -28,6 +29,11 @@ public struct RegionInfo
         get { return _regionConqured; }
         set { _regionConqured = value; }
     }
+    */
+    #endregion
+    public GameObject regionObject;
+    public int regionSceneIndex;
+    public bool regionConqured;
 }
 #endregion
 
@@ -51,7 +57,10 @@ public class RegionManager : MonoBehaviour
         else if (instance != this)
         {
             // destroy the other instance after taking its info.
-            this.conquredRegions = instance.conquredRegions;
+            for(int i = 0; i < instance.regionList.Count;i++)
+            {
+                this.regionList[i].regionConqured = instance.regionList[i].regionConqured;
+            }
             this.retreatCount = instance.retreatCount;
             Destroy(instance.gameObject);
             instance = this;
@@ -60,20 +69,13 @@ public class RegionManager : MonoBehaviour
         }
     }
     [SerializeField]
-    GameObject selectedRegion;
-    [SerializeField]
-    int selectedRegionInt;
-    [SerializeField]
-    bool selectedRegionConqure, isRegionMap = false;
-    [SerializeField]
-    int currentSelectedRegionInt;
+    RegionInfo currentRegion;
 
     [SerializeField]
-    List<GameObject> regionList;
+    bool isRegionMap = false;
+
     [SerializeField]
-    int[] regionSceneInt;
-    [SerializeField]
-    bool[] conquredRegions;
+    List<RegionInfo> regionList;
     [SerializeField]
     int retreatCount = 5;
     [SerializeField]
@@ -87,7 +89,7 @@ public class RegionManager : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        canManage = (regionList.Count != regionSceneInt.Length && regionList.Count != conquredRegions.Length);
+        //canManage = (regionList.Count != regionSceneInt.Length && regionList.Count != conquredRegions.Length);
     }
 
     // Update is called once per frame
@@ -125,7 +127,7 @@ public class RegionManager : MonoBehaviour
         int? regionInt = null;
         for (int i = 0; i < regionList.Count; i++)
         {
-            if (regionList[i] == region)
+            //if (regionList[i] == region)
                 regionInt = i;
         }
         if (regionInt != null)
@@ -141,30 +143,27 @@ public class RegionManager : MonoBehaviour
     }
     public void SetSelectedRegion(int regionIndex)
     {
-        currentSelectedRegionInt = regionIndex;
-        selectedRegion = regionList[regionIndex];
-        selectedRegionInt = regionSceneInt[regionIndex];
-        selectedRegionConqure = conquredRegions[regionIndex];
+        currentRegion = regionList[regionIndex];
     }
     public void ConqureRegion(int regionIndex, bool conqured = true)
     {
-        conquredRegions[regionIndex] = conqured;
+        regionList[regionIndex].regionConqured = conqured;
         //if (!conquredRegions[regionIndex]) ToggleConqureRegion(regionIndex);
     }
     public void ToggleConqureRegion(int regionIndex)
     {
-        conquredRegions[regionIndex] = !conquredRegions[regionIndex];
+        regionList[regionIndex].regionConqured = !regionList[regionIndex].regionConqured;
     }
     public void UnconqureAllRegions()
     {
-        for(int i = 0; i < conquredRegions.Length; i++)
+        for(int i = 0; i < regionList.Count; i++)
         {
-            conquredRegions[i] = false;
+            regionList[i].regionConqured = false;
         }
     }
     public void LoadRegionScene(int regionIndex)
     {
-        CustomLoadScene(regionSceneInt[regionIndex]);
+        CustomLoadScene(regionList[regionIndex].regionSceneIndex);
     }
     public void FindAndConqureRegionByBuildIndex(int buildIndex)
     {
@@ -179,7 +178,7 @@ public class RegionManager : MonoBehaviour
         int? regionIndex = null;
         for(int i = 0;i < regionList.Count; i++)
         {
-            if (regionSceneInt[i] == buildIndex) regionIndex = i;
+            if (regionList[i].regionSceneIndex == buildIndex) regionIndex = i;
         }
         return regionIndex;
     }
@@ -192,16 +191,16 @@ public class RegionManager : MonoBehaviour
     {
         if (isRegionMap) return;
 
-        selectedRegionConqure = true;
-        ConqureRegion(currentSelectedRegionInt);
+        currentRegion.regionConqured = true;
+        ConqureRegion(currentRegion.regionSceneIndex);
         CustomLoadScene(1);
     }
     public bool CheckWinCondition()
     {
         bool won = true;
-        foreach (bool conqured in conquredRegions)
+        foreach (RegionInfo conqured in regionList)
         {
-            if (!conqured) won = false;
+            if (!conqured.regionConqured) won = false;
         }
         return won;
     }
@@ -223,17 +222,17 @@ public class RegionManager : MonoBehaviour
     void SetRegionMaterial(int regionIndex)
     {
         Renderer regionRenderer = null;
-        if (regionList[regionIndex].GetComponentInChildren<Renderer>() != null)
+        if (regionList[regionIndex].regionObject.GetComponentInChildren<Renderer>() != null)
         {
-            regionRenderer = regionList[regionIndex].GetComponentInChildren<Renderer>();
+            regionRenderer = regionList[regionIndex].regionObject.GetComponentInChildren<Renderer>();
         }
         if (conquredMat == null || unconquredMat == null || regionRenderer == null) return;
         //regionRenderer.material = (conquredRegions[regionIndex]) ? conquredMat : unconquredMat;
-        if (regionList[regionIndex].GetComponentsInChildren<Renderer>().Length > 0)
+        if (regionList[regionIndex].regionObject.GetComponentsInChildren<Renderer>().Length > 0)
         {
-            foreach (Renderer render in regionList[regionIndex].GetComponentsInChildren<Renderer>())
+            foreach (Renderer render in regionList[regionIndex].regionObject.GetComponentsInChildren<Renderer>())
             {
-                render.material = (conquredRegions[regionIndex]) ? conquredMat : unconquredMat;
+                render.material = (regionList[regionIndex].regionConqured) ? conquredMat : unconquredMat;
             }
         }
     }
