@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class UnitInfo
+{
+    public GameObject prefab;
+    public Material material;
+}
+
 public class UnitManager : MonoBehaviour {
 
     public enum UnitType
@@ -14,10 +21,12 @@ public class UnitManager : MonoBehaviour {
         EnemyElite,
         Knight
     }
-    public GameObject soldierPrefab, enemyPrefab, heavyPrefab, sniperPrefab, enemyElitePrefab, knightPrefab;
-    public Material soldierMat, enemyMat, heavyMat, sniperMat, enemyEliteMat, knightMat;
+    // [Header("Unit Types")]
+    public UnitInfo soldier, enemy, heavy, sniper, enemyElite, knight;
     List<GameObject> unitList;
 
+    [Space]
+    [Space]
     [SerializeField]
     List<GameObject> targetList;
 	// Use this for initialization
@@ -73,22 +82,22 @@ public class UnitManager : MonoBehaviour {
         switch (template.unitType)
         {
             case UnitType.Soldier:
-                CreateUnit(soldierPrefab, unit);
+                CreateUnit(soldier.prefab, unit);
                 break;
             case UnitType.EnemySoldier:
-                CreateUnit(enemyPrefab, unit);
+                CreateUnit(enemy.prefab, unit);
                 break;
             case UnitType.Sniper:
-                CreateUnit(sniperPrefab, unit);
+                CreateUnit(sniper.prefab, unit);
                 break;
             case UnitType.Heavy:
-                CreateUnit(heavyPrefab, unit);
+                CreateUnit(heavy.prefab, unit);
                 break;
             case UnitType.EnemyElite:
-                CreateUnit(enemyElitePrefab, unit);
+                CreateUnit(enemyElite.prefab, unit);
                 break;
             case UnitType.Knight:
-                CreateUnit(knightPrefab, unit);
+                CreateUnit(knight.prefab, unit);
                 break;
             default:
                 Debug.Log(unit.name + " does not have Unit Type");
@@ -112,5 +121,43 @@ public class UnitManager : MonoBehaviour {
             return;
         }
         CreateUnit(unitPrefab, unitTemplate.transform.position, unitTemplate.transform.rotation);
+    }
+    public GameObject GetPrefab(UnitType type)
+    {
+        return GetUnit(type).prefab;
+    }
+    public Material GetMaterial(UnitType type)
+    {
+        return GetUnit(type).material;
+    }
+    UnitInfo GetUnit (UnitType type)
+    {
+        UnitInfo foundInfo = null;
+        switch (type)
+        {
+            case UnitType.None:
+                break;
+            case UnitType.Soldier:
+                foundInfo = soldier;
+                break;
+            case UnitType.EnemySoldier:
+                foundInfo = enemy;
+                break;
+            case UnitType.Sniper:
+                foundInfo = sniper;
+                break;
+            case UnitType.Heavy:
+                foundInfo = heavy;
+                break;
+            case UnitType.EnemyElite:
+                foundInfo = enemyElite;
+                break;
+            case UnitType.Knight:
+                foundInfo = knight;
+                break;
+            default:
+                break;
+        }
+        return foundInfo;
     }
 }
