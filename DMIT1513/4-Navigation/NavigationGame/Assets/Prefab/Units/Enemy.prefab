@@ -989,14 +989,12 @@ MonoBehaviour:
   lockOnTarget: 1
   canInterrupt: 0
   isEnemy: 0
+  alwaysActiveHp: 1
   hasPatrol: 1
-  getRandPatrol: 1
-  hasStartPosPatrol: 0
+  getRandPatrol: 0
+  hasStartPosPatrol: 1
   drawDetect: 0
-  patrolPoints:
-  - {x: 90, y: 140}
-  - {x: 70, y: 120}
-  - {x: 60, y: 140}
+  patrolPoints: []
   selectedIndicator: {fileID: 1751858334070560}
 --- !u!195 &195025496310084384
 NavMeshAgent:

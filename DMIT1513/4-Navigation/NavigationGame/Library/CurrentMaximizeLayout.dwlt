@@ -23,7 +23,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 492}
   m_MaxSize: {x: 14004, y: 14042}
   vertical: 0
-  controlID: 633
+  controlID: 528
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 492}
   m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 634
+  controlID: 482
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 635
+  controlID: 453
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,8 +169,8 @@ MonoBehaviour:
     y: 0
     width: 271
     height: 398
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -203,9 +203,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: e26e0000
-    m_LastClickedID: 28386
-    m_ExpandedIDs: defbffff00000000
+    m_SelectedIDs: c06900000462000036dd000012ab0000
+    m_LastClickedID: 27072
+    m_ExpandedIDs: ccfbffff000000001a720000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -224,7 +224,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 5}
     m_SearchString: 
   m_ExpandedScenes:
-  - StartScene
+  - PlayScene
   m_CurrenRootInstanceID: 0
   m_LockTracker:
     m_IsLocked: 0
@@ -282,14 +282,14 @@ MonoBehaviour:
     height: 377
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 39323.06742106597
+  lastFramingTime: 12524.050379324215
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 434.6437, y: 344.59872, z: -283.29272}
+    m_Target: {x: 57.261887, y: 3.652378, z: 141.39307}
     speed: 2
-    m_Value: {x: 434.6437, y: 344.59872, z: -283.29272}
+    m_Value: {x: 57.261887, y: 3.652378, z: 141.39307}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -317,13 +317,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.14050359, y: -0.025241831, z: 0.003581696, w: -0.98975194}
+    m_Target: {x: 0.24694598, y: 0.32634324, z: -0.08874317, w: 0.9080982}
     speed: 2
-    m_Value: {x: -0.14050357, y: -0.025241831, z: 0.0035816957, w: -0.98975194}
+    m_Value: {x: -0.24694598, y: -0.32634324, z: 0.08874317, w: -0.9080983}
   m_Size:
-    m_Target: 272.29382
+    m_Target: 117.28319
     speed: 2
-    m_Value: 272.29382
+    m_Value: 117.28319
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -424,20 +424,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Prefab/Units
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Prefab/Units
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\shark_000\Documents\GitHub\Game-and-Unity\DMIT1513\4-Navigation\NavigationGame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 17}
-    m_SelectedIDs: 040a0000
-    m_LastClickedID: 2564
-    m_ExpandedIDs: 0000000054090000f009000000ca9a3b
+    m_SelectedIDs: 520c0000
+    m_LastClickedID: 3154
+    m_ExpandedIDs: 00000000800900001c0a00005c0b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -465,7 +465,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000054090000f009000000ca9a3b
+    m_ExpandedIDs: 00000000800900001c0a00005c0b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -490,8 +490,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: e26e0000
-    m_LastClickedInstanceID: 28386
+    m_SelectedInstanceIDs: c06900000462000036dd000012ab0000
+    m_LastClickedInstanceID: 43794
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000e8360000a0810100
     m_RenameOverlay:
@@ -680,8 +680,8 @@ MonoBehaviour:
     y: 0
     width: 280
     height: 675
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 15}
   m_Panes:
   - {fileID: 15}

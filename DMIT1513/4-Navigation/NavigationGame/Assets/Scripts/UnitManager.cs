@@ -23,32 +23,48 @@ public class UnitManager : MonoBehaviour {
     }
     // [Header("Unit Types")]
     public UnitInfo soldier, enemy, heavy, sniper, enemyElite, knight;
-    List<GameObject> unitList;
+    public List<GameObject> unitList;
 
     [Space]
     [Space]
     [SerializeField]
     List<GameObject> targetList;
+    [SerializeField]
+    UnitTemplate[] foundTemplates;
+    
+    [SerializeField]
+    bool universalCanSpawn = false, useUnit = false, useTemplate = false;
 	// Use this for initialization
 	void Start () {
-        FindAllUnits();
-	}
+        if (useUnit)
+        {
+            FindAllUnits();
+            SpawnAllUnits();
+        }
+        if (useTemplate)
+        {
+            FindAllTemplates();
+            SetAllTemplatesSpawn(universalCanSpawn);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+    }
+
+    #region Unit Functions (For manager to fully control what the templates do)
     void FindAllUnits()
     {
         if (targetList.Count > 0)
         {
-            foreach(GameObject target in targetList)
+            foreach (GameObject target in targetList)
             {
                 GameObject unitObj = null;
                 if (target.GetComponent<UnitTemplate>().gameObject != null) unitObj = target.GetComponent<UnitTemplate>().gameObject;
                 if (target.GetComponentsInChildren<UnitTemplate>().Length > 0)
                 {
-                    foreach(UnitTemplate unit in target.GetComponentsInChildren<UnitTemplate>())
+                    foreach (UnitTemplate unit in target.GetComponentsInChildren<UnitTemplate>())
                     {
                         AddToUnitList(unit.gameObject);
                     }
@@ -59,6 +75,9 @@ public class UnitManager : MonoBehaviour {
         }
         else
         {
+            UnitTemplate[] templateArray = FindObjectsOfType<UnitTemplate>();
+            foundTemplates = templateArray;
+            if (templateArray.Length > 0) AddToUnitList(templateArray);
         }
     }
     void AddToUnitList(GameObject unit)
@@ -66,6 +85,13 @@ public class UnitManager : MonoBehaviour {
         if (!unitList.Contains(unit))
         {
             unitList.Add(unit);
+        }
+    }
+    void AddToUnitList(UnitTemplate[] array)
+    {
+        foreach(UnitTemplate temp in array)
+        {
+            AddToUnitList(temp.gameObject);
         }
     }
     void SpawnAllUnits()
@@ -79,49 +105,74 @@ public class UnitManager : MonoBehaviour {
     {
         UnitTemplate template = unit.GetComponent<UnitTemplate>();
 
-        switch (template.unitType)
+        UnitInfo currentUnit = GetUnit(template.unitType);
+        if (currentUnit == null)
         {
-            case UnitType.Soldier:
-                CreateUnit(soldier.prefab, unit);
-                break;
-            case UnitType.EnemySoldier:
-                CreateUnit(enemy.prefab, unit);
-                break;
-            case UnitType.Sniper:
-                CreateUnit(sniper.prefab, unit);
-                break;
-            case UnitType.Heavy:
-                CreateUnit(heavy.prefab, unit);
-                break;
-            case UnitType.EnemyElite:
-                CreateUnit(enemyElite.prefab, unit);
-                break;
-            case UnitType.Knight:
-                CreateUnit(knight.prefab, unit);
-                break;
-            default:
-                Debug.Log(unit.name + " does not have Unit Type");
-                break;
+            Debug.Log(unit.name + " does not have Unit Type");
+            return;
         }
+        CreateUnit(currentUnit.prefab, unit);
+        Destroy(unit);
     }
-    void CreateUnit(GameObject unitPrefab, Vector3 spawnPos, Quaternion spawnRot, Transform spawnedParent = null)
+    GameObject CreateUnit(GameObject unitPrefab, Vector3 spawnPos, Quaternion spawnRot, Transform spawnedParent = null)
     {
         GameObject spawned = Instantiate(unitPrefab, spawnPos, spawnRot, spawnedParent);
+        return spawned;
     }
-    void CreateUnit (GameObject unitPrefab, Vector3 spawnPos)
+    GameObject CreateUnit(GameObject unitPrefab, Vector3 spawnPos)
     {
-        CreateUnit(unitPrefab, spawnPos, Quaternion.identity);
+        return CreateUnit(unitPrefab, spawnPos, Quaternion.identity);
     }
-    void CreateUnit(GameObject unitPrefab, GameObject unitTemplate)
+    GameObject CreateUnit(GameObject unitPrefab, GameObject unitTemplate)
     {
         UnitTemplate template = unitTemplate.GetComponent<UnitTemplate>();
         if (unitPrefab == null)
         {
             Debug.Log("No " + template.unitType + " Prefab.");
-            return;
+            return null;
         }
-        CreateUnit(unitPrefab, unitTemplate.transform.position, unitTemplate.transform.rotation);
+        GameObject spawned = CreateUnit(unitPrefab, unitTemplate.transform.position, unitTemplate.transform.rotation);
+        PlayableUnits spawnedUnitScript = spawned.GetComponent<PlayableUnits>();
+        if (template.patrolPoints.Count > 0)
+        {
+            spawnedUnitScript.SetPatrolPointList(template.patrolPoints);
+        }
+        return spawned;
     }
+    #endregion
+
+    #region Template Functions (For controlling all templates)
+    void FindAllTemplates()
+    {
+        foreach(GameObject target in targetList)
+        {
+            foreach (UnitTemplate targetTemplate in target.GetComponents<UnitTemplate>())
+            {
+                targetList.Add(targetTemplate.gameObject);
+            }
+            foreach (UnitTemplate targetTemplate in target.GetComponentsInChildren<UnitTemplate>())
+            {
+                targetList.Add(targetTemplate.gameObject);
+            }
+        }
+    }
+    void SetAllTemplatesSpawn(bool bSpawn)
+    {
+        foreach (GameObject template in targetList)
+        {
+            UnitTemplate tempScript = template.GetComponent<UnitTemplate>();
+            tempScript.canSpawn = bSpawn;
+        }
+    }
+    void AddUniqueTemplateToList(GameObject template)
+    {
+        if (template == null) return;
+        if (!targetList.Contains(template))
+        {
+            targetList.Add(template);
+        }
+    }
+    #endregion
     public GameObject GetPrefab(UnitType type)
     {
         return GetUnit(type).prefab;
@@ -159,5 +210,8 @@ public class UnitManager : MonoBehaviour {
                 break;
         }
         return foundInfo;
+    }
+    private void OnDrawGizmos()
+    {
     }
 }

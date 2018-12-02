@@ -25,6 +25,7 @@ public class PlayableUnits : MonoBehaviour
     bool lockOnTarget = false, // once target != null, set destination to target and eliminate 
         canInterrupt = false, // if shooting @ target, if true then can move and ignore target
         isEnemy = false,
+        alwaysActiveHp = true,
         hasPatrol = false,
         getRandPatrol = false,
         hasStartPosPatrol = false,
@@ -83,6 +84,8 @@ public class PlayableUnits : MonoBehaviour
             navAgent.stoppingDistance = shootDist - 1;
 
         GetComponent<Rigidbody>().drag = 1;
+        
+
 
         wakeDelay += Time.time;
 
@@ -95,11 +98,13 @@ public class PlayableUnits : MonoBehaviour
     {
         selectedIndicator.SetActive(isSelected && !isEnemy);
 
-        bool healthControlActive = (isSelected || isEnemy) ? true : false;
+        bool healthControlActive = ((isSelected || isEnemy) || alwaysActiveHp) ? true : false;
         if (healthController.activeInHierarchy != healthControlActive)
         {
             healthController.SetActive(healthControlActive);
         }
+
+        if (patrolPoints.Count < 2 && hasPatrol) hasPatrol = false;
 
         AiState();
     }
@@ -323,6 +328,18 @@ public class PlayableUnits : MonoBehaviour
     void ClearPatrolPoints()
     {
         patrolPoints.Clear();
+    }
+    public void SetPatrolPointList(List<Vector2> patrols)
+    {
+        patrolPoints = patrols;
+    }
+    public void SetPatrolPointList(Vector2[] patrols)
+    {
+        ClearPatrolPoints();
+        foreach(Vector2 patrol in patrols)
+        {
+            AddPatrolPoint(patrol);
+        }
     }
     #endregion
     #region Gizmos

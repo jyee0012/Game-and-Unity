@@ -11,7 +11,7 @@ public class MenuScript : MonoBehaviour
     [SerializeField]
     Image backgroundImage;
     [SerializeField]
-    Text musicText, soundText, masterText, bgmToggleText;
+    Text musicText, soundText, masterText, bgmToggleText, controlText, controlToggleText;
     [SerializeField]
     Slider musicSlider, soundSlider, masterSlider;
     [SerializeField]
@@ -22,7 +22,7 @@ public class MenuScript : MonoBehaviour
     AudioSource[] bgmArray;
     [SerializeField]
     Dropdown bgmDropDown;
-    bool bgmOn = false;
+    bool bgmOn = false, showControls = true;
     public bool useTimeScale = true, startBgmOn = true, hasBgm = true, startCursor = false, useDefaultSound = false, useGlobalVolume = false, useMixerSettings = true, alwaysOnCursor = false;
     [SerializeField]
     float masterVolume = 80, musicVolume = 80, soundVolume = 80;
@@ -43,6 +43,10 @@ public class MenuScript : MonoBehaviour
             {
                 ToggleBGM();
             }
+        }
+        if (controlText != null)
+        {
+            ToggleControlText(showControls);
         }
     }
 
@@ -144,6 +148,16 @@ public class MenuScript : MonoBehaviour
             || 
             (musicText.isActiveAndEnabled && musicSlider.isActiveAndEnabled && 
             soundSlider.isActiveAndEnabled && soundText.isActiveAndEnabled);
+    }
+    void ToggleControlText(bool show = true)
+    {
+        controlText.gameObject.SetActive(show);
+        if(controlToggleText != null) controlToggleText.text = (show) ? "Hide Controls":"Show Controls";
+    }
+    public void ToggleShowControls()
+    {
+        showControls = !showControls;
+        ToggleControlText(showControls);
     }
     #endregion
     #region Pause

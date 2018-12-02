@@ -7,7 +7,7 @@ public class MoveCharacter : MonoBehaviour
 {
     #region Variables
     [SerializeField]
-    GameObject selectedUnit, targetUnit, movementIndicator, mainCam, mapCam, regionMang;
+    GameObject selectedUnit, targetUnit, movementIndicator, mainCam, mapCam, regionMang, multiselectIndicator;
     RaycastHit hit;
     [SerializeField]
     int waypointDist = 10;
@@ -22,7 +22,7 @@ public class MoveCharacter : MonoBehaviour
     [SerializeField]
     KeyCode selectUnitBtn = KeyCode.Mouse0, deselectUnitBtn = KeyCode.Mouse1, multiSelectBtn = KeyCode.LeftControl, 
         speedUpCamBtn = KeyCode.LeftShift, swapCamBtn = KeyCode.C, camZoomBtn = KeyCode.LeftShift;
-    Vector3 cameraStartPos, mouseStartPos = Vector3.zero, mouseEndPos = Vector3.zero;
+    Vector3 cameraStartPos, mouseStartPos = Vector3.zero, mouseEndPos = Vector3.zero, mouseCurrentPos = Vector3.zero;
     Quaternion cameraStartRot;
     float vInput, hInput, rxInput, ryInput, baseMoveSpeed;
     bool bSwapCam = true;
@@ -38,6 +38,7 @@ public class MoveCharacter : MonoBehaviour
         cameraStartPos = mainCam.transform.position;
         cameraStartRot = mainCam.transform.rotation;
         movementIndicator.SetActive(false);
+        multiselectIndicator.SetActive(false);
         baseMoveSpeed = movementSpeed;
         SwapCamera(true);
         if (autoSwapCam)
@@ -61,6 +62,7 @@ public class MoveCharacter : MonoBehaviour
     private void FixedUpdate()
     {
         PlaceIndicators();
+        MassSelectUnit();
         SelectUnit();
         DeselectUnit();
         CameraControls(canMoveCamera, cameraHasBoundary, mainCam);
@@ -99,15 +101,9 @@ public class MoveCharacter : MonoBehaviour
     {
         if (Input.GetKeyDown(deselectUnitBtn) && selectedUnit != null)
         {
-            foreach (GameObject unit in selectedUnits)
-            {
-                //if (unit.GetComponent<PlayableUnits>() != null)
-                unit.GetComponent<PlayableUnits>().isSelected = false;
-            }
-            selectedUnit.GetComponent<PlayableUnits>().isSelected = false;
+            DeselectAllUnits();
             movementIndicator.SetActive(false);
             selectedUnit = null;
-            selectedUnits.Clear();
         }
     }
     #endregion
@@ -132,27 +128,15 @@ public class MoveCharacter : MonoBehaviour
                 }
                 if (Input.GetKey(multiSelectBtn) && hit.transform.tag == "Moveable")
                 {
-                    if (selectedUnit != null && !selectedUnits.Contains(selectedUnit))
-                        selectedUnits.Add(selectedUnit);
-
                     selectedUnit = hit.transform.gameObject;
-                    selectedUnit.GetComponent<PlayableUnits>().isSelected = true;
-                    selectedUnit.GetComponent<PlayableUnits>().WakeUp();
-                    selectedUnits.Add(selectedUnit);
+                    AddUnitToSelected(selectedUnit);
                 }
                 // Debug.Log(hit.transform.tag);
                 else if (hit.transform.tag == "Moveable")
                 {
                     selectedUnit = hit.transform.gameObject;
-                    selectedUnit.GetComponent<PlayableUnits>().isSelected = true;
-                    selectedUnit.GetComponent<PlayableUnits>().WakeUp();
-                    foreach (GameObject unit in selectedUnits)
-                    {
-                        //if (unit.GetComponent<PlayableUnits>() != null)
-                        unit.GetComponent<PlayableUnits>().isSelected = false;
-                    }
-                    selectedUnits.Clear();
-                    selectedUnits.Add(selectedUnit);
+                    DeselectAllUnits();
+                    AddUnitToSelected(selectedUnit);
                 }
                 else if (selectedUnit != null && hit.transform.tag == "EnemyUnit")
                 {
@@ -179,25 +163,75 @@ public class MoveCharacter : MonoBehaviour
     }
     void MassSelectUnit()
     {
+        Vector3 rayDirection = -Vector3.up;
+        bool canBoxCast = false;
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
+            multiselectIndicator.SetActive(true);
             Ray ray = mainCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit))
             {
-                mouseStartPos = hit.transform.position;
-                Debug.Log(mouseStartPos);
+                mouseStartPos = hit.point;
+                //Debug.Log("MouseDown: " + mouseStartPos);
             }
         }
-        else if (Input.GetKeyUp(KeyCode.Mouse0))
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            multiselectIndicator.SetActive(false);
+            Ray ray = mainCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                mouseEndPos = hit.point;
+                //Debug.Log("MouseUp: " + mouseEndPos);
+                rayDirection = ray.direction;
+                canBoxCast = true;
+            }
+        }
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             Ray ray = mainCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit))
             {
-                mouseEndPos = hit.transform.position;
-                Debug.Log(mouseEndPos);
+                mouseCurrentPos = hit.point;
             }
+            if (multiselectIndicator != null)
+            {
+                Vector3 multiselectCenter = Vector3.Lerp(mouseStartPos, mouseCurrentPos, 0.5f), 
+                    multiselectSize = mouseStartPos - mouseCurrentPos;
+
+                multiselectCenter.y = mouseStartPos.y + 1;
+                multiselectSize = new Vector3(Mathf.Abs(multiselectSize.x), 1, Mathf.Abs(multiselectSize.z));
+                multiselectIndicator.transform.position = multiselectCenter;
+                multiselectIndicator.transform.localScale = multiselectSize;
+            }
+        }
+        if (canBoxCast)
+        {
+            Vector3 mouseCenter = Vector3.Lerp(mouseStartPos, mouseEndPos, 0.5f),
+                mouseSize = mouseStartPos - mouseEndPos;
+            mouseCenter.y = mouseStartPos.y + 1;
+            mouseSize = new Vector3(Mathf.Abs(mouseSize.x), mouseStartPos.y, Mathf.Abs(mouseSize.z));
+            RaycastHit[] allHits = Physics.BoxCastAll(mouseCenter, mouseSize / 2, rayDirection);
+            //Debug.Log("BoxCast: true | Length: " + allHits.Length + " | ");
+
+            foreach (RaycastHit boxHit in allHits)
+            {
+                if (boxHit.transform.tag == "Moveable")
+                {
+                    GameObject boxHitObj = boxHit.transform.gameObject;
+
+                    if (boxHitObj != null && !selectedUnits.Contains(boxHitObj))
+                    {
+                        if (selectedUnit == null) selectedUnit = boxHitObj;
+                        AddUnitToSelected(boxHitObj);
+                    }
+                }
+            }
+
+
         }
     }
     #endregion
@@ -260,17 +294,36 @@ public class MoveCharacter : MonoBehaviour
         mapCam.SetActive(!swapCam);
     }
     #endregion
+    void AddUnitToSelected(GameObject newUnit)
+    {
+        if (newUnit != null && !selectedUnits.Contains(newUnit))
+        {
+            newUnit.GetComponent<PlayableUnits>().isSelected = true;
+            newUnit.GetComponent<PlayableUnits>().WakeUp();
+            selectedUnits.Add(newUnit);
+        }
+
+    }
+    void DeselectAllUnits()
+    {
+        foreach (GameObject unit in selectedUnits)
+        {
+            //if (unit.GetComponent<PlayableUnits>() != null)
+            unit.GetComponent<PlayableUnits>().isSelected = false;
+        }
+        selectedUnits.Clear();
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.cyan;
         /* lets say mouse start is 113,512 and mouse end is 142,300
          * mouseStartX - mouseEndX = -30
          */
-        //Vector3 mouseCenter = Vector3.Lerp(mouseStartPos, mouseEndPos, 0.5f),
-        //    mouseSize = mouseStartPos - mouseEndPos;
-        //mouseCenter.y = mouseStartPos.y;
-        //mouseSize = new Vector3(Mathf.Abs(mouseSize.x), mouseStartPos.y, Mathf.Abs(mouseSize.z));
-        //Gizmos.DrawCube(mouseCenter,mouseSize);
+        Vector3 mouseCenter = Vector3.Lerp(mouseStartPos, mouseEndPos, 0.5f),
+            mouseSize = mouseStartPos - mouseEndPos;
+        mouseCenter.y = mouseStartPos.y + 1;
+        mouseSize = new Vector3(Mathf.Abs(mouseSize.x), mouseStartPos.y, Mathf.Abs(mouseSize.z));
+        Gizmos.DrawCube(mouseCenter,mouseSize);
 
     }
 }
