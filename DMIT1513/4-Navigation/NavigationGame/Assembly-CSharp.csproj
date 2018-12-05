@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\PlayableUnits.cs" />
      <Compile Include="Assets\Scripts\RegionManager.cs" />
      <Compile Include="Assets\Scripts\ShootingScript.cs" />
+     <Compile Include="Assets\Scripts\SkillManager.cs" />
      <Compile Include="Assets\Scripts\UnitManager.cs" />
      <Compile Include="Assets\Scripts\UnitSpawner.cs" />
      <Compile Include="Assets\Scripts\UnitTemplate.cs" />

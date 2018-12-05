@@ -2,9 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.EventSystems;
 
 public class MoveCharacter : MonoBehaviour
 {
+    private int fingerID = -1;
+    private void Awake()
+    {
+        #if !UNITY_EDITOR
+             fingerID = 0; 
+        #endif
+    }
     #region Variables
     [SerializeField]
     GameObject selectedUnit, targetUnit, movementIndicator, mainCam, mapCam, regionMang, multiselectIndicator;
@@ -112,13 +120,18 @@ public class MoveCharacter : MonoBehaviour
     {
         if (Input.GetKeyDown(selectUnitBtn))
         {
+            bool hitUI = false;
             Ray ray = mainCam.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-            
-            if (Physics.Raycast(ray, out hit))
+            if (EventSystem.current.IsPointerOverGameObject(fingerID))    // is the touch on the GUI
             {
-                //string debugString = hit.transform.gameObject.name;
-                //if (hit.transform.transform.parent != null && hit.transform.transform.parent != hit.transform) debugString += ":" + hit.transform.parent.gameObject.name;
-                //Debug.Log(debugString);
+                // GUI Action
+                hitUI = true;
+            }
+            if (Physics.Raycast(ray, out hit) && !hitUI)
+            {
+                string debugString = hit.transform.gameObject.name;
+                if (hit.transform.transform.parent != null && hit.transform.transform.parent != hit.transform) debugString += ":" + hit.transform.parent.gameObject.name;
+                Debug.Log(debugString);
                 if (regionMang != null && regionMang.GetComponent<RegionManager>() != null && isRegionMap)
                 {
                     RegionManager tempRegMang = regionMang.GetComponent<RegionManager>();
