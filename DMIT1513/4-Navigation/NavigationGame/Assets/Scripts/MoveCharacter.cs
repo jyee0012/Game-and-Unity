@@ -132,7 +132,7 @@ public class MoveCharacter : MonoBehaviour
                 //string debugString = hit.transform.gameObject.name;
                 //if (hit.transform.transform.parent != null && hit.transform.transform.parent != hit.transform) debugString += ":" + hit.transform.parent.gameObject.name;
                 //Debug.Log(debugString);
-                SkillManager.UseSkill(hit.point);
+                FindObjectOfType<SkillManager>().UseSkill(hit.point);
                 if (regionMang != null && regionMang.GetComponent<RegionManager>() != null && isRegionMap)
                 {
                     RegionManager tempRegMang = regionMang.GetComponent<RegionManager>();
