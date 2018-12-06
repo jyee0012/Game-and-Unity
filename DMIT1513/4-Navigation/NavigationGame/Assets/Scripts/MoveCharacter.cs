@@ -129,9 +129,9 @@ public class MoveCharacter : MonoBehaviour
             }
             if (Physics.Raycast(ray, out hit) && !hitUI)
             {
-                string debugString = hit.transform.gameObject.name;
-                if (hit.transform.transform.parent != null && hit.transform.transform.parent != hit.transform) debugString += ":" + hit.transform.parent.gameObject.name;
-                Debug.Log(debugString);
+                //string debugString = hit.transform.gameObject.name;
+                //if (hit.transform.transform.parent != null && hit.transform.transform.parent != hit.transform) debugString += ":" + hit.transform.parent.gameObject.name;
+                //Debug.Log(debugString);
                 if (regionMang != null && regionMang.GetComponent<RegionManager>() != null && isRegionMap)
                 {
                     RegionManager tempRegMang = regionMang.GetComponent<RegionManager>();

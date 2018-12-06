@@ -38,6 +38,7 @@ public class PlayableUnits : MonoBehaviour
     bool firstEncounter = true;
     int currentPatrol = 0;
     Vector3 currentPatrolPoint;
+    private Animator animator;
     #endregion
 
     #region Start
@@ -69,10 +70,14 @@ public class PlayableUnits : MonoBehaviour
             else
                 AddPatrolPoint(GetRandomPatrolWithinRange(patrolRange));
         }
-        if (hasStartPosPatrol)
+        if (hasStartPosPatrol && patrolPoints.Count > 0)
         {
             patrolPoints[0] = new Vector2(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
             currentPatrol = 1;
+        }
+        if (animator == null)
+        {
+            animator = GetComponentInChildren<Animator>();
         }
         #endregion
 
@@ -107,6 +112,7 @@ public class PlayableUnits : MonoBehaviour
         if (patrolPoints.Count < 2 && hasPatrol) hasPatrol = false;
 
         AiState();
+        AnimateWalk();
     }
     #endregion
 
@@ -220,6 +226,12 @@ public class PlayableUnits : MonoBehaviour
     public void WakeUp()
     {
         aichan = UnitAI.Move;
+    }
+    public void AnimateWalk()
+    {
+        float speed = navAgent.remainingDistance > 1 ? Mathf.Abs(navAgent.speed): 0;
+
+        if (animator != null) animator.SetFloat("speedv", speed);
     }
     #region Targeting
     bool CheckTarget(GameObject currentTarget, string checkText = "")

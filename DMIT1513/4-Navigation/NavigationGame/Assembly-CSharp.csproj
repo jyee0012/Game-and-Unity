@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\UnitManager.cs" />
      <Compile Include="Assets\Scripts\UnitSpawner.cs" />
      <Compile Include="Assets\Scripts\UnitTemplate.cs" />
+     <Compile Include="Assets\SimpleSkeletonFree\Script\Character\PlayerController.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/jyee12/Documents/GitHub/Game-and-Unity/DMIT1513/4-Navigation/NavigationGame/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
  </Reference>

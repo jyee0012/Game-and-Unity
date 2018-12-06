@@ -68,6 +68,35 @@ public class UnitSpawner : MonoBehaviour {
         }
 
     }
+    public static void StaticSpawnUnits(GameObject spawnUnit, Vector3 spawnPoint, float spawnAmount = 1, float verticalBoundary = 5, float horizontalBoundary = 5)
+    {
+        for (int i = 0; i < spawnAmount; i++)
+        {
+            Vector2 min = spawnPoint,
+                max = spawnPoint;
+            min.x -= horizontalBoundary;
+            min.y -= verticalBoundary;
+            max.x += horizontalBoundary;
+            max.y += verticalBoundary;
+            GameObject tempUnit = Instantiate(spawnUnit, GetRandomStaticSpawn(min, max, spawnPoint), spawnUnit.transform.rotation, null);
+            tempUnit.SetActive(true);
+        }
+    }
+    static Vector3 GetRandomStaticSpawn(Vector2 min, Vector2 max, Vector3 spawnPos)
+    {
+        Vector3 spawnLoc = Vector3.zero;
+
+        float randX = Random.Range(-min.x, max.x),
+            randZ = Random.Range(-min.y, max.y),
+            spawnY = spawnPos.y + 1,
+            randXCord = spawnPos.x + randX,
+            randZCord = spawnPos.z + randZ;
+
+
+        spawnLoc = new Vector3(randXCord, spawnY, randZCord);
+
+        return spawnLoc;
+    }
     Vector3 GetRandomSpawnLoc(Vector2 min, Vector2 max)
     {
         Vector3 spawnLoc = Vector3.zero;

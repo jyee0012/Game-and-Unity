@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class SkillManager : MonoBehaviour {
 
     bool first = false;
-    public GameObject currentActive = null;
+    GameObject currentActive = null;
+    [SerializeField]
+    GameObject heavyUnit, sniperUnit;
     // Use this for initialization
     void Start () {
 		
