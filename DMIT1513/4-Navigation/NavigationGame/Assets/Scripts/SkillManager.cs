@@ -49,4 +49,8 @@ public class SkillManager : MonoBehaviour {
         first = !first;
         return first;
     }
+    public static void UseSkill(Vector3 clickPoint)
+    {
+
+    }
 }
