@@ -20,7 +20,7 @@ public class MoveCharacter : MonoBehaviour
     [SerializeField]
     int waypointDist = 10;
     [SerializeField]
-    bool canMoveCamera = true, cameraHasBoundary = false, isRegionMap = false, autoSwapCam = false;
+    bool canMoveCamera = true, cameraHasBoundary = false, isRegionMap = false, autoSwapCam = false, isRegionCam = false;
     [SerializeField]
     float movementSpeed = 20, rotationSpeed = 20;
     [SerializeField]
@@ -45,13 +45,18 @@ public class MoveCharacter : MonoBehaviour
 
         cameraStartPos = mainCam.transform.position;
         cameraStartRot = mainCam.transform.rotation;
-        movementIndicator.SetActive(false);
-        multiselectIndicator.SetActive(false);
+        if (movementIndicator != null) movementIndicator.SetActive(false);
+        if (multiselectIndicator != null) multiselectIndicator.SetActive(false);
         baseMoveSpeed = movementSpeed;
         SwapCamera(true);
         if (autoSwapCam)
         {
             bSwapCam = !bSwapCam;
+        }
+        if (isRegionCam)
+        {
+            mainCam.transform.position = mapCam.transform.position;
+            mainCam.transform.rotation = mapCam.transform.rotation;
         }
     }
     #endregion
@@ -62,7 +67,7 @@ public class MoveCharacter : MonoBehaviour
         if (selectedUnit == null || !selectedUnit.activeInHierarchy)
         {
             selectedUnit = null;
-            movementIndicator.SetActive(false);
+            if (movementIndicator != null) movementIndicator.SetActive(false);
         }
     }
     #endregion
@@ -131,8 +136,9 @@ public class MoveCharacter : MonoBehaviour
             {
                 //string debugString = hit.transform.gameObject.name;
                 //if (hit.transform.transform.parent != null && hit.transform.transform.parent != hit.transform) debugString += ":" + hit.transform.parent.gameObject.name;
+                //if (hit.transform.transform.root != null && hit.transform.transform.root != hit.transform) debugString += ":" + hit.transform.root.gameObject.name;
                 //Debug.Log(debugString);
-                FindObjectOfType<SkillManager>().UseSkill(hit.point);
+                if (FindObjectOfType<SkillManager>() != null) FindObjectOfType<SkillManager>().UseSkill(hit.point);
                 if (regionMang != null && regionMang.GetComponent<RegionManager>() != null && isRegionMap)
                 {
                     RegionManager tempRegMang = regionMang.GetComponent<RegionManager>();

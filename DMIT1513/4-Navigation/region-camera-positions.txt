@@ -1,0 +1,15 @@
+region1
+minx -190 miny 216
+maxx -12 maxy 360
+
+region2
+minx 0 miny 215
+maxx 135 maxy 430
+
+region3
+minx 150 miny 210
+maxx 295 maxy 355
+
+region4
+minx 150 miny 390
+maxx 385 maxy 520

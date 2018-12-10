@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class UnitSpawner : MonoBehaviour {
 
     [SerializeField]
@@ -72,13 +73,14 @@ public class UnitSpawner : MonoBehaviour {
     {
         for (int i = 0; i < spawnAmount; i++)
         {
-            Vector2 min = spawnPoint,
-                max = spawnPoint;
-            min.x -= horizontalBoundary;
-            min.y -= verticalBoundary;
+            Vector2 min = new Vector2(0,0),
+                max = new Vector2(0, 0);
+            min.x += horizontalBoundary;
+            min.y += verticalBoundary;
             max.x += horizontalBoundary;
             max.y += verticalBoundary;
             GameObject tempUnit = Instantiate(spawnUnit, GetRandomStaticSpawn(min, max, spawnPoint), spawnUnit.transform.rotation, null);
+            //Debug.Log("Spawn: " + spawn + " | Min: " + min + " | Max: " + max + " | Click: " + spawnPoint);
             tempUnit.SetActive(true);
         }
     }

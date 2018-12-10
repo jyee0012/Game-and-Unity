@@ -12,7 +12,7 @@ public class EnemyControllerScript : MonoBehaviour {
     [SerializeField]
     Text enemyText;
     [SerializeField]
-    int enemyTotal = 0, enemyAlive = 0, unitAlive = 0;
+    int enemyTotal = 0, enemyAlive = 0, unitAlive = 0, controllerDelay = 20;
     [SerializeField]
     bool win = false, lose = false, universalSleep = false;
     [SerializeField]
@@ -32,6 +32,7 @@ public class EnemyControllerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (controllerDelay > Time.time) return;
         FindAllEnemies();
         enemyAlive = CheckAllEnemy();
         lose = CheckAllUnits();

@@ -14,6 +14,7 @@ public class SkillManager : MonoBehaviour
     }
     public Skill currentSkill = Skill.None;
     bool bActiveSkill = false;
+    float skillCooldown = 0;
     GameObject currentActive = null;
     [SerializeField]
     GameObject heavyUnit, sniperUnit;
@@ -26,7 +27,10 @@ public class SkillManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (skillCooldown < Time.time && currentActive != null)
+        {
+            currentActive.GetComponent<Image>().color = Color.green;
+        }
     }
     public void ActivateSkillButton(GameObject button, int skillIndex)
     {
@@ -70,7 +74,7 @@ public class SkillManager : MonoBehaviour
     }
     public void UseSkill(Vector3 clickPoint)
     {
-        if (currentSkill == Skill.None) return;
+        if (currentSkill == Skill.None || skillCooldown > Time.time) return;
 
         switch (currentSkill)
         {
@@ -82,10 +86,16 @@ public class SkillManager : MonoBehaviour
             default:
                 break;
         }
+        DeactivateSkill();
+    }
+    void DeactivateSkill()
+    {
+        skillCooldown = Time.time + 5;
+        currentActive.GetComponent<Image>().color = Color.red;
     }
     void SkillSpawnUnits(Vector3 clickPoint, GameObject unit)
     {
-        UnitSpawner.StaticSpawnUnits(unit, clickPoint, 5, 0.5f, 0.5f);
+        UnitSpawner.StaticSpawnUnits(unit, clickPoint, 5, 5f, 5f);
     }
     void SpawnSniperUnits(Vector3 clickPoint)
     {

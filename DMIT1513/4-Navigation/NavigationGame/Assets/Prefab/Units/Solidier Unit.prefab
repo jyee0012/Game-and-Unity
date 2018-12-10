@@ -2293,8 +2293,10 @@ MonoBehaviour:
   lockRot: 1
   lookAt: 0
   healthbarOffset: 1.6
-  deathParticle: {fileID: 0}
-  deathSound: {fileID: 0}
+  deathParticle: {fileID: 198266921212257850, guid: 7623dbcd9ff4b4f4ab9013c241c7a2df,
+    type: 2}
+  deathSound: {fileID: 82479636504451710, guid: 9d6b59b84db0263438011eb9ca27fd5d,
+    type: 2}
 --- !u!114 &114445106251069508
 MonoBehaviour:
   m_ObjectHideFlags: 1

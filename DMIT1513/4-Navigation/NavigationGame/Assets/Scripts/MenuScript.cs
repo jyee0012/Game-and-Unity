@@ -143,6 +143,7 @@ public class MenuScript : MonoBehaviour
     }
     public bool CheckMusicSoundText()
     {
+        if (musicSlider == null || musicText == null || soundSlider == null || soundText == null) return false;
         return (musicText.gameObject.activeInHierarchy || musicSlider.gameObject.activeInHierarchy || 
             soundText.gameObject.activeInHierarchy || soundSlider.gameObject.activeInHierarchy) 
             || 

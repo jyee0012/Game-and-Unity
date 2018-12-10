@@ -1,0 +1,7 @@
+Final Project Goals
+1. (Done?) One of the major bug fixes is going to be the dysfunctional save in the win conditions.
+2. (Done) Hoping to add the mass select for the player to not require individually selecting units, which i have noticed is annoying once managing 10+ units.
+3. (Done) Add models for each unit hopefully.
+4. (Done) I have noticed that each unit takes up alot of lag in editor, so I may swap that out for a placeholder that will spawn the unit during play.
+5. (Done) Potentially adding the mentioned skills above. 
+6. Any other discovered “features” after more play-testing. (Didn't really discover anything)

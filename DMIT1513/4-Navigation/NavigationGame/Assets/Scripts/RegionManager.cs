@@ -7,7 +7,7 @@ using UnityEngine.UI;
 // Serialize Region Info for inspector
 #region Region Info
 [System.Serializable]
-public class RegionInfo 
+public class RegionInfo
 {
     private GameObject _regionObj;
     private int _regionSceneIndex;
@@ -57,10 +57,11 @@ public class RegionManager : MonoBehaviour
         else if (instance != this)
         {
             // destroy the other instance after taking its info.
-            for(int i = 0; i < instance.regionList.Count;i++)
+            for (int i = 0; i < instance.regionList.Count; i++)
             {
                 this.regionList[i].regionConqured = instance.regionList[i].regionConqured;
             }
+            this.currentRegion = instance.currentRegion;
             this.retreatCount = instance.retreatCount;
             Destroy(instance.gameObject);
             instance = this;
@@ -95,6 +96,12 @@ public class RegionManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SceneManager.GetActiveScene().buildIndex == 2 || SceneManager.GetActiveScene().buildIndex == 3)
+        {
+            Destroy(this.gameObject);
+            Destroy(instance);
+            instance = null;
+        }
         UpdateText();
         if (isRegionMap)
         {
@@ -127,7 +134,7 @@ public class RegionManager : MonoBehaviour
         int? regionInt = null;
         for (int i = 0; i < regionList.Count; i++)
         {
-            //if (regionList[i] == region)
+            if (regionList[i].regionObject == region)
                 regionInt = i;
         }
         if (regionInt != null)
@@ -156,7 +163,7 @@ public class RegionManager : MonoBehaviour
     }
     public void UnconqureAllRegions()
     {
-        for(int i = 0; i < regionList.Count; i++)
+        for (int i = 0; i < regionList.Count; i++)
         {
             regionList[i].regionConqured = false;
         }
@@ -176,7 +183,7 @@ public class RegionManager : MonoBehaviour
     public int? FindRegionByBuildIndex(int buildIndex)
     {
         int? regionIndex = null;
-        for(int i = 0;i < regionList.Count; i++)
+        for (int i = 0; i < regionList.Count; i++)
         {
             if (regionList[i].regionSceneIndex == buildIndex) regionIndex = i;
         }
@@ -191,8 +198,9 @@ public class RegionManager : MonoBehaviour
     {
         if (isRegionMap) return;
 
-        currentRegion.regionConqured = true;
-        ConqureRegion(currentRegion.regionSceneIndex);
+        //currentRegion.regionConqured = true;
+        FindAndConqureRegionByBuildIndex(currentRegion.regionSceneIndex);
+        //Debug.Log(currentRegion.regionSceneIndex);
         CustomLoadScene(1);
     }
     public bool CheckWinCondition()
