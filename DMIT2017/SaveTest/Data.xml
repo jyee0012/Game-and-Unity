@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<SaveContainer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <saveDatas>
+    <SaveData>
+      <name>Sumone</name>
+      <score>31</score>
+    </SaveData>
+    <SaveData>
+      <name>Sumonelse</name>
+      <score>87</score>
+    </SaveData>
+  </saveDatas>
+</SaveContainer>
