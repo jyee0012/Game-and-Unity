@@ -4,17 +4,17 @@ For each element you will receive one mark if your build works occasionally and 
 
 - Opening Screen (2 Marks)
 
-- Profile Select 
+(Done)- Profile Select 
 
-     - Add Profile (2 Marks)
+(Done)     - Add Profile (2 Marks)
 
-     - Delete Profile (2 Marks)
+(Done)     - Delete Profile (2 Marks)
 
-     - Confirm Profile Deletion (2 Marks)
+(Done)     - Confirm Profile Deletion (2 Marks)
 
-     - Select Profile
+(Done)     - Select Profile
 
-          - Show profile info (2 Marks)
+(Done)          - Show profile info (2 Marks)
 
           - Allow player to play the game with selected profile (2 Marks)
 
