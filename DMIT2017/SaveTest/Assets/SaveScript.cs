@@ -6,6 +6,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
+#region SaveDatas
 [System.Serializable]
 public class SaveData
 {
@@ -15,7 +16,7 @@ public class SaveData
 
     public SaveData()
     {
-        name = "none";
+        name = "noone";
         score = 0;
     }
     public string GetName()
@@ -41,6 +42,7 @@ public class SaveContainer
     public List<SaveData> saveDatas;
     public static float beginningHeight = 130, buttonSpacing = 35;
 }
+#endregion
 
 public class SaveScript : MonoBehaviour
 {
@@ -49,13 +51,13 @@ public class SaveScript : MonoBehaviour
     SaveData myData;
 
     [SerializeField]
-    Text scoreText;
+    Text scoreText, confirmText;
     [SerializeField]
     InputField nameField;
     [SerializeField]
     Slider scoreSlider;
     [SerializeField]
-    GameObject profileContainer;
+    GameObject profileContainer, confirmDeletePanel;
     List<Button> profileBtns;
     [SerializeField]
     Button btnPrefab;
@@ -68,6 +70,7 @@ public class SaveScript : MonoBehaviour
         myData = new SaveData();
         profileBtns = new List<Button>();
         LoadData();
+        DisplayConfirmDelete(false);
     }
 
     // Update is called once per frame
@@ -75,6 +78,7 @@ public class SaveScript : MonoBehaviour
     {
 
     }
+    #region Save & Load
     public void CreateLoadProfileBtn()
     {
         Button profilebtn;
@@ -124,12 +128,20 @@ public class SaveScript : MonoBehaviour
             //Debug.Log(newBtnPos);
             profileBtns.Add(profilebtn);
         }
-        for (int i = 0; i < profileBtns.Count; i++)
-        {
-            //profileBtns[i].onClick.AddListener(() => FillLoadedData(i));
-        }
     }
     public void LoadData()
+    {
+        if (File.Exists("Data.xml"))
+        {
+            Stream stream = File.Open("Data.xml", FileMode.Open);
+            XmlSerializer serializer = new XmlSerializer(typeof(SaveContainer));
+            allData = serializer.Deserialize(stream) as SaveContainer;
+            stream.Close();
+        }
+        RemoveProfileBtns();
+        CreateLoadProfileBtn();
+    }
+    public void RemoveProfileBtns()
     {
         if (profileBtns.Count > 0)
         {
@@ -142,22 +154,6 @@ public class SaveScript : MonoBehaviour
             }
             profileBtns.Clear();
         }
-        if (File.Exists("Data.xml"))
-        {
-            Stream stream = File.Open("Data.xml", FileMode.Open);
-            XmlSerializer serializer = new XmlSerializer(typeof(SaveContainer));
-            allData = serializer.Deserialize(stream) as SaveContainer;
-            stream.Close();
-        }
-        CreateLoadProfileBtn();
-
-    }
-    public void ClickButton(string input = "")
-    {
-        if (input == "") Debug.Log(gameObject.name);
-        else Debug.Log(input);
-
-        FillLoadedData();
     }
     public void FillLoadedData(int loadedIndex = 0)
     {
@@ -177,13 +173,18 @@ public class SaveScript : MonoBehaviour
     public void SaveData()
     {
         AddNewData();
-
+        SaveXml();
+        LoadData();
+    }
+    public void SaveXml()
+    {
         Stream stream = File.Open("Data.xml", FileMode.Create);
         XmlSerializer serializer = new XmlSerializer(typeof(SaveContainer));
         serializer.Serialize(stream, allData);
         stream.Close();
     }
-
+    #endregion
+    #region Change Data
     public void ChangeName(string value)
     {
         myData.SetName(value);
@@ -201,8 +202,11 @@ public class SaveScript : MonoBehaviour
     {
         ChangeScore(Mathf.RoundToInt(scoreSlider.value));
     }
+    #endregion
+    #region New Data
     public void AddNewData()
     {
+        if (allData.saveDatas.Count >= 10) return;
         if (!allData.saveDatas.Contains(myData))
         {
             allData.saveDatas.Add(myData);
@@ -214,6 +218,26 @@ public class SaveScript : MonoBehaviour
         nameField.text = "";
         scoreSlider.value = 0;
         scoreText.text = "Score";
+    }
+    #endregion
+    public void DeleteData()
+    {
+        if (myData != null)
+        {
+            allData.saveDatas.Remove(myData);
+            SaveXml();
+            LoadData();
+            NewData();
+        }
+        DisplayConfirmDelete(false);
+    }
+    public void DisplayConfirmDelete(bool showConfirm)
+    {
+        if (showConfirm)
+        {
+            confirmText.text = "Are you sure you wish to delete " + myData.GetName() + "?";
+        }
+        confirmDeletePanel.SetActive(showConfirm);
     }
 
 }

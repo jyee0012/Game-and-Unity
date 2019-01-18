@@ -11,19 +11,11 @@
     </SaveData>
     <SaveData>
       <name>Bob</name>
-      <score>53</score>
+      <score>71</score>
     </SaveData>
     <SaveData>
-      <name>Tom</name>
+      <name>Tommy</name>
       <score>100</score>
-    </SaveData>
-    <SaveData>
-      <name>Jeff</name>
-      <score>47</score>
-    </SaveData>
-    <SaveData>
-      <name>Jum</name>
-      <score>36</score>
     </SaveData>
     <SaveData>
       <name>Kelly</name>
@@ -38,12 +30,16 @@
       <score>0</score>
     </SaveData>
     <SaveData>
-      <name>Gomba</name>
-      <score>39</score>
+      <name>MonkaS</name>
+      <score>57</score>
     </SaveData>
     <SaveData>
-      <name>Jon</name>
-      <score>63</score>
+      <name>Billy</name>
+      <score>16</score>
+    </SaveData>
+    <SaveData>
+      <name>no</name>
+      <score>0</score>
     </SaveData>
   </saveDatas>
 </SaveContainer>
