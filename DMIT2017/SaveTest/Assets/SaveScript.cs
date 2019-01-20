@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using UnityEngine.SceneManagement;
 
 #region SaveDatas
 [System.Serializable]
@@ -57,11 +58,11 @@ public class SaveScript : MonoBehaviour
     [SerializeField]
     Slider scoreSlider;
     [SerializeField]
-    GameObject profileContainer, confirmDeletePanel;
-    List<Button> profileBtns;
+    GameObject profileContainer, confirmDeletePanel, startMenu, pauseMenu, optionsMenu;
     [SerializeField]
     Button btnPrefab;
 
+    List<Button> profileBtns;
 
     // Use this for initialization
     void Start()
@@ -78,6 +79,7 @@ public class SaveScript : MonoBehaviour
     {
 
     }
+    #region Data Control
     #region Save & Load
     public void CreateLoadProfileBtn()
     {
@@ -220,6 +222,7 @@ public class SaveScript : MonoBehaviour
         scoreText.text = "Score";
     }
     #endregion
+    #region Delete Data
     public void DeleteData()
     {
         if (myData != null)
@@ -239,5 +242,89 @@ public class SaveScript : MonoBehaviour
         }
         confirmDeletePanel.SetActive(showConfirm);
     }
+    #endregion
+    #endregion
+    #region Open/Close Menu
+    public void OpenStartMenu()
+    {
+        startMenu.SetActive(true);
+    }
+    public void CloseStartMenu()
+    {
+        startMenu.SetActive(false);
+    }
+    public void OpenPauseMenu()
+    {
+        SetCursor(true);
+        pauseMenu.SetActive(true);
+        PauseEverything(true);
+    }
+    public void ClosePauseMenu()
+    {
+        PauseEverything(false);
+        SetCursor(false);
+        pauseMenu.SetActive(false);
+        CloseOptions();
+    }
+    public void OpenClosePauseMenu()
+    {
+        if (!pauseMenu.activeInHierarchy)
+        {
+            OpenPauseMenu();
+        }
+        else
+        {
+            ClosePauseMenu();
+        }
+    }
+    public void OpenOptions()
+    {
+        optionsMenu.SetActive(true);
+    }
+    public void CloseOptions()
+    {
+        optionsMenu.SetActive(false);
+    }
+    #endregion
+    #region Game Control
+    public void PlayGame()
+    {
+        SceneManager.LoadScene(1);
+        CloseStartMenu();
+        CloseOptions();
+    }
+    public void CustomLoadScene(int sceneIndex)
+    {
+        SceneManager.LoadScene(sceneIndex);
+    }
+    public void CloseGame()
+    {
+        Application.Quit();
+    }
+    #endregion
+    #region Pause
+    public void PauseEverything(bool pause)
+    {
+        //if (!pauseMenu.activeInHierarchy && pauseMenu != null) return;
+        //Debug.Log(Time.timeScale + ":" + Time.fixedDeltaTime);
+        Time.timeScale = (pause) ? 0 : 1;
+        Time.fixedDeltaTime = (pause) ? 0 : 0.02f;
+    }
+    #endregion
+    #region Cursor
+    public void SetCursor(bool cursorOn = true)
+    {
 
+        if (cursorOn)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+    }
+    #endregion
 }
