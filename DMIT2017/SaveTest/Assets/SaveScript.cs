@@ -11,14 +11,17 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class SaveData
 {
-    public string name;
-    public string description;
-    public int score;
+    public string name, description;
+    public int score, 
+        shapeIndex, //[0] Cube ,[1] Sphere ,[2] Cylinder, [3] Capsule
+        colorIndex; //[0] Blue ,[1] Red ,[2] Yellow, [3] Purple
 
     public SaveData()
     {
         name = "noone";
         score = 0;
+        shapeIndex = 0;
+        colorIndex = 0;
     }
     public string GetName()
     {
@@ -35,6 +38,14 @@ public class SaveData
     public void SetScore(int value)
     {
         score = value;
+    }
+    public void SetShape(int value)
+    {
+        shapeIndex = value;
+    }
+    public void SetColor(int value)
+    {
+        colorIndex = value;
     }
 }
 [System.Serializable]
@@ -60,9 +71,12 @@ public class SaveScript : MonoBehaviour
     [SerializeField]
     GameObject profileContainer, confirmDeletePanel, startMenu, pauseMenu, optionsMenu;
     [SerializeField]
-    Button btnPrefab;
+    Button btnPrefab, createNewProfileBtn;
+    [SerializeField]
+    Dropdown shapeDropdown, colorDropdown;
 
     List<Button> profileBtns;
+
 
     // Use this for initialization
     void Start()
@@ -72,6 +86,7 @@ public class SaveScript : MonoBehaviour
         profileBtns = new List<Button>();
         LoadData();
         DisplayConfirmDelete(false);
+        if (createNewProfileBtn != null) createNewProfileBtn.gameObject.SetActive(allData.saveDatas.Count < 10);
     }
 
     // Update is called once per frame
@@ -84,9 +99,11 @@ public class SaveScript : MonoBehaviour
     public void CreateLoadProfileBtn()
     {
         Button profilebtn;
+        float horizontalDisplacement = 0f; //91.5f, 71.8f
         for (int i = 0; i < allData.saveDatas.Count; i++)
         {
-            Vector3 newBtnPos = new Vector3(91.5f, SaveContainer.beginningHeight - (SaveContainer.buttonSpacing * i) - 150, 0);
+            
+            Vector3 newBtnPos = new Vector3(horizontalDisplacement, SaveContainer.beginningHeight - (SaveContainer.buttonSpacing * i) - 150, 0);
             profilebtn = Instantiate(btnPrefab, btnPrefab.transform.position, btnPrefab.transform.rotation, profileContainer.transform);
             profilebtn.GetComponentInChildren<Text>().text = allData.saveDatas[i].GetName();
             profilebtn.GetComponent<RectTransform>().localPosition = newBtnPos;
@@ -130,6 +147,7 @@ public class SaveScript : MonoBehaviour
             //Debug.Log(newBtnPos);
             profileBtns.Add(profilebtn);
         }
+        if (horizontalDisplacement != 71.8f) horizontalDisplacement = 71.8f;
     }
     public void LoadData()
     {
@@ -167,6 +185,8 @@ public class SaveScript : MonoBehaviour
         myData = allData.saveDatas[loadedIndex];
         nameField.text = myData.GetName();
         scoreText.text = "Score: " + myData.GetScore();
+        shapeDropdown.value = myData.shapeIndex;
+        colorDropdown.value = myData.colorIndex;
         if (scoreSlider != null)
         {
             scoreSlider.value = myData.GetScore();
@@ -204,6 +224,16 @@ public class SaveScript : MonoBehaviour
     {
         ChangeScore(Mathf.RoundToInt(scoreSlider.value));
     }
+    public void ChangeShape()
+    {
+        if (shapeDropdown == null) return;
+        myData.SetShape(shapeDropdown.value);
+    }
+    public void ChangeColor()
+    {
+        if (colorDropdown == null) return;
+        myData.SetColor(colorDropdown.value);
+    }
     #endregion
     #region New Data
     public void AddNewData()
@@ -216,6 +246,7 @@ public class SaveScript : MonoBehaviour
     }
     public void NewData()
     {
+        if (createNewProfileBtn != null) createNewProfileBtn.gameObject.SetActive(allData.saveDatas.Count < 10);
         myData = new SaveData();
         nameField.text = "";
         scoreSlider.value = 0;

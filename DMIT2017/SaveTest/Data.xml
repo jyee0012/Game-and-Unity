@@ -4,42 +4,62 @@
     <SaveData>
       <name>Sumone</name>
       <score>31</score>
+      <shapeIndex>1</shapeIndex>
+      <colorIndex>1</colorIndex>
     </SaveData>
     <SaveData>
       <name>Sumonelse</name>
       <score>87</score>
+      <shapeIndex>0</shapeIndex>
+      <colorIndex>0</colorIndex>
     </SaveData>
     <SaveData>
       <name>Bob</name>
       <score>71</score>
+      <shapeIndex>0</shapeIndex>
+      <colorIndex>0</colorIndex>
     </SaveData>
     <SaveData>
       <name>Tommy</name>
       <score>100</score>
+      <shapeIndex>0</shapeIndex>
+      <colorIndex>0</colorIndex>
     </SaveData>
     <SaveData>
       <name>Kelly</name>
       <score>76</score>
+      <shapeIndex>0</shapeIndex>
+      <colorIndex>0</colorIndex>
     </SaveData>
     <SaveData>
       <name>Inva</name>
       <score>29</score>
+      <shapeIndex>0</shapeIndex>
+      <colorIndex>0</colorIndex>
     </SaveData>
     <SaveData>
       <name>Lonk</name>
       <score>0</score>
+      <shapeIndex>0</shapeIndex>
+      <colorIndex>0</colorIndex>
     </SaveData>
     <SaveData>
       <name>MonkaS</name>
       <score>57</score>
+      <shapeIndex>0</shapeIndex>
+      <colorIndex>0</colorIndex>
     </SaveData>
     <SaveData>
       <name>Billy</name>
       <score>16</score>
+      <shapeIndex>0</shapeIndex>
+      <colorIndex>0</colorIndex>
     </SaveData>
     <SaveData>
-      <name>no</name>
+      <name>someone</name>
       <score>0</score>
+      <shapeIndex>0</shapeIndex>
+      <colorIndex>0</colorIndex>
     </SaveData>
   </saveDatas>
 </SaveContainer>
