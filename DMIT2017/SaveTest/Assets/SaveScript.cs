@@ -99,7 +99,7 @@ public class SaveScript : MonoBehaviour
     public void CreateLoadProfileBtn()
     {
         Button profilebtn;
-        float horizontalDisplacement = 0f; //91.5f, 71.8f
+        float horizontalDisplacement = 71.8f; //91.5f, 71.8f
         for (int i = 0; i < allData.saveDatas.Count; i++)
         {
             
@@ -197,6 +197,7 @@ public class SaveScript : MonoBehaviour
         AddNewData();
         SaveXml();
         LoadData();
+        if (createNewProfileBtn != null) createNewProfileBtn.gameObject.SetActive(allData.saveDatas.Count < 10);
     }
     public void SaveXml()
     {
