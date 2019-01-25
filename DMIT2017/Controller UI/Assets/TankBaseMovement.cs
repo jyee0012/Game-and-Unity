@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TankBaseMovement : MonoBehaviour {
 
-    float movementSpeed = 2f;
+    float movementSpeed = 2f, leftTread, rightTread;
 
 	// Use this for initialization
 	void Start () {
@@ -39,7 +39,6 @@ public class TankBaseMovement : MonoBehaviour {
         button7.text = Input.GetAxis("Button7").ToString(); //start button
         */
         #endregion
-        float leftTread, rightTread;
         leftTread = Input.GetAxis("Axis2");
         rightTread = Input.GetAxis("Axis5");
 

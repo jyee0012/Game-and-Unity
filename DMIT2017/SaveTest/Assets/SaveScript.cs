@@ -15,6 +15,8 @@ public class SaveData
     public int score, 
         shapeIndex, //[0] Cube ,[1] Sphere ,[2] Cylinder, [3] Capsule
         colorIndex; //[0] Blue ,[1] Red ,[2] Yellow, [3] Purple
+    
+
 
     public SaveData()
     {
@@ -99,7 +101,7 @@ public class SaveScript : MonoBehaviour
     public void CreateLoadProfileBtn()
     {
         Button profilebtn;
-        float horizontalDisplacement = 71.8f; //91.5f, 71.8f
+        float horizontalDisplacement = 91.5f; //91.5f, 71.8f
         for (int i = 0; i < allData.saveDatas.Count; i++)
         {
             

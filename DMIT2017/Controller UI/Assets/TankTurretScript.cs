@@ -7,11 +7,14 @@ public class TankTurretScript : MonoBehaviour {
     [SerializeField]
     bool bWeaponClamp;
     [SerializeField]
-    float rotationSpeed = 100, weaponClampMax, weaponClampMin;
+    float rotationSpeed = 100, weaponClampMax, weaponClampMin, timeBetweenShot = 0.5f, projectileForce = 100;
     [SerializeField]
-    GameObject weaponMount;
+    GameObject weaponMount, fireLocation, projectilePrefab;
+    [SerializeField]
+    KeyCode FireKey = KeyCode.Mouse0;
 
-    float tInput, wInput;
+    bool canFire = true;
+    float tInput, wInput, lastShot;
     Vector3 angles;
 
     // Use this for initialization
@@ -24,6 +27,7 @@ public class TankTurretScript : MonoBehaviour {
 	void Update () {
         TurretMovement();
         WeaponMountClamp();
+        Fire();
 	}
     void TurretMovement()
     {
@@ -47,5 +51,24 @@ public class TankTurretScript : MonoBehaviour {
         {
             weaponMount.transform.localRotation = Quaternion.Euler(weaponClampMin, angles.y, angles.z);
         }
+    }
+    void Fire()
+    {
+        float fireButton = Input.GetAxis("Button0");
+        if ((fireButton != 0 || Input.GetKey(FireKey)) && Time.time - lastShot > timeBetweenShot && canFire)
+        {
+            Shoot(fireLocation.transform);
+        }
+    }
+    bool Shoot(Transform fireLocation)
+    {
+        Vector3 spawnPos = fireLocation.position, fireDirection = fireLocation.forward;
+        GameObject projectile = Instantiate(projectilePrefab, spawnPos, fireLocation.rotation, null);
+        //Debug.Log("Spawned");
+        Rigidbody projectileRBody = projectile.GetComponent<Rigidbody>();
+        projectileRBody.AddForce(fireDirection * projectileForce);
+        Destroy(projectile, 3);
+        lastShot = Time.time;
+        return true;
     }
 }
