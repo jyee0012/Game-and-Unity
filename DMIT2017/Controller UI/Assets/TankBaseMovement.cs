@@ -42,7 +42,7 @@ public class TankBaseMovement : MonoBehaviour {
         leftTread = Input.GetAxis("Axis2");
         rightTread = Input.GetAxis("Axis5");
 
-        transform.Translate(Vector3.forward * (leftTread + rightTread) * Time.deltaTime * movementSpeed);
+        transform.Translate(-Vector3.forward * (leftTread + rightTread) * Time.deltaTime * movementSpeed);
         transform.Rotate(Vector3.up * (-leftTread + rightTread));
     }
 }

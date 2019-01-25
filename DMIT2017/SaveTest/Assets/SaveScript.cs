@@ -12,10 +12,13 @@ using UnityEngine.SceneManagement;
 public class SaveData
 {
     public string name, description;
-    public int score, 
+    public int score,
         shapeIndex, //[0] Cube ,[1] Sphere ,[2] Cylinder, [3] Capsule
-        colorIndex; //[0] Blue ,[1] Red ,[2] Yellow, [3] Purple
-    
+        colorIndex, //[0] Blue ,[1] Red ,[2] Yellow, [3] Purple
+        saveIndex;
+    public float time;
+    public List<float> vInputGhost, hInputGhost;
+    public List<Vector3> posList;
 
 
     public SaveData()
@@ -76,6 +79,8 @@ public class SaveScript : MonoBehaviour
     Button btnPrefab, createNewProfileBtn;
     [SerializeField]
     Dropdown shapeDropdown, colorDropdown;
+    [SerializeField]
+    GameObject playerDataPrefab;
 
     List<Button> profileBtns;
 
@@ -108,6 +113,7 @@ public class SaveScript : MonoBehaviour
             Vector3 newBtnPos = new Vector3(horizontalDisplacement, SaveContainer.beginningHeight - (SaveContainer.buttonSpacing * i) - 150, 0);
             profilebtn = Instantiate(btnPrefab, btnPrefab.transform.position, btnPrefab.transform.rotation, profileContainer.transform);
             profilebtn.GetComponentInChildren<Text>().text = allData.saveDatas[i].GetName();
+            allData.saveDatas[i].saveIndex = i;
             profilebtn.GetComponent<RectTransform>().localPosition = newBtnPos;
             //profilebtn.onClick.AddListener(() => { FillLoadedData(i); });
             switch (i)
@@ -193,6 +199,7 @@ public class SaveScript : MonoBehaviour
         {
             scoreSlider.value = myData.GetScore();
         }
+        Debug.Log(myData.name);
     }
     public void SaveData()
     {
@@ -236,6 +243,10 @@ public class SaveScript : MonoBehaviour
     {
         if (colorDropdown == null) return;
         myData.SetColor(colorDropdown.value);
+    }
+    public void ImportDataAt(SaveData importedData,int saveIndex)
+    {
+        allData.saveDatas[saveIndex] = importedData;
     }
     #endregion
     #region New Data
@@ -323,9 +334,15 @@ public class SaveScript : MonoBehaviour
     #region Game Control
     public void PlayGame()
     {
+
+        if (myData == null || myData == new SaveData()) return;
+        if (playerDataPrefab == null) playerDataPrefab = Resources.Load<GameObject>("Prefab/PlayerData") as GameObject;
+        GameObject playerData = Instantiate(playerDataPrefab, Vector3.zero, Quaternion.identity, null);
+        playerData.name = "PlayerData";
+        playerData.GetComponent<PlayerDataScript>().playerData = myData;
         SceneManager.LoadScene(1);
-        CloseStartMenu();
-        CloseOptions();
+        //CloseStartMenu();
+        //CloseOptions();
     }
     public void CustomLoadScene(int sceneIndex)
     {
