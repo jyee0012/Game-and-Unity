@@ -16,7 +16,7 @@ For each element you will receive one mark if your build works occasionally and 
 
 (Done)          - Show profile info (2 Marks)
 
-()     - Allow player to play the game with selected profile (2 Marks)
+(Done)     - Allow player to play the game with selected profile (2 Marks)
 
 (Done)     - Player choose Profile name, Object, and Color (2 Marks)
 
@@ -24,31 +24,31 @@ For each element you will receive one mark if your build works occasionally and 
 
 (Done)     - Player controls an object (2 Marks) (eg. Racing game, side scrolling platformer, etc.)
 
-     - Player object and color are the ones selected by the player in the Profile Select (2 Marks)
+(Done)     - Player object and color are the ones selected by the player in the Profile Select (2 Marks)
 
-     - Player obtains a score or fastest time (2 Marks)
+(Done)     - Player obtains a score or fastest time (2 Marks)
 
-     - Game ends allowing for retry or quit (2 Marks)
+(Done)     - Game ends allowing for retry or quit (2 Marks)
 
-     - High score or best time saved to current profile (2 Marks)
+(Done)     - High score or best time saved to current profile (2 Marks)
 
-     - Ghost Data saved (2 Marks)
+(Done)     - Ghost Data saved (2 Marks)
 
-     - Confirm overwriting of Ghost Data (2 Marks)
+(Done)     - Confirm overwriting of Ghost Data (2 Marks)
 
-     - If Ghost Data exists it will run with a Ghost copy of the player when the game is next played (2 Marks)
+(Done)     - If Ghost Data exists it will run with a Ghost copy of the player when the game is next played (2 Marks)
 
-     - Option to delete the Ghost Data (2 Marks)
+(Done)     - Option to delete the Ghost Data (2 Marks)
 
 
 
 - Leader board
 
-     - Top 5 scores or time displayed (2 Marks)
+(Done)     - Top 5 scores or time displayed (2 Marks)
 
-     - Sorted in descending order from top down (2 Marks)
+(Done)     - Sorted in descending order from top down (2 Marks)
 
-     - Accessible from the Profile select (2 Marks)
+(Done)     - Accessible from the Profile select (2 Marks)
 
 
 

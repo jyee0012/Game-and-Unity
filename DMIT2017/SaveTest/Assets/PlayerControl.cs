@@ -24,6 +24,8 @@ public class PlayerControl : MonoBehaviour
         if (GetComponent<Rigidbody>() != null) rbody = GetComponent<Rigidbody>();
         startPos = transform.position;
         posTimer += posResetTimer;
+        if (GameObject.Find("PlayerData") != null) playerName = GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().playerData.GetName();
+        if (playerName == "") playerName = "N/A";
         playerNameText.text = playerName;
     }
     #endregion

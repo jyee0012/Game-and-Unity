@@ -19,7 +19,23 @@ public class SaveData
     public float time;
     public List<float> vInputGhost, hInputGhost;
     public List<Vector3> posList;
-
+    public string timeText
+    {
+        get
+        {
+            if (time > 0)
+                return string.Format("{0}:{1:00}", (int)time / 60, (int)time % 60);
+            else
+                return "N/A";
+        }
+    }
+    public bool hasGhostData
+    {
+        get
+        {
+            return (hInputGhost.Count > 0 && vInputGhost.Count > 0);
+        }
+    }
 
     public SaveData()
     {
@@ -27,6 +43,10 @@ public class SaveData
         score = 0;
         shapeIndex = 0;
         colorIndex = 0;
+        time = 0;
+        vInputGhost = new List<float>();
+        hInputGhost = new List<float>();
+        posList = new List<Vector3>();
     }
     public string GetName()
     {
@@ -52,6 +72,12 @@ public class SaveData
     {
         colorIndex = value;
     }
+    public void ClearGhostData()
+    {
+        vInputGhost = new List<float>();
+        hInputGhost = new List<float>();
+        posList = new List<Vector3>();
+    }
 }
 [System.Serializable]
 public class SaveContainer
@@ -76,14 +102,16 @@ public class SaveScript : MonoBehaviour
     [SerializeField]
     GameObject profileContainer, confirmDeletePanel, startMenu, pauseMenu, optionsMenu;
     [SerializeField]
-    Button btnPrefab, createNewProfileBtn;
+    Button btnPrefab, createNewProfileBtn, deleteGhostBtn;
     [SerializeField]
     Dropdown shapeDropdown, colorDropdown;
     [SerializeField]
     GameObject playerDataPrefab;
+    [SerializeField]
+    List<Text> highscoreList;
 
     List<Button> profileBtns;
-
+    List<SaveData> recordHolderList;
 
     // Use this for initialization
     void Start()
@@ -91,9 +119,12 @@ public class SaveScript : MonoBehaviour
         allData = new SaveContainer();
         myData = new SaveData();
         profileBtns = new List<Button>();
+        recordHolderList = new List<SaveData>();
         LoadData();
         DisplayConfirmDelete(false);
         if (createNewProfileBtn != null) createNewProfileBtn.gameObject.SetActive(allData.saveDatas.Count < 10);
+        NewData();
+        deleteGhostBtn.gameObject.SetActive(myData.hasGhostData);
     }
 
     // Update is called once per frame
@@ -109,13 +140,17 @@ public class SaveScript : MonoBehaviour
         float horizontalDisplacement = 91.5f; //91.5f, 71.8f
         for (int i = 0; i < allData.saveDatas.Count; i++)
         {
-            
             Vector3 newBtnPos = new Vector3(horizontalDisplacement, SaveContainer.beginningHeight - (SaveContainer.buttonSpacing * i) - 150, 0);
             profilebtn = Instantiate(btnPrefab, btnPrefab.transform.position, btnPrefab.transform.rotation, profileContainer.transform);
             profilebtn.GetComponentInChildren<Text>().text = allData.saveDatas[i].GetName();
             allData.saveDatas[i].saveIndex = i;
             profilebtn.GetComponent<RectTransform>().localPosition = newBtnPos;
+            if (allData.saveDatas[i].time > 0)
+            {
+                recordHolderList.Add(allData.saveDatas[i]);
+            }
             //profilebtn.onClick.AddListener(() => { FillLoadedData(i); });
+            #region Stupid Switch
             switch (i)
             {
                 case 0:
@@ -152,6 +187,7 @@ public class SaveScript : MonoBehaviour
                     profilebtn.onClick.AddListener(() => FillLoadedData(10));
                     break;
             }
+            #endregion
             //Debug.Log(newBtnPos);
             profileBtns.Add(profilebtn);
         }
@@ -166,8 +202,10 @@ public class SaveScript : MonoBehaviour
             allData = serializer.Deserialize(stream) as SaveContainer;
             stream.Close();
         }
+        recordHolderList.Clear();
         RemoveProfileBtns();
         CreateLoadProfileBtn();
+        FillLeaderBoard();
     }
     public void RemoveProfileBtns()
     {
@@ -192,14 +230,15 @@ public class SaveScript : MonoBehaviour
         }
         myData = allData.saveDatas[loadedIndex];
         nameField.text = myData.GetName();
-        scoreText.text = "Score: " + myData.GetScore();
+        scoreText.text = "Record Time: " + myData.timeText;
         shapeDropdown.value = myData.shapeIndex;
         colorDropdown.value = myData.colorIndex;
+        deleteGhostBtn.gameObject.SetActive(myData.hasGhostData);
         if (scoreSlider != null)
         {
             scoreSlider.value = myData.GetScore();
         }
-        Debug.Log(myData.name);
+        //Debug.Log(myData.name);
     }
     public void SaveData()
     {
@@ -228,7 +267,7 @@ public class SaveScript : MonoBehaviour
     public void ChangeScore(int value)
     {
         myData.SetScore(value);
-        scoreText.text = "Score: " + myData.GetScore();
+        scoreText.text = "Record Time: " + myData.timeText;
     }
     public void ChangeScoreSlider()
     {
@@ -244,9 +283,16 @@ public class SaveScript : MonoBehaviour
         if (colorDropdown == null) return;
         myData.SetColor(colorDropdown.value);
     }
-    public void ImportDataAt(SaveData importedData,int saveIndex)
+    public void ImportDataAt(SaveData importedData, int saveIndex)
     {
         allData.saveDatas[saveIndex] = importedData;
+        SaveData();
+    }
+    public void DeleteGhost()
+    {
+        myData.ClearGhostData();
+        SaveXml();
+        FillLoadedData(myData.saveIndex);
     }
     #endregion
     #region New Data
@@ -264,7 +310,7 @@ public class SaveScript : MonoBehaviour
         myData = new SaveData();
         nameField.text = "";
         scoreSlider.value = 0;
-        scoreText.text = "Score";
+        scoreText.text = "Record Time: ";
     }
     #endregion
     #region Delete Data
@@ -336,13 +382,22 @@ public class SaveScript : MonoBehaviour
     {
 
         if (myData == null || myData == new SaveData()) return;
+        CreatePlayerData();
+        SceneManager.LoadScene(1);
+        //CloseStartMenu();
+        //CloseOptions();
+    }
+    public void CreatePlayerData()
+    {
+        if (GameObject.Find("PlayerData") != null)
+        {
+            Destroy(GameObject.Find("PlayerData"));
+        }
+
         if (playerDataPrefab == null) playerDataPrefab = Resources.Load<GameObject>("Prefab/PlayerData") as GameObject;
         GameObject playerData = Instantiate(playerDataPrefab, Vector3.zero, Quaternion.identity, null);
         playerData.name = "PlayerData";
         playerData.GetComponent<PlayerDataScript>().playerData = myData;
-        SceneManager.LoadScene(1);
-        //CloseStartMenu();
-        //CloseOptions();
     }
     public void CustomLoadScene(int sceneIndex)
     {
@@ -378,4 +433,23 @@ public class SaveScript : MonoBehaviour
         }
     }
     #endregion
+    void FillLeaderBoard()
+    {
+        recordHolderList.Sort(delegate(SaveData save1, SaveData save2) { return save1.time.CompareTo(save2.time); });
+        for (int i = 0; i < highscoreList.Count; i++)
+        {
+            if (recordHolderList.Count > i)
+            {
+                highscoreList[i].text = i + 1 + ") " + recordHolderList[i].GetName() + " - Time: " + recordHolderList[i].timeText;
+            }
+            else
+            {
+                highscoreList[i].text = i + 1 + ") " + "N/A";
+            }
+        }
+    }
+    string TimeFormat(float time)
+    {
+        return string.Format("{0}:{1:00}", (int)time / 60, (int)time % 60);
+    }
 }

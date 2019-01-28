@@ -6,27 +6,29 @@ public class GhostControl : PlayerControl {
 
     PlayerControl player;
     PlayerDataScript playerData;
-    public bool bHasGhostData = true, bGhostDone = false;
+    public bool bHasGhostData = false, bGhostDone = false;
     int currentInputIndex = 0, currentPosIndex;
     [SerializeField]
     float timeDelay = 10f;
 	// Use this for initialization
-	void Start () {
-        if (player == null) player = GameObject.Find("Player").GetComponent<PlayerControl>();
-        if (playerData == null) playerData = GameObject.Find("PlayerData").GetComponent<PlayerDataScript>();
+	void Start ()
+    {
         rbody = GetComponent<Rigidbody>();
         startPos = transform.position;
         posTimer = posResetTimer + timeDelay;
-        bHasGhostData = (playerData.playerData.hInputGhost.Count > 0 && playerData.playerData.vInputGhost.Count > 0);
-        if (bHasGhostData)
-        {
-            GetGhostData(playerData.playerData);
-        }
+
+        if (player == null) player = GameObject.Find("Player").GetComponent<PlayerControl>();
+        if (playerData == null && GameObject.Find("PlayerData") != null) playerData = GameObject.Find("PlayerData").GetComponent<PlayerDataScript>();
+   
+        if (playerData != null) bHasGhostData = playerData.CheckGhostData();
+        if (bHasGhostData) GetGhostData(playerData.playerData);
+
+        gameObject.SetActive(bHasGhostData);
     }
 	
 	// Update is called once per frame
 	void Update () {
-		if (Time.time > timeDelay && !bGhostDone)
+		if ((Time.time > timeDelay && !bGhostDone) && bHasGhostData)
         {
             if (!bGrounded && jumpDelay < Time.time)
             {
