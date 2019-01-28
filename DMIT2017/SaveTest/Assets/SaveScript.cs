@@ -84,6 +84,10 @@ public class SaveContainer
 {
     public List<SaveData> saveDatas;
     public static float beginningHeight = 130, buttonSpacing = 35;
+    public SaveContainer()
+    {
+        saveDatas = new List<SaveData>();
+    }
 }
 #endregion
 
@@ -240,12 +244,16 @@ public class SaveScript : MonoBehaviour
         }
         //Debug.Log(myData.name);
     }
-    public void SaveData()
+    public void SaveNewData()
     {
         AddNewData();
+        SaveData();
+        if (createNewProfileBtn != null) createNewProfileBtn.gameObject.SetActive(allData.saveDatas.Count < 10);
+    }
+    public void SaveData()
+    {
         SaveXml();
         LoadData();
-        if (createNewProfileBtn != null) createNewProfileBtn.gameObject.SetActive(allData.saveDatas.Count < 10);
     }
     public void SaveXml()
     {
@@ -287,6 +295,7 @@ public class SaveScript : MonoBehaviour
     {
         allData.saveDatas[saveIndex] = importedData;
         SaveData();
+        FillLoadedData(saveIndex);
     }
     public void DeleteGhost()
     {
@@ -311,6 +320,11 @@ public class SaveScript : MonoBehaviour
         nameField.text = "";
         scoreSlider.value = 0;
         scoreText.text = "Record Time: ";
+    }
+    public void ClearData()
+    {
+        NewData();
+        myData = null;
     }
     #endregion
     #region Delete Data

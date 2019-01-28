@@ -50,6 +50,7 @@ public class PlayerDataScript : MonoBehaviour
     {
         SaveScript saveScript = GameObject.Find("Canvas").GetComponent<SaveScript>();
         saveScript.ImportDataAt(playerData, playerData.saveIndex);
+        Destroy(gameObject);
     }
     public bool CheckGhostData()
     {
