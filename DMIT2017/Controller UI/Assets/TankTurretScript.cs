@@ -12,6 +12,8 @@ public class TankTurretScript : MonoBehaviour {
     GameObject weaponMount, fireLocation, projectilePrefab;
     [SerializeField]
     KeyCode FireKey = KeyCode.Mouse0;
+    [SerializeField]
+    bool useController = true;
 
     bool canFire = true;
     float tInput, wInput, lastShot;

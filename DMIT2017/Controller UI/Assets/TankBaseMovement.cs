@@ -4,10 +4,15 @@ using UnityEngine;
 
 public class TankBaseMovement : MonoBehaviour {
 
-    float movementSpeed = 2f, leftTread, rightTread;
+    [SerializeField]
+    float movementSpeed = 2f;    
+    [SerializeField]
+    bool useController = true;
 
-	// Use this for initialization
-	void Start () {
+    float leftTread, rightTread, vInput, hInput;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -39,10 +44,20 @@ public class TankBaseMovement : MonoBehaviour {
         button7.text = Input.GetAxis("Button7").ToString(); //start button
         */
         #endregion
-        leftTread = Input.GetAxis("Axis2");
-        rightTread = Input.GetAxis("Axis5");
+        if (useController)
+        {
+            leftTread = Input.GetAxis("Axis2");
+            rightTread = Input.GetAxis("Axis5");
 
-        transform.Translate(-Vector3.forward * (leftTread + rightTread) * Time.deltaTime * movementSpeed);
-        transform.Rotate(Vector3.up * (-leftTread + rightTread));
+            transform.Translate(-Vector3.forward * (leftTread + rightTread) * Time.deltaTime * movementSpeed);
+            transform.Rotate(Vector3.up * (-leftTread + rightTread));
+        }
+        else
+        {
+            vInput = Input.GetAxis("Vertical");
+            hInput = Input.GetAxis("Horizontal");
+            transform.Translate(-Vector3.forward * (vInput) * Time.deltaTime * movementSpeed);
+            transform.Rotate(Vector3.up * (hInput));
+        }
     }
 }
