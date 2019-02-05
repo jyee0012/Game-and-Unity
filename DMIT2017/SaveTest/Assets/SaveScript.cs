@@ -199,6 +199,15 @@ public class SaveScript : MonoBehaviour
     }
     public void LoadData()
     {
+        //LoadXml();
+        LoadJson();
+        recordHolderList.Clear();
+        RemoveProfileBtns();
+        CreateLoadProfileBtn();
+        FillLeaderBoard();
+    }
+    public void LoadXml()
+    {
         if (File.Exists("Data.xml"))
         {
             Stream stream = File.Open("Data.xml", FileMode.Open);
@@ -206,10 +215,17 @@ public class SaveScript : MonoBehaviour
             allData = serializer.Deserialize(stream) as SaveContainer;
             stream.Close();
         }
-        recordHolderList.Clear();
-        RemoveProfileBtns();
-        CreateLoadProfileBtn();
-        FillLeaderBoard();
+    }
+    public void LoadJson()
+    {
+        if (File.Exists("Data.json"))
+        {
+            string dataAsJson = File.ReadAllText("Data.json");
+            allData = JsonUtility.FromJson<SaveContainer>(dataAsJson);
+        }else
+        {
+            allData = new SaveContainer();
+        }
     }
     public void RemoveProfileBtns()
     {
@@ -252,7 +268,8 @@ public class SaveScript : MonoBehaviour
     }
     public void SaveData()
     {
-        SaveXml();
+        //SaveXml();
+        SaveJson();
         LoadData();
     }
     public void SaveXml()
@@ -261,6 +278,11 @@ public class SaveScript : MonoBehaviour
         XmlSerializer serializer = new XmlSerializer(typeof(SaveContainer));
         serializer.Serialize(stream, allData);
         stream.Close();
+    }
+    public void SaveJson()
+    {
+        string json = JsonUtility.ToJson(allData);
+        File.WriteAllText("Data.json", json);
     }
     #endregion
     #region Change Data
