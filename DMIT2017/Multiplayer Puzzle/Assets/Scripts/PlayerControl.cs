@@ -51,19 +51,21 @@ public class PlayerData
 
 public class PlayerControl : MonoBehaviour
 {
-    public float movementSpeed = 2f, forceModifier = 1, timer = 0, maxJumps = 1, jumpDelay = 0.5f, groundRange = 1f;
+    public float movementSpeed = 2f, forceModifier = 1, timer = 0, maxJumps = 1, jumpDelay = 0.5f, groundRange = 1f, deathHeight = -10f;
     [SerializeField]
     KeyCode jumpKey = KeyCode.Space;
     [SerializeField]
     Text timerText, vText, hText, playerNameText;
     [SerializeField]
     GameObject ghostPlayer;
+    [SerializeField]
+    bool drawGizmo= true;
 
     protected float vInput, hInput, jumpCount = 0, jumpTimer = 0, posResetTimer = 10, posTimer = 0, recordTimer = 0;
     protected Rigidbody rbody;
     protected bool bGrounded = true;
     protected Vector3 ground, startPos, ghostStartPos;
-
+    
     public bool useController = false, isMultiplayer = false, recording = false;
     public int playerNum = 1;
 
@@ -85,6 +87,13 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // cannot be placed within a function, it causes delays
+        if (!bGrounded && jumpTimer < Time.time)
+        {
+            ground = transform.position;
+            ground.y -= groundRange;
+            if (bGrounded = CheckGround(ground)) jumpCount = 0;
+        }
         AllMovement();
         Timer();
         if (posTimer < Time.time)
@@ -97,7 +106,6 @@ public class PlayerControl : MonoBehaviour
     #region Fixed Update
     private void FixedUpdate()
     {
-
     }
     #endregion
 
@@ -107,7 +115,6 @@ public class PlayerControl : MonoBehaviour
     }
     void AllMovement()
     {
-        ResetGround();
         PlayerMovement();
         PlayerJump();
     }
@@ -117,7 +124,7 @@ public class PlayerControl : MonoBehaviour
 
         InputText();
         if (recording) hInputGhost.Add(hInput);
-        RespawnPlayer();
+        //RespawnPlayer();
     }
     void PlayerJump()
     {
@@ -137,10 +144,6 @@ public class PlayerControl : MonoBehaviour
         ghostStartPos = transform.position;
         recording = true;
         recordTimer = Time.time + 10f;
-    }
-    void CameraMovement()
-    {
-        // ((big vector - small vector) /2) + small vector = point between 2 vectors
     }
     #region Base Jump Functions
     protected void Jump()
@@ -168,7 +171,6 @@ public class PlayerControl : MonoBehaviour
             ground = transform.position;
             ground.y -= groundRange;
             if (bGrounded = CheckGround(ground)) jumpCount = 0;
-            Debug.Log(gameObject.name + ":" + bGrounded);
         }
     }
     #endregion
@@ -177,12 +179,12 @@ public class PlayerControl : MonoBehaviour
     protected void BasicMovement(float input)
     {
         transform.Translate(new Vector3(input * Time.deltaTime * movementSpeed, 0, 0));
-        RespawnPlayer();
+        RespawnPlayer(deathHeight);
     }
     protected void BasicMovement(Vector3 vectorInput)
     {
         transform.Translate(vectorInput);
-        RespawnPlayer();
+        RespawnPlayer(deathHeight);
     }
     void ControllerMovement()
     {
@@ -274,6 +276,14 @@ public class PlayerControl : MonoBehaviour
         if (vText != null)
         {
             vText.text = "vInput: " + vInput;
+        }
+    }
+    private void OnDrawGizmos()
+    {
+        if (drawGizmo)
+        {
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(transform.position, ground);
         }
     }
 }

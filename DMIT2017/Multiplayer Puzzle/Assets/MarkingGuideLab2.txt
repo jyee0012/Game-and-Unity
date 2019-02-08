@@ -24,9 +24,9 @@ For each element you will receive one mark if your build works occasionally and 
 
 - All puzzles can be solved by using the record function (2 Marks)
 
-- In multiplayer mode each player can be controlled with a separate gamepad (2 Marks)
+(Done)- In multiplayer mode each player can be controlled with a separate gamepad (2 Marks)
 
-- Each player should be identifiable (2 Marks)
+(Done)- Each player should be identifiable (2 Marks)
 
 - UI should be included to show when the player is in record mode (2 Marks)
 
