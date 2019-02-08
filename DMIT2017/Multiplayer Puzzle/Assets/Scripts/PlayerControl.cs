@@ -51,18 +51,20 @@ public class PlayerData
 
 public class PlayerControl : MonoBehaviour
 {
-    public float movementSpeed = 2f, forceModifier = 1, timer = 0, maxJumps = 1;
+    public float movementSpeed = 2f, forceModifier = 1, timer = 0, maxJumps = 1, jumpDelay = 0.5f, groundRange = 1f;
     [SerializeField]
     KeyCode jumpKey = KeyCode.Space;
     [SerializeField]
     Text timerText, vText, hText, playerNameText;
+    [SerializeField]
+    GameObject ghostPlayer;
 
-    protected float vInput, hInput, jumpCount = 0, jumpDelay = 0, posResetTimer = 10, posTimer = 0;
+    protected float vInput, hInput, jumpCount = 0, jumpTimer = 0, posResetTimer = 10, posTimer = 0, recordTimer = 0;
     protected Rigidbody rbody;
     protected bool bGrounded = true;
-    protected Vector3 ground, startPos;
+    protected Vector3 ground, startPos, ghostStartPos;
 
-    public bool useController;
+    public bool useController = false, isMultiplayer = false, recording = false;
     public int playerNum = 1;
 
     // Ghost Data
@@ -107,23 +109,34 @@ public class PlayerControl : MonoBehaviour
     {
         ResetGround();
         PlayerMovement();
+        PlayerJump();
     }
     void PlayerMovement()
     {
         ControllerMovement();
-        hText.text = "hInput: " + hInput;
-        hInputGhost.Add(hInput);
+
+        InputText();
+        if (recording) hInputGhost.Add(hInput);
         RespawnPlayer();
     }
     void PlayerJump()
     {
-        vText.text = "vInput: " + vInput;
+        ControllerMovement();
+        InputText();
         if (JumpInput()) vInput = 1;
-        vInputGhost.Add(vInput);
+        if (recording) vInputGhost.Add(vInput);
         if ((JumpInput()) && (bGrounded || jumpCount < maxJumps))
         {
             Jump();
         }
+    }
+    void StartGhostRecord()
+    {
+        vInputGhost.Clear();
+        hInputGhost.Clear();
+        ghostStartPos = transform.position;
+        recording = true;
+        recordTimer = Time.time + 10f;
     }
     void CameraMovement()
     {
@@ -137,12 +150,12 @@ public class PlayerControl : MonoBehaviour
         rbody.velocity = Vector3.zero;
         rbody.AddForce(0, force, 0);
         bGrounded = false;
-        jumpDelay = Time.time + 0.5f;
+        jumpTimer = Time.time + jumpDelay;
         jumpCount++;
     }
     bool JumpInput()
     {
-        return Input.GetKey(jumpKey) || vInput > 0.1;
+        return Input.GetKey(jumpKey) || vInput > 0.01;
     }
     protected bool CheckGround(Vector3 ground)
     {
@@ -150,19 +163,25 @@ public class PlayerControl : MonoBehaviour
     }
     void ResetGround()
     {
-        if (!bGrounded && jumpDelay < Time.time)
+        if (!bGrounded && jumpTimer < Time.time)
         {
             ground = transform.position;
-            ground.y -= 1f;
+            ground.y -= groundRange;
             if (bGrounded = CheckGround(ground)) jumpCount = 0;
+            Debug.Log(gameObject.name + ":" + bGrounded);
         }
     }
     #endregion
-    // to fix a jump delay issue the player jump is now within controller movement so there is no delay when getting vInput
+    // jump is broken sometimes, when
     #region Base Movement Functions 
     protected void BasicMovement(float input)
     {
         transform.Translate(new Vector3(input * Time.deltaTime * movementSpeed, 0, 0));
+        RespawnPlayer();
+    }
+    protected void BasicMovement(Vector3 vectorInput)
+    {
+        transform.Translate(vectorInput);
         RespawnPlayer();
     }
     void ControllerMovement()
@@ -191,21 +210,49 @@ public class PlayerControl : MonoBehaviour
         #endregion
         if (useController)
         {
-            vInput = Input.GetAxis("Axis2P" + playerNum);
+            vInput = Input.GetAxis("Button0P" + playerNum);
             hInput = Input.GetAxis("Axis1P" + playerNum);
-
-            transform.Translate(-Vector3.forward * (hInput) * Time.deltaTime * movementSpeed);
+        }
+        else if (isMultiplayer)
+        {
+            vInput = Input.GetAxis("VerticalP" + playerNum);
+            hInput = Input.GetAxis("HorizontalP" + playerNum);
         }
         else
         {
             vInput = Input.GetAxis("Vertical");
             hInput = Input.GetAxis("Horizontal");
-            transform.Translate(Vector3.right * (hInput) * Time.deltaTime * movementSpeed);
-            //transform.Rotate(Vector3.up * (hInput));
         }
-        PlayerJump();
+        BasicMovement(Vector3.right * (hInput) * Time.deltaTime * movementSpeed);
     }
     #endregion
+
+    void GetAllControllers()
+    {
+        string[] controllers = Input.GetJoystickNames();
+        //Debug.Log(controllers.Length + " controllers");
+        PlayerControl[] players = FindObjectsOfType<PlayerControl>();
+        PlayerControl otherPlayer = null;
+        if (players.Length > 1)
+        {
+            foreach (PlayerControl currentPlayer in players)
+            {
+                if (currentPlayer != this) otherPlayer = currentPlayer;
+            }
+        }
+        for (int i = 0; i < controllers.Length; i++)
+        {
+            Debug.Log(i + ":" + controllers[i]);
+            if (controllers[i].Length > 0)
+            {
+                if (otherPlayer.playerNum == i || otherPlayer == null)
+                {
+                    playerNum = i + 1;
+                    return;
+                }
+            }
+        }
+    }
     void Timer()
     {
         timer += Time.deltaTime;
@@ -217,5 +264,16 @@ public class PlayerControl : MonoBehaviour
         string timerString = "Time: ",
             minSec = string.Format("{0}:{1:00}", (int)timer / 60, (int)timer % 60);
         if (timerText != null) timerText.text = timerString + minSec;
+    }
+    void InputText()
+    {
+        if (hText != null)
+        {
+            hText.text = "hInput: " + hInput;
+        }
+        if (vText != null)
+        {
+            vText.text = "vInput: " + vInput;
+        }
     }
 }
