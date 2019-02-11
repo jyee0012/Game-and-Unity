@@ -53,7 +53,7 @@ public class PlayerControl : MonoBehaviour
 {
     public float movementSpeed = 2f, forceModifier = 1, timer = 0, maxJumps = 1, jumpDelay = 0.5f, groundRange = 1f, deathHeight = -10f;
     [SerializeField]
-    KeyCode jumpKey = KeyCode.Space;
+    KeyCode jumpKey = KeyCode.Space, recordBtn = KeyCode.R;
     [SerializeField]
     Text timerText, vText, hText, playerNameText;
     [SerializeField]
@@ -95,6 +95,10 @@ public class PlayerControl : MonoBehaviour
             if (bGrounded = CheckGround(ground)) jumpCount = 0;
         }
         AllMovement();
+        if (Input.GetKeyDown(recordBtn))
+        {
+            StartGhostRecord();
+        }
         Timer();
         if (posTimer < Time.time)
         {
