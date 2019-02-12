@@ -18,6 +18,7 @@ public class PlayerData
         hInputGhost = new List<float>();
         posList = new List<Vector3>();
     }
+    #region PlayerData Functions
     public void ClearGhostData()
     {
         vInputGhost = new List<float>();
@@ -47,11 +48,12 @@ public class PlayerData
     {
         score = value;
     }
+    #endregion
 }
 
 public class PlayerControl : MonoBehaviour
 {
-    public float movementSpeed = 2f, forceModifier = 1, timer = 0, maxJumps = 1, jumpDelay = 0.5f, groundRange = 1f, deathHeight = -10f;
+    public float movementSpeed = 2f, forceModifier = 1, timer = 0, maxJumps = 1, jumpDelay = 0.5f, groundRange = 1f, deathHeight = -10f, recordTimeLimit = 10f;
     [SerializeField]
     KeyCode jumpKey = KeyCode.Space, recordBtn = KeyCode.R;
     [SerializeField]
@@ -61,7 +63,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     bool drawGizmo= true;
 
-    protected float vInput, hInput, jumpCount = 0, jumpTimer = 0, posResetTimer = 10, posTimer = 0, recordTimer = 0;
+    protected float vInput, hInput, jumpCount = 0, jumpTimer = 0, posResetTimer = 10, posTimer = 0;
     protected Rigidbody rbody;
     protected bool bGrounded = true;
     protected Vector3 ground, startPos, ghostStartPos;
@@ -73,7 +75,10 @@ public class PlayerControl : MonoBehaviour
     public List<float> hInputGhost, vInputGhost;
     public List<Vector3> posList;
     public string playerName;
-    #region Start
+
+    private float recordTimer = 0, recordStart = 0, recordEnd = 0;
+
+    #region Default Functions
     void Start()
     {
         if (GetComponent<Rigidbody>() != null) rbody = GetComponent<Rigidbody>();
@@ -82,8 +87,6 @@ public class PlayerControl : MonoBehaviour
         if (playerName == "") playerName = "N/A";
         //playerNameText.text = playerName;
     }
-    #endregion
-    #region Update
     // Update is called once per frame
     void Update()
     {
@@ -94,6 +97,7 @@ public class PlayerControl : MonoBehaviour
             ground.y -= groundRange;
             if (bGrounded = CheckGround(ground)) jumpCount = 0;
         }
+        // 
         AllMovement();
         if (Input.GetKeyDown(recordBtn))
         {
@@ -106,13 +110,11 @@ public class PlayerControl : MonoBehaviour
             posTimer += posResetTimer;
         }
     }
-    #endregion
-    #region Fixed Update
     private void FixedUpdate()
     {
     }
     #endregion
-
+    #region Movement Functions
     protected void RespawnPlayer(float fallHeight = -10)
     {
         if (transform.position.y < fallHeight) transform.position = startPos;
@@ -140,14 +142,6 @@ public class PlayerControl : MonoBehaviour
         {
             Jump();
         }
-    }
-    void StartGhostRecord()
-    {
-        vInputGhost.Clear();
-        hInputGhost.Clear();
-        ghostStartPos = transform.position;
-        recording = true;
-        recordTimer = Time.time + 10f;
     }
     #region Base Jump Functions
     protected void Jump()
@@ -178,7 +172,6 @@ public class PlayerControl : MonoBehaviour
         }
     }
     #endregion
-    // jump is broken sometimes, when
     #region Base Movement Functions 
     protected void BasicMovement(float input)
     {
@@ -232,7 +225,7 @@ public class PlayerControl : MonoBehaviour
         BasicMovement(Vector3.right * (hInput) * Time.deltaTime * movementSpeed);
     }
     #endregion
-
+    #endregion
     void GetAllControllers()
     {
         string[] controllers = Input.GetJoystickNames();
@@ -259,6 +252,7 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
+    #region Update Text
     void Timer()
     {
         timer += Time.deltaTime;
@@ -282,6 +276,29 @@ public class PlayerControl : MonoBehaviour
             vText.text = "vInput: " + vInput;
         }
     }
+    #endregion
+    #region Ghost/Record Functions
+    void StartGhostRecord()
+    {
+        vInputGhost.Clear();
+        hInputGhost.Clear();
+        ghostStartPos = transform.position;
+        recording = true;
+        recordTimer = Time.time + recordTimeLimit;
+    }
+    public PlayerData GeneratePlayerData()
+    {
+        // this function should be triggered right before the ghost plays the recording
+        PlayerData currentData = new PlayerData();
+        currentData.name = "Player " + playerNum;
+        currentData.time = (recordEnd - recordStart) + Time.time; // the record duration, so when the duration ends so does the ghost. This should be recordEnd - recordStart + recordPlay.
+        currentData.vInputGhost = vInputGhost;
+        currentData.hInputGhost = hInputGhost;
+        currentData.posList.Clear();
+        currentData.posList.Add(ghostStartPos);
+        return currentData;
+    }
+    #endregion
     private void OnDrawGizmos()
     {
         if (drawGizmo)
