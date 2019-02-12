@@ -8,11 +8,11 @@ public class CameraControl : MonoBehaviour
     [SerializeField]
     bool cameraMove = true;
     [SerializeField]
-    GameObject player1, player2;
+    GameObject player1 = null, player2 = null;
     [SerializeField]
     float playerDist = 0;
     Vector3 player1Pos, player2Pos, cameraStartPos;
-    float cameraYPos = 0, cameraXPos = 0, lerpTimer = 0, lerpTargetTime;
+    float lerpTimer = 0, lerpTargetTime;
     // Use this for initialization
     void Start()
     {
@@ -30,6 +30,7 @@ public class CameraControl : MonoBehaviour
             //lerpTimer = lerpTargetTime - Time.time;
             //if (playerDist > 70)
             //{
+            //    //Instead of lerping try moving the camera further negative z coord
             //    if (GetComponent<Camera>().fieldOfView == 60) lerpTargetTime = Time.time + 1f;
             //    GetComponent<Camera>().fieldOfView = Mathf.Lerp(90, 60,1f);
             //}

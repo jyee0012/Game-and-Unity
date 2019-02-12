@@ -20,12 +20,14 @@ public class TankBaseMovement : MonoBehaviour
     float leftTread, rightTread, vInput, hInput;
     TankTurretScript childTurret;
     Vector3 startPos;
+    Quaternion startRot;
     int enemyScore = 0;
     // Use this for initialization
     void Start()
     {
         GetAllControllers();
         startPos = transform.position;
+        startRot = transform.rotation;
         health = maxHealth;
         UpdateText();
     }
@@ -75,6 +77,7 @@ public class TankBaseMovement : MonoBehaviour
             transform.Translate(Vector3.forward * (vInput) * Time.deltaTime * movementSpeed);
             transform.Rotate(Vector3.up * (hInput));
         }
+        if (transform.position.y < -10) Respawn();
     }
     void ChangeChildren()
     {
@@ -120,7 +123,9 @@ public class TankBaseMovement : MonoBehaviour
     {
         health = maxHealth;
         transform.position = startPos;
+        transform.rotation = startRot;
         enemyScore++;
+        UpdateText();
     }
     void TakeDamage(float dmg = 1f)
     {

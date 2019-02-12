@@ -57,7 +57,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     KeyCode jumpKey = KeyCode.Space, recordBtn = KeyCode.R;
     [SerializeField]
-    Text timerText, vText, hText, playerNameText;
+    Text timerText = null, vText = null, hText = null, playerNameText = null;
     [SerializeField]
     GameObject ghostPlayer;
     [SerializeField]
@@ -74,7 +74,6 @@ public class PlayerControl : MonoBehaviour
     // Ghost Data
     public List<float> hInputGhost, vInputGhost;
     public List<Vector3> posList;
-    public string playerName;
 
     private float recordTimer = 0, recordStart = 0, recordEnd = 0;
 
@@ -84,8 +83,7 @@ public class PlayerControl : MonoBehaviour
         if (GetComponent<Rigidbody>() != null) rbody = GetComponent<Rigidbody>();
         startPos = transform.position;
         posTimer += posResetTimer;
-        if (playerName == "") playerName = "N/A";
-        //playerNameText.text = playerName;
+        SetPlayerNameText();
     }
     // Update is called once per frame
     void Update()
@@ -99,9 +97,23 @@ public class PlayerControl : MonoBehaviour
         }
         // 
         AllMovement();
-        if (Input.GetKeyDown(recordBtn))
+        if (recording)
         {
-            StartGhostRecord();
+            if (Input.GetKeyDown(recordBtn))
+            {
+                StopGhostRecord();
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(recordBtn))
+            {
+                StartGhostRecord();
+            }
+        }
+        if (recording && recordTimeLimit < Time.time)
+        {
+            StopGhostRecord();
         }
         Timer();
         if (posTimer < Time.time)
@@ -265,6 +277,11 @@ public class PlayerControl : MonoBehaviour
             minSec = string.Format("{0}:{1:00}", (int)timer / 60, (int)timer % 60);
         if (timerText != null) timerText.text = timerString + minSec;
     }
+    void SetPlayerNameText()
+    {
+        if (playerNameText == null) return;
+        playerNameText.text = "Player " + playerNum;
+    }
     void InputText()
     {
         if (hText != null)
@@ -284,7 +301,17 @@ public class PlayerControl : MonoBehaviour
         hInputGhost.Clear();
         ghostStartPos = transform.position;
         recording = true;
+        recordStart = Time.time;
         recordTimer = Time.time + recordTimeLimit;
+    }
+    void StopGhostRecord()
+    {
+        recording = false;
+        recordEnd = Time.time;
+    }
+    void PlayGhostRecord()
+    {
+        ghostPlayer.SetActive(true);
     }
     public PlayerData GeneratePlayerData()
     {
