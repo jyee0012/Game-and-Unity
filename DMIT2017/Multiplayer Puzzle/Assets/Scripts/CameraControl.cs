@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraControl : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class CameraControl : MonoBehaviour
     GameObject player1 = null, player2 = null;
     [SerializeField]
     float playerDist = 0;
+    [SerializeField]
+    Text controlText;
     Vector3 player1Pos, player2Pos, cameraStartPos;
     float lerpTimer = 0, lerpTargetTime;
     // Use this for initialization
@@ -35,6 +38,11 @@ public class CameraControl : MonoBehaviour
             //    GetComponent<Camera>().fieldOfView = Mathf.Lerp(90, 60,1f);
             //}
         }
+    }
+    public void ToggleControlText()
+    {
+        if (controlText == null) return;
+        controlText.gameObject.SetActive(!controlText.gameObject.activeInHierarchy);
     }
     Vector3 CameraMovement()
     {

@@ -55,27 +55,28 @@ public class PlayerControl : MonoBehaviour
 {
     public float movementSpeed = 2f, forceModifier = 1, timer = 0, maxJumps = 1, jumpDelay = 0.5f, groundRange = 1f, deathHeight = -10f, recordTimeLimit = 10f;
     [SerializeField]
-    KeyCode jumpKey = KeyCode.Space, recordBtn = KeyCode.R;
+    KeyCode jumpKey = KeyCode.Space, recordBtn = KeyCode.R, replayBtn = KeyCode.E;
     [SerializeField]
-    Text timerText = null, vText = null, hText = null, playerNameText = null;
+    Text timerText = null, vText = null, hText = null, playerNameText = null, recordText = null;
     [SerializeField]
     GameObject ghostPlayer;
     [SerializeField]
-    bool drawGizmo= true;
+    bool drawGizmo = true;
 
     protected float vInput, hInput, jumpCount = 0, jumpTimer = 0, posResetTimer = 10, posTimer = 0;
     protected Rigidbody rbody;
     protected bool bGrounded = true;
     protected Vector3 ground, startPos, ghostStartPos;
-    
-    public bool useController = false, isMultiplayer = false, recording = false;
+
+    public bool useController = false, isMultiplayer = false;
     public int playerNum = 1;
 
     // Ghost Data
     public List<float> hInputGhost, vInputGhost;
     public List<Vector3> posList;
 
-    private float recordTimer = 0, recordStart = 0, recordEnd = 0;
+    private float recordTimer = 0, recordStart = 0, recordEnd = 0, recordDuration = 0;
+    private bool recording = false, playing = false;
 
     #region Default Functions
     void Start()
@@ -97,6 +98,7 @@ public class PlayerControl : MonoBehaviour
         }
         // 
         AllMovement();
+        #region Recording Controls
         if (recording)
         {
             if (Input.GetKeyDown(recordBtn))
@@ -111,16 +113,17 @@ public class PlayerControl : MonoBehaviour
                 StartGhostRecord();
             }
         }
-        if (recording && recordTimeLimit < Time.time)
+        if (recording && recordTimer < Time.time)
         {
             StopGhostRecord();
         }
-        Timer();
-        if (posTimer < Time.time)
+        #endregion
+        if (Input.GetKeyDown(replayBtn) && (vInputGhost.Count > 0 && hInputGhost.Count > 0))
         {
-            posList.Add(transform.position);
-            posTimer += posResetTimer;
+            PlayGhostRecord();
         }
+        Timer();
+        UpdateRecordText();
     }
     private void FixedUpdate()
     {
@@ -264,6 +267,14 @@ public class PlayerControl : MonoBehaviour
             }
         }
     }
+    void AddToPositionList()
+    {
+        if (posTimer < Time.time)
+        {
+            posList.Add(transform.position);
+            posTimer += posResetTimer;
+        }
+    }
     #region Update Text
     void Timer()
     {
@@ -274,8 +285,12 @@ public class PlayerControl : MonoBehaviour
     void UpdateTimerText()
     {
         string timerString = "Time: ",
-            minSec = string.Format("{0}:{1:00}", (int)timer / 60, (int)timer % 60);
+            minSec = GetTimeText(timer);
         if (timerText != null) timerText.text = timerString + minSec;
+    }
+    string GetTimeText(float time)
+    {
+        return string.Format("{0}:{1:00}", (int)time / 60, (int)time % 60);
     }
     void SetPlayerNameText()
     {
@@ -292,6 +307,35 @@ public class PlayerControl : MonoBehaviour
         {
             vText.text = "vInput: " + vInput;
         }
+    }
+    public void UpdateRecordText()
+    {
+        string statusText = "No Recording";
+        if (recordText == null) return;
+        if (recording)
+        {
+            statusText = "Recording: " + GetTimeText(recordTimer - Time.time) + " Left";
+        }
+        else
+        {
+            if (playing)
+            {
+                statusText = "Playing: " + GetTimeText(recordDuration - Time.time) + " Left";
+                playing = (recordDuration > Time.time);
+            }
+            else
+            {
+                if (vInputGhost.Count > 0)
+                {
+                    statusText = "Press \"E\" to play recording";
+                }
+                else
+                {
+                    statusText = "Press \"R\" to start recording";
+                }
+            }
+        }
+        recordText.text = statusText;
     }
     #endregion
     #region Ghost/Record Functions
@@ -311,14 +355,22 @@ public class PlayerControl : MonoBehaviour
     }
     void PlayGhostRecord()
     {
+        if (ghostPlayer.GetComponent<GhostControl>() != null)
+        {
+            GhostControl ghostControls = ghostPlayer.GetComponent<GhostControl>();
+            ghostControls.playerData = GeneratePlayerData();
+        }
         ghostPlayer.SetActive(true);
+        ghostPlayer.transform.position = ghostStartPos;
+        playing = true;
     }
     public PlayerData GeneratePlayerData()
     {
         // this function should be triggered right before the ghost plays the recording
         PlayerData currentData = new PlayerData();
         currentData.name = "Player " + playerNum;
-        currentData.time = (recordEnd - recordStart) + Time.time; // the record duration, so when the duration ends so does the ghost. This should be recordEnd - recordStart + recordPlay.
+        recordDuration = (recordEnd - recordStart) + Time.time; // the record duration, so when the duration ends so does the ghost. This should be recordEnd - recordStart + recordPlay.
+        currentData.time = recordDuration;
         currentData.vInputGhost = vInputGhost;
         currentData.hInputGhost = hInputGhost;
         currentData.posList.Clear();

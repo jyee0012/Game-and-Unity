@@ -20,20 +20,20 @@ For each element you will receive one mark if your build works occasionally and 
 
 - Game has four unique puzzle that requires both players to solve (2 Marks)
 
-- Game allows for one player to record movements and play them using a clone or copy of the player (2 Marks)
+(Done)- Game allows for one player to record movements and play them using a clone or copy of the player (2 Marks)
 
-- All puzzles can be solved by using the record function (2 Marks)
+(Done)- All puzzles can be solved by using the record function (2 Marks)
 
 (Done)- In multiplayer mode each player can be controlled with a separate gamepad (2 Marks)
 
 (Done)- Each player should be identifiable (2 Marks)
 
-- UI should be included to show when the player is in record mode (2 Marks)
+(Done)- UI should be included to show when the player is in record mode (2 Marks)
 
-- The record time should be limited and displayed (ex. 10 seconds) (2 Marks)
+(Done)- The record time should be limited and displayed (ex. 10 seconds) (2 Marks)
 
-- Replay mode should be able to be triggered as long as a recording exists (2 Marks)
+(Done)- Replay mode should be able to be triggered as long as a recording exists (2 Marks)
 
-- UI should be included to show if a recording exists (2 Marks)
+(Done)- UI should be included to show if a recording exists (2 Marks)
 
 Total Marks: 34

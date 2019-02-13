@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GhostControl : PlayerControl {
 
-    PlayerControl player;
-    PlayerData playerData;
+    public PlayerControl player;
+    public PlayerData playerData;
     public bool bHasGhostData = false, bGhostDone = false;
-    int currentInputIndex = 0, currentPosIndex;
+    public int currentInputIndex = 0, currentPosIndex;
     [SerializeField]
     float timeDelay = 10f;
 	// Use this for initialization
@@ -44,7 +44,12 @@ public class GhostControl : PlayerControl {
                 posTimer += posResetTimer;
                 currentPosIndex++;
             }
-            bGhostDone = player.timer > playerData.time;
+        }
+        if (bGhostDone)
+        {
+            gameObject.SetActive(false);
+            currentInputIndex = currentPosIndex = 0;
+            bGhostDone = false;
         }
 	}
     void GhostMovement()
@@ -53,6 +58,7 @@ public class GhostControl : PlayerControl {
         BasicMovement(hInputGhost[currentInputIndex]);
         if (vInputGhost[currentInputIndex] > 0.1 && bGrounded) Jump();
         currentInputIndex++;
+        bGhostDone = currentInputIndex >= hInputGhost.Count;
     }
     void GetGhostData(PlayerData player)
     {
