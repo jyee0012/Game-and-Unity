@@ -63,7 +63,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     bool drawGizmo = true;
 
-    protected float vInput, hInput, jumpCount = 0, jumpTimer = 0, posResetTimer = 10, posTimer = 0;
+    protected float vInput, hInput, jumpCount = 0, jumpTimer = 0, posResetTimer = 10, posTimer = 0, score = 0;
     protected Rigidbody rbody;
     protected bool bGrounded = true;
     protected Vector3 ground, startPos, ghostStartPos;
@@ -75,6 +75,7 @@ public class PlayerControl : MonoBehaviour
     public List<float> hInputGhost, vInputGhost;
     public List<Vector3> posList;
 
+    // Record Data
     private float recordTimer = 0, recordStart = 0, recordEnd = 0, recordDuration = 0;
     private bool recording = false, playing = false;
 
@@ -384,6 +385,14 @@ public class PlayerControl : MonoBehaviour
         {
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(transform.position, ground);
+        }
+    }
+    void CollectCoin(Transform collided)
+    {
+        if (collided.tag == "Coin")
+        {
+            score++;
+            Destroy(collided.gameObject);
         }
     }
 }
