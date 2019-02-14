@@ -57,7 +57,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     KeyCode jumpKey = KeyCode.Space, recordBtn = KeyCode.R, replayBtn = KeyCode.E;
     [SerializeField]
-    Text timerText = null, vText = null, hText = null, playerNameText = null, recordText = null;
+    Text timerText = null, vText = null, hText = null, playerNameText = null, playerScoreText = null, recordText = null;
     [SerializeField]
     GameObject ghostPlayer;
     [SerializeField]
@@ -125,6 +125,7 @@ public class PlayerControl : MonoBehaviour
         }
         Timer();
         UpdateRecordText();
+        UpdatePlayerScoreText();
     }
     private void FixedUpdate()
     {
@@ -308,6 +309,11 @@ public class PlayerControl : MonoBehaviour
         {
             vText.text = "vInput: " + vInput;
         }
+    }
+    void UpdatePlayerScoreText()
+    {
+        if (playerScoreText == null) return;
+        playerScoreText.text = "P" + playerNum + " Score: " + score;
     }
     public void UpdateRecordText()
     {

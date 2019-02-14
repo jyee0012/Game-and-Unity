@@ -1,0 +1,7 @@
+Multi-Display
+-Create or modify a project to use two displays (monitor)
+-Project should detect how many displays are active
+-if only one display is active then switch to split screen
+
+Resource:
+https://docs.unity3d.com/Manual/MultiDisplay.html
