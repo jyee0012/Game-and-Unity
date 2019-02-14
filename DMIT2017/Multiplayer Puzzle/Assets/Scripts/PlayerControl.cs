@@ -393,6 +393,10 @@ public class PlayerControl : MonoBehaviour
             Gizmos.DrawLine(transform.position, ground);
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        CollectCoin(other.transform);
+    }
     void CollectCoin(Transform collided)
     {
         if (collided.tag == "Coin")

@@ -6,19 +6,19 @@ For each element you will receive one mark if your build works occasionally and 
 
 - Game has a level that takes about 5 minutes to complete (2 Marks)
 
-- Game has a number of objects to collect (2 Marks)
+(Done)- Game has a number of objects to collect (2 Marks)
 
-- When a player collects an object it adds to that player's count (2 Marks)
+(Done)- When a player collects an object it adds to that player's count (2 Marks)
 
-- UI should be included to display each players object count (2 Marks)
+(Done)- UI should be included to display each players object count (2 Marks)
 
-- Game has one unique puzzle that requires both players to solve (2 Marks)
+(Done)- Game has one unique puzzle that requires both players to solve (2 Marks)
 
-- Game has two unique puzzles that requires both players to solve (2 Marks)
+(Done)- Game has two unique puzzles that requires both players to solve (2 Marks)
 
-- Game has three unique puzzle that requires both players to solve (2 Marks)
+(Done)- Game has three unique puzzle that requires both players to solve (2 Marks)
 
-- Game has four unique puzzle that requires both players to solve (2 Marks)
+(Done)- Game has four unique puzzle that requires both players to solve (2 Marks)
 
 (Done)- Game allows for one player to record movements and play them using a clone or copy of the player (2 Marks)
 

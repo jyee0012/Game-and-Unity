@@ -12,11 +12,11 @@ public class RemoteDoorScript : MonoBehaviour
     [SerializeField]
     DirectionalMovement movement = DirectionalMovement.DontMove;
     [SerializeField]
-    Vector2 movementLimit = Vector2.zero;
+    float movementLimit = 10;
     [SerializeField]
     DirectionalRotation rotate = DirectionalRotation.DontRotate;
     [SerializeField]
-    Vector2 rotationLimit = Vector2.zero;
+    float rotationLimit = 10;
     [SerializeField]
     float timer = 0, movementSpeed = 2f, rotationSpeed = 2f;
 
@@ -43,13 +43,25 @@ public class RemoteDoorScript : MonoBehaviour
         {
             if (onTrigger)
             {
-                Move();
+                Vector3 directionMove = Movement(movement) * movementLimit;
+                //if (Movement(movement).z > 0)
+                //{
+                //    directionMove = new Vector3(Movement(movement).z * movementLimit, 0, 0);
+                //}
+                Vector3 targetPos = (objStartPos + directionMove);
+                //Debug.Log(moveableObject.transform.position + ":" + targetPos);
+                if (Vector3.Distance(moveableObject.transform.position, targetPos) > 0.1)
+                {
+                    Move();
+                }
             }
             else if (CheckCanMoveRotate(movement, rotate))
             {
                 Move(-1);
             }
         }
+        //onTrigger = (Physics.BoxCast(transform.position, transform.localScale / 2, -Vector3.forward, transform.rotation, 10, LayerMask.GetMask("Player")));
+        //Debug.Log(onTrigger);
     }
     bool CheckCanMoveRotate(DirectionalMovement move, DirectionalRotation rot)
     {
@@ -112,7 +124,10 @@ public class RemoteDoorScript : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-
+        if (!other.gameObject.activeInHierarchy)
+        {
+            onTrigger = false;
+        }
     }
     private void OnTriggerExit(Collider other)
     {
@@ -120,5 +135,10 @@ public class RemoteDoorScript : MonoBehaviour
         {
             onTrigger = false;
         }
+    }
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawCube(transform.position, transform.localScale);
     }
 }
