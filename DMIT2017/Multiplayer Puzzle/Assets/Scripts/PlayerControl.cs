@@ -61,7 +61,7 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     GameObject ghostPlayer;
     [SerializeField]
-    bool drawGizmo = true;
+    bool drawGizmo = true, useRecord = true;
 
     protected float vInput, hInput, jumpCount = 0, jumpTimer = 0, posResetTimer = 10, posTimer = 0, score = 0;
     protected Rigidbody rbody;
@@ -99,32 +99,35 @@ public class PlayerControl : MonoBehaviour
         }
         // 
         AllMovement();
-        #region Recording Controls
-        if (recording)
+        if (useRecord)
         {
-            if (Input.GetKeyDown(recordBtn))
+            #region Recording Controls
+            if (recording)
+            {
+                if (Input.GetKeyDown(recordBtn))
+                {
+                    StopGhostRecord();
+                }
+            }
+            else
+            {
+                if (Input.GetKeyDown(recordBtn))
+                {
+                    StartGhostRecord();
+                }
+            }
+            if (recording && recordTimer < Time.time)
             {
                 StopGhostRecord();
             }
-        }
-        else
-        {
-            if (Input.GetKeyDown(recordBtn))
+            #endregion
+            if (Input.GetKeyDown(replayBtn) && (vInputGhost.Count > 0 && hInputGhost.Count > 0))
             {
-                StartGhostRecord();
+                PlayGhostRecord();
             }
-        }
-        if (recording && recordTimer < Time.time)
-        {
-            StopGhostRecord();
-        }
-        #endregion
-        if (Input.GetKeyDown(replayBtn) && (vInputGhost.Count > 0 && hInputGhost.Count > 0))
-        {
-            PlayGhostRecord();
+            UpdateRecordText();
         }
         Timer();
-        UpdateRecordText();
         UpdatePlayerScoreText();
     }
     private void FixedUpdate()

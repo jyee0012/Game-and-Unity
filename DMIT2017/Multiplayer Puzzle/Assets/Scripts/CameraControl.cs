@@ -15,7 +15,7 @@ public class CameraControl : MonoBehaviour
     [SerializeField]
     Text controlText;
     Vector3 player1Pos, player2Pos, cameraStartPos;
-    float lerpTimer = 0, lerpTargetTime;
+    float camFOV = 60;
     // Use this for initialization
     void Start()
     {
@@ -31,12 +31,23 @@ public class CameraControl : MonoBehaviour
             transform.position = CameraMovement();
             playerDist = Vector3.Distance(player1Pos, player2Pos);
             //lerpTimer = lerpTargetTime - Time.time;
-            //if (playerDist > 70)
-            //{
-            //    //Instead of lerping try moving the camera further negative z coord
-            //    if (GetComponent<Camera>().fieldOfView == 60) lerpTargetTime = Time.time + 1f;
-            //    GetComponent<Camera>().fieldOfView = Mathf.Lerp(90, 60,1f);
-            //}
+            if (playerDist > 70)
+            {
+                //Instead of lerping try moving the camera further negative z coord
+                if (camFOV < 90)
+                {
+                    camFOV++;
+                    GetComponent<Camera>().fieldOfView = camFOV;
+                }
+            }
+            else
+            {
+                if (camFOV > 60)
+                {
+                    camFOV--;
+                    GetComponent<Camera>().fieldOfView = camFOV;
+                }
+            }
         }
     }
     public void ToggleControlText()
