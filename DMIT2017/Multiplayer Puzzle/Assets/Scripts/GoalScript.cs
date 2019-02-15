@@ -8,10 +8,10 @@ public class GoalScript : MonoBehaviour {
     [SerializeField]
     int playerCount = 0, goalScene = 0, totalPlayers = 0;
     [SerializeField]
-    bool useGoal = true;
+    bool useGoal = true, useCheckPoint = false;
 	// Use this for initialization
 	void Start () {
-        if (totalPlayers == 0) totalPlayers = FindAllPlayers().Count/2;
+        if (totalPlayers == 0) totalPlayers = FindAllPlayers().Count;
     }
 
     // Update is called once per frame
@@ -51,6 +51,10 @@ public class GoalScript : MonoBehaviour {
         if (other.tag == "Player")
         {
             playerCount++;
+            if (useCheckPoint)
+            {
+                other.gameObject.GetComponent<PlayerControl>().SetNewSpawnPoint();
+            }
         }
     }
     private void OnTriggerExit(Collider other)

@@ -76,7 +76,7 @@ public class PlayerControl : MonoBehaviour
     public List<Vector3> posList;
 
     // Record Data
-    private float recordTimer = 0, recordStart = 0, recordEnd = 0, recordDuration = 0;
+    private float recordTimer = 0, recordStart = 0, recordEnd = 0, recordDuration = 0, btnDelay = 0f;
     private bool recording = false, playing = false;
 
     #region Default Functions
@@ -104,16 +104,18 @@ public class PlayerControl : MonoBehaviour
             #region Recording Controls
             if (recording)
             {
-                if (Input.GetKeyDown(recordBtn))
+                if ((Input.GetKeyDown(recordBtn) || Input.GetAxis("Button2") != 0) && btnDelay < Time.time)
                 {
                     StopGhostRecord();
+                    btnDelay = Time.time + 0.5f;
                 }
             }
             else
             {
-                if (Input.GetKeyDown(recordBtn))
+                if ((Input.GetKeyDown(recordBtn) || Input.GetAxis("Button2") != 0) && btnDelay < Time.time)
                 {
                     StartGhostRecord();
+                    btnDelay = Time.time + 0.5f;
                 }
             }
             if (recording && recordTimer < Time.time)
@@ -121,9 +123,10 @@ public class PlayerControl : MonoBehaviour
                 StopGhostRecord();
             }
             #endregion
-            if (Input.GetKeyDown(replayBtn) && (vInputGhost.Count > 0 && hInputGhost.Count > 0))
+            if ((Input.GetKeyDown(replayBtn) || Input.GetAxis("Button1") != 0) && (vInputGhost.Count > 0 && hInputGhost.Count > 0) && btnDelay < Time.time)
             {
                 PlayGhostRecord();
+                btnDelay = Time.time + 0.5f;
             }
             UpdateRecordText();
         }
@@ -135,7 +138,7 @@ public class PlayerControl : MonoBehaviour
     }
     #endregion
     #region Movement Functions
-    protected void RespawnPlayer(float fallHeight = -10)
+    public void RespawnPlayer(float fallHeight = -10)
     {
         if (transform.position.y < fallHeight) transform.position = startPos;
     }
@@ -337,11 +340,13 @@ public class PlayerControl : MonoBehaviour
             {
                 if (vInputGhost.Count > 0)
                 {
-                    statusText = "Press \"E\" to play recording";
+                    string key = (useController) ? "B" : "E";
+                    statusText = "Press \"" + key + "\" to play recording";
                 }
                 else
                 {
-                    statusText = "Press \"R\" to start recording";
+                    string key = (useController) ? "X" : "R";
+                    statusText = "Press \"" + key + "\" to start recording";
                 }
             }
         }
@@ -388,6 +393,11 @@ public class PlayerControl : MonoBehaviour
         return currentData;
     }
     #endregion
+    public void SetNewSpawnPoint()
+    {
+        startPos = transform.position;
+        startPos.y += 5f;
+    }
     private void OnDrawGizmos()
     {
         if (drawGizmo)
@@ -399,6 +409,20 @@ public class PlayerControl : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         CollectCoin(other.transform);
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Moving Platform")
+        {
+            transform.parent = collision.transform;
+        }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.transform.tag == "Moving Platform")
+        {
+            transform.parent = null;
+        }
     }
     void CollectCoin(Transform collided)
     {

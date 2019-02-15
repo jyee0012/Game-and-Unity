@@ -29,23 +29,31 @@ public class CameraControl : MonoBehaviour
         if (cameraMove)
         {
             transform.position = CameraMovement();
-            playerDist = Vector3.Distance(player1Pos, player2Pos);
-            //lerpTimer = lerpTargetTime - Time.time;
-            if (playerDist > 70)
+            if (player1 != null && player2 != null)
             {
-                //Instead of lerping try moving the camera further negative z coord
-                if (camFOV < 90)
+                playerDist = Vector3.Distance(player1Pos, player2Pos);
+                //lerpTimer = lerpTargetTime - Time.time;
+                if (playerDist > 70)
                 {
-                    camFOV++;
-                    GetComponent<Camera>().fieldOfView = camFOV;
+                    if (playerDist > 110)
+                    {
+                        player1.GetComponent<PlayerControl>().RespawnPlayer();
+                        player2.GetComponent<PlayerControl>().RespawnPlayer();
+                    }
+                    //Instead of lerping try moving the camera further negative z coord
+                    if (camFOV < 90)
+                    {
+                        camFOV++;
+                        GetComponent<Camera>().fieldOfView = camFOV;
+                    }
                 }
-            }
-            else
-            {
-                if (camFOV > 60)
+                else
                 {
-                    camFOV--;
-                    GetComponent<Camera>().fieldOfView = camFOV;
+                    if (camFOV > 60)
+                    {
+                        camFOV--;
+                        GetComponent<Camera>().fieldOfView = camFOV;
+                    }
                 }
             }
         }
