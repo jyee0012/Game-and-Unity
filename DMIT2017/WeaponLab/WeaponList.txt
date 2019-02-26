@@ -1,0 +1,38 @@
+Sword
+Bow
+Rocket Launcher
+Dagger
+Axe
+Knife
+Blue Shell
+Bomb
+Glass Cannon
+Crowbar
+Magic
+Rifle
+
+Universal Stats:
+Name
+Description
+Damage/DamageType
+Attack Speed
+Animation
+Particles
+Range
+
+Ranged Stats:
+Ammo/AmmoType
+Spread
+Reload Time
+Accuracy
+Recoil
+Aim Speed
+Muzzle Location
+Projectile
+Velocity
+
+Categories:
+Range
+-Projectile
+-HitScan
+Melee
