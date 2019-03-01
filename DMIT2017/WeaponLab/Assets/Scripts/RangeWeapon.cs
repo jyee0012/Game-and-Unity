@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangeWeapon : WeaponBase
+public class RangeWeapon : Weapon
 {
     // Start is called before the first frame update
     void Start()
@@ -13,6 +13,10 @@ public class RangeWeapon : WeaponBase
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    public override void Use()
+    {
+        base.Use();
     }
 }

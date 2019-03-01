@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
-    WeaponBase myWeapon;
+    Weapon myWeapon;
 
     [SerializeField]
     Text weaponName, currentAmmo, maxAmmo;
@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        myWeapon = GetComponentInChildren<WeaponBase>();
+        myWeapon = GetComponentInChildren<Weapon>();
     }
 
     // Update is called once per frame

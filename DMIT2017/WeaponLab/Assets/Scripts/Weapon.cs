@@ -11,8 +11,11 @@ public class WeaponData
     public float currentAmmo, maxAmmo;
     public float weaponSpread, reloadTime, accuracy, recoil, aimSpd;
     public float currentClip, maxClip;
+    public float projectileSpeed;
+
     public ParticleSystem weaponParticles;
-    public GameObject weaponProjectile;
+    public GameObject weaponProjectile, muzzleObject;
+    public bool canFire { get { return currentClip > 0; } }
 
     public WeaponData()
     {
@@ -30,8 +33,12 @@ public class WeaponData
         aimSpd = 100;
         maxClip = 10;
         currentClip = maxClip;
+
+        projectileSpeed = 10f;
+
         weaponParticles = null;
         weaponProjectile = null;
+        muzzleObject = null;
     }
     public WeaponData(string wepName, string wepDesc, float wepDmg, float wepAtkRate, float wepAtkRange, float wepMaxAmmo, float wepSpread, float wepReloadTime, float wepAcc, float wepRecoil, float wepAimSpd, float wepClipSize)
     {
@@ -83,9 +90,17 @@ public class WeaponData
         currentClip -= amount;
         currentAmmo -= amount;
     }
+    public void ResetAmmo()
+    {
+        currentAmmo = maxAmmo;
+    }
+    public void ResetClip()
+    {
+        currentClip = maxClip;
+    }
 }
 
-public class WeaponBase : MonoBehaviour
+public class Weapon : MonoBehaviour
 {
     public WeaponData myWeaponData = new WeaponData();
 
@@ -93,18 +108,7 @@ public class WeaponBase : MonoBehaviour
     Text ammoText = null;
 
     bool useAmmo = false;
-    float reloadTimeStamp = 0;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    float reloadTimeStamp = 0, fireDelay = 0;
     public virtual void Use()
     {
 
@@ -112,7 +116,9 @@ public class WeaponBase : MonoBehaviour
         {
             if (CanFire())
             {
+                FireProjectile(myWeaponData.weaponProjectile);
                 myWeaponData.UseAmmo();
+                fireDelay = Time.time + myWeaponData.attackRate;
             }
             else
             {
@@ -122,7 +128,7 @@ public class WeaponBase : MonoBehaviour
     }
     protected virtual bool CanFire()
     {
-        return myWeaponData.currentClip > 0;
+        return myWeaponData.canFire;
     }
     public virtual string GetName()
     {
@@ -147,6 +153,7 @@ public class WeaponBase : MonoBehaviour
     public virtual void Reload()
     {
         reloadTimeStamp = Time.time + myWeaponData.reloadTime;
+        myWeaponData.ResetAmmo();
     }
     public virtual string GetCurrentAmmoText()
     {
@@ -158,5 +165,29 @@ public class WeaponBase : MonoBehaviour
         {
             ammoText.text = GetCurrentAmmoText();
         }
+    }
+    public virtual void FireProjectile(GameObject projectile)
+    {
+        Vector3 fireLoc = Vector3.zero;
+        Quaternion fireRot = Quaternion.identity;
+        if (projectile == null) return;
+        if (myWeaponData.muzzleObject == null)
+        {
+            fireLoc = transform.position + (Vector3.forward * 5f);
+            fireRot = transform.rotation;
+        }
+        else
+        {
+            fireLoc = myWeaponData.muzzleObject.transform.position;
+            fireRot = myWeaponData.muzzleObject.transform.rotation;
+        }
+        GameObject tempProj = Instantiate(projectile, fireLoc, fireRot);
+        if (tempProj.GetComponent<Rigidbody>() == null)
+        {
+            tempProj.AddComponent<Rigidbody>();
+        }
+        Rigidbody tempProjRB = tempProj.GetComponent<Rigidbody>();
+        tempProjRB.AddForce(myWeaponData.muzzleObject.transform.forward * myWeaponData.projectileSpeed);
+        Destroy(tempProj, 10f);
     }
 }
