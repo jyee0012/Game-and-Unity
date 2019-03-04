@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
+[Serializable]
 public class WeaponData
 {
     public enum WeaponType { Melee, Range }
     public string name, description;
     public float damage, attackRate, attackRange;
     public float currentAmmo, maxAmmo;
-    public float weaponSpread, reloadTime, accuracy, recoil, aimSpd;
-    public float currentClip, maxClip;
     public float projectileSpeed;
+    public bool shootProjectile;
 
     public ParticleSystem weaponParticles;
     public GameObject weaponProjectile, muzzleObject;
-    public bool canFire { get { return currentClip > 0; } }
 
     public WeaponData()
     {
+        shootProjectile = true;
         name = "Nameless";
         description = "Nothing";
         damage = 1f;
@@ -26,13 +27,6 @@ public class WeaponData
         attackRange = 10f;
         maxAmmo = 100;
         currentAmmo = maxAmmo;
-        weaponSpread = 0f;
-        reloadTime = 1f;
-        accuracy = 100;
-        recoil = 0;
-        aimSpd = 100;
-        maxClip = 10;
-        currentClip = maxClip;
 
         projectileSpeed = 10f;
 
@@ -40,25 +34,20 @@ public class WeaponData
         weaponProjectile = null;
         muzzleObject = null;
     }
-    public WeaponData(string wepName, string wepDesc, float wepDmg, float wepAtkRate, float wepAtkRange, float wepMaxAmmo, float wepSpread, float wepReloadTime, float wepAcc, float wepRecoil, float wepAimSpd, float wepClipSize)
+    public WeaponData(bool canShoot, string wepName, string wepDesc, float wepDmg, float wepAtkRate, float wepAtkRange, float wepMaxAmmo, float wepSpread, float wepReloadTime, float wepAcc, float wepRecoil, float wepAimSpd, float wepClipSize)
     {
+        shootProjectile = canShoot;
         name = wepName;
         description = wepDesc;
         damage = wepDmg;
         attackRate = wepAtkRate;
         attackRange = wepAtkRange;
         maxAmmo = wepMaxAmmo;
-        weaponSpread = wepSpread;
-        reloadTime = wepReloadTime;
-        accuracy = wepAcc;
-        recoil = wepRecoil;
-        aimSpd = wepAimSpd;
-        maxClip = wepClipSize;
         currentAmmo = maxAmmo;
-        currentClip = maxClip;
     }
     public WeaponData(WeaponData newWeapon)
     {
+        shootProjectile = newWeapon.shootProjectile;
         name = newWeapon.name;
         description = newWeapon.description;
         damage = newWeapon.damage;
@@ -66,13 +55,6 @@ public class WeaponData
         attackRange = newWeapon.attackRange;
         currentAmmo = newWeapon.currentAmmo;
         maxAmmo = newWeapon.maxAmmo;
-        weaponSpread = newWeapon.weaponSpread;
-        reloadTime = newWeapon.reloadTime;
-        accuracy = newWeapon.accuracy;
-        recoil = newWeapon.recoil;
-        aimSpd = newWeapon.aimSpd;
-        maxClip = newWeapon.maxClip;
-        currentClip = newWeapon.currentClip;
     }
     public void PlayAnimation()
     {
@@ -87,12 +69,54 @@ public class WeaponData
     }
     public void UseAmmo(float amount = 1)
     {
-        currentClip -= amount;
         currentAmmo -= amount;
     }
     public void ResetAmmo()
     {
         currentAmmo = maxAmmo;
+    }
+}
+[Serializable]
+public class RangeWeaponData
+{
+    public float weaponSpread, reloadTime, accuracy, recoil, aimSpd;
+    public float currentClip, maxClip;
+
+    public bool canFire { get { return currentClip > 0; } }
+
+    public RangeWeaponData()
+    {
+        weaponSpread = 0f;
+        reloadTime = 1f;
+        accuracy = 100;
+        recoil = 0;
+        aimSpd = 100;
+        maxClip = 10;
+        currentClip = maxClip;
+    }
+    public RangeWeaponData(float wepSpread, float wepReloadTime, float wepAcc, float wepRecoil, float wepAimSpd, float wepClipSize)
+    {
+        weaponSpread = wepSpread;
+        reloadTime = wepReloadTime;
+        accuracy = wepAcc;
+        recoil = wepRecoil;
+        aimSpd = wepAimSpd;
+        maxClip = wepClipSize;
+        currentClip = maxClip;
+    }
+    public RangeWeaponData(RangeWeaponData newWeapon)
+    {
+        weaponSpread = newWeapon.weaponSpread;
+        reloadTime = newWeapon.reloadTime;
+        accuracy = newWeapon.accuracy;
+        recoil = newWeapon.recoil;
+        aimSpd = newWeapon.aimSpd;
+        maxClip = newWeapon.maxClip;
+        currentClip = newWeapon.currentClip;
+    }
+    public void UseAmmo(float amount = 1)
+    {
+        currentClip -= amount;
     }
     public void ResetClip()
     {
@@ -100,21 +124,24 @@ public class WeaponData
     }
 }
 
+
 public class Weapon : MonoBehaviour
 {
     public WeaponData myWeaponData = new WeaponData();
 
     [SerializeField]
     Text ammoText = null;
+    [SerializeField]
+    protected string debugText = "";
 
-    bool useAmmo = false;
-    float reloadTimeStamp = 0, fireDelay = 0;
+    protected bool useAmmo = false;
+    protected float reloadTimeStamp = 0, fireDelay = 0;
     public virtual void Use()
     {
 
         if (useAmmo)
         {
-            if (CanFire())
+            if (GetCurrentAmmo() > 0)
             {
                 FireProjectile(myWeaponData.weaponProjectile);
                 myWeaponData.UseAmmo();
@@ -125,10 +152,6 @@ public class Weapon : MonoBehaviour
                 Reload();
             }
         }
-    }
-    protected virtual bool CanFire()
-    {
-        return myWeaponData.canFire;
     }
     public virtual string GetName()
     {
@@ -142,22 +165,17 @@ public class Weapon : MonoBehaviour
     {
         return myWeaponData.currentAmmo;
     }
-    public virtual float GetCurrentClip()
-    {
-        return myWeaponData.currentClip;
-    }
     public virtual float GetMaxAmmo()
     {
         return myWeaponData.maxAmmo;
     }
     public virtual void Reload()
     {
-        reloadTimeStamp = Time.time + myWeaponData.reloadTime;
         myWeaponData.ResetAmmo();
     }
     public virtual string GetCurrentAmmoText()
     {
-        return myWeaponData.name + ": " + GetCurrentClip() + "/" + GetCurrentAmmo();
+        return myWeaponData.name + ": " + GetCurrentAmmo() + "/" + GetMaxAmmo();
     }
     public virtual void UpdateAmmoText()
     {

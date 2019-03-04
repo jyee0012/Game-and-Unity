@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 502594674318394606}
   - component: {fileID: 502594674318394607}
+  - component: {fileID: 502594675460160279}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -25,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 502594674318394604}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.61, z: 4.45}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 502594674840350605}
@@ -49,6 +50,40 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.5526819, y: 0.42118508, z: 0.22223485}
   m_Center: {x: 0, y: -0.08810821, z: 0}
+--- !u!114 &502594675460160279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 502594674318394604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f51a478af48c504789a0d4cc1fcb5d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myWeaponData:
+    name: Nameless
+    description: Nothing
+    damage: 1
+    attackRate: 1
+    attackRange: 10
+    currentAmmo: 100
+    maxAmmo: 100
+    weaponSpread: 0
+    reloadTime: 1
+    accuracy: 100
+    recoil: 0
+    aimSpd: 100
+    currentClip: 10
+    maxClip: 10
+    projectileSpeed: 10
+    shootProjectile: 1
+    weaponParticles: {fileID: 0}
+    weaponProjectile: {fileID: 0}
+    muzzleObject: {fileID: 0}
+  ammoText: {fileID: 0}
+  debugText: I shoot my gun
 --- !u!1 &502594674548680517
 GameObject:
   m_ObjectHideFlags: 0
