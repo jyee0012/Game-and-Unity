@@ -20,9 +20,12 @@ public class MeleeWeapon : Weapon
     // Update is called once per frame
     void Update()
     {
-        if (animate)
+        if (canAnimate)
         {
-            AnimateSwing();
+            if (animate)
+            {
+                AnimateSwing();
+            }
         }
     }
     public override void Use()

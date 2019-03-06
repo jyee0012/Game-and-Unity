@@ -682,7 +682,7 @@ PrefabInstance:
     - target: {fileID: 502594674318394604, guid: 5ee3262e58168724eb8225ecb4485b75,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 502594674318394606, guid: 5ee3262e58168724eb8225ecb4485b75,
         type: 3}
@@ -823,6 +823,16 @@ PrefabInstance:
       propertyPath: myWeaponData.name
       value: GunBlade
       objectReference: {fileID: 0}
+    - target: {fileID: 1850816549976690702, guid: ea06369725c3a9242b7acc818230b8ff,
+        type: 3}
+      propertyPath: myWeaponData.currentAmmo
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1850816549976690702, guid: ea06369725c3a9242b7acc818230b8ff,
+        type: 3}
+      propertyPath: myWeaponData.maxAmmo
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea06369725c3a9242b7acc818230b8ff, type: 3}
 --- !u!1001 &3031160405197120950
@@ -836,6 +846,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Katana
+      objectReference: {fileID: 0}
+    - target: {fileID: 3031160406626436652, guid: 8dfa443aa4f35714889f572bc103be36,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3031160406626436653, guid: 8dfa443aa4f35714889f572bc103be36,
         type: 3}
@@ -1076,6 +1091,16 @@ PrefabInstance:
       propertyPath: myWeaponData.name
       value: Sword
       objectReference: {fileID: 0}
+    - target: {fileID: 6499131106656249315, guid: 517d325d6bd006147b6bde50e7c45530,
+        type: 3}
+      propertyPath: myWeaponData.currentAmmo
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6499131106656249315, guid: 517d325d6bd006147b6bde50e7c45530,
+        type: 3}
+      propertyPath: myWeaponData.maxAmmo
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 517d325d6bd006147b6bde50e7c45530, type: 3}
 --- !u!1001 &7183437320081232594
@@ -1153,7 +1178,7 @@ PrefabInstance:
     - target: {fileID: 7183437320081232596, guid: 95df88e33bde17147880333ac45cbdba,
         type: 3}
       propertyPath: myWeaponData.name
-      value: Misaka Misaka
+      value: Railgun
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95df88e33bde17147880333ac45cbdba, type: 3}

@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour
         currentAmmo.text = myWeapon.GetCurrentAmmo().ToString();
         maxAmmo.text = myWeapon.GetMaxAmmo().ToString();
 
-        if (Input.GetAxis("Fire1") == 1)
+        if (Input.GetAxis("Fire1") == 1 || Input.GetKeyDown(KeyCode.Mouse0))
         {
             myWeapon.Use();
         }

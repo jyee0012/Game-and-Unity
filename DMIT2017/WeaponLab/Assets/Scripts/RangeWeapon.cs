@@ -17,6 +17,14 @@ public class RangeWeapon : Weapon
     }
     public override void Use()
     {
+        if (debugText != "")
+        {
+            Debug.Log(debugText);
+        }
+        if (GetCurrentAmmo() > 0)
+        {
+            myWeaponData.UseAmmo();
+        }
         base.Use();
     }
 }
