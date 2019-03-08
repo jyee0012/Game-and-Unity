@@ -914,20 +914,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myWeaponData:
-    name: Nameless
+    name: GunBlade
     description: Nothing
     damage: 1
     attackRate: 1
     attackRange: 10
-    currentAmmo: 100
-    maxAmmo: 100
-    weaponSpread: 0
-    reloadTime: 1
-    accuracy: 100
-    recoil: 0
-    aimSpd: 100
-    currentClip: 10
-    maxClip: 10
+    currentAmmo: 10
+    maxAmmo: 10
     projectileSpeed: 10
     shootProjectile: 1
     weaponParticles: {fileID: 0}
@@ -935,6 +928,7 @@ MonoBehaviour:
     muzzleObject: {fileID: 0}
   ammoText: {fileID: 0}
   debugText: I swing then shoot my gunblade
+  canAnimate: 1
 --- !u!1 &1850816551597281076
 GameObject:
   m_ObjectHideFlags: 0

@@ -63,20 +63,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myWeaponData:
-    name: Nameless
+    name: Pistol
     description: Nothing
     damage: 1
     attackRate: 1
     attackRange: 10
     currentAmmo: 100
     maxAmmo: 100
-    weaponSpread: 0
-    reloadTime: 1
-    accuracy: 100
-    recoil: 0
-    aimSpd: 100
-    currentClip: 10
-    maxClip: 10
     projectileSpeed: 10
     shootProjectile: 1
     weaponParticles: {fileID: 0}

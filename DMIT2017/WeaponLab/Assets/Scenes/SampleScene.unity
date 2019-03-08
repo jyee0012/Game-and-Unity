@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657886, g: 0.4964127, b: 0.57481724, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -682,7 +682,7 @@ PrefabInstance:
     - target: {fileID: 502594674318394604, guid: 5ee3262e58168724eb8225ecb4485b75,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 502594674318394606, guid: 5ee3262e58168724eb8225ecb4485b75,
         type: 3}
@@ -738,11 +738,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 502594675460160279, guid: 5ee3262e58168724eb8225ecb4485b75,
-        type: 3}
-      propertyPath: myWeaponData.name
-      value: Pistol
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5ee3262e58168724eb8225ecb4485b75, type: 3}
@@ -818,21 +813,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1850816549976690702, guid: ea06369725c3a9242b7acc818230b8ff,
-        type: 3}
-      propertyPath: myWeaponData.name
-      value: GunBlade
-      objectReference: {fileID: 0}
-    - target: {fileID: 1850816549976690702, guid: ea06369725c3a9242b7acc818230b8ff,
-        type: 3}
-      propertyPath: myWeaponData.currentAmmo
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1850816549976690702, guid: ea06369725c3a9242b7acc818230b8ff,
-        type: 3}
-      propertyPath: myWeaponData.maxAmmo
-      value: 10
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea06369725c3a9242b7acc818230b8ff, type: 3}
 --- !u!1001 &3031160405197120950
@@ -906,11 +886,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3031160405197120952, guid: 8dfa443aa4f35714889f572bc103be36,
-        type: 3}
-      propertyPath: myWeaponData.name
-      value: Katana
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dfa443aa4f35714889f572bc103be36, type: 3}
@@ -1086,21 +1061,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6499131106656249315, guid: 517d325d6bd006147b6bde50e7c45530,
-        type: 3}
-      propertyPath: myWeaponData.name
-      value: Sword
-      objectReference: {fileID: 0}
-    - target: {fileID: 6499131106656249315, guid: 517d325d6bd006147b6bde50e7c45530,
-        type: 3}
-      propertyPath: myWeaponData.currentAmmo
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6499131106656249315, guid: 517d325d6bd006147b6bde50e7c45530,
-        type: 3}
-      propertyPath: myWeaponData.maxAmmo
-      value: 100
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 517d325d6bd006147b6bde50e7c45530, type: 3}
 --- !u!1001 &7183437320081232594
@@ -1174,11 +1134,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7183437320081232596, guid: 95df88e33bde17147880333ac45cbdba,
-        type: 3}
-      propertyPath: myWeaponData.name
-      value: Railgun
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 95df88e33bde17147880333ac45cbdba, type: 3}
