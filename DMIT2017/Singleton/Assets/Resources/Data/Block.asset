@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d3427e3786b3be408218fa82d061ff8, type: 3}
   m_Name: Block
   m_EditorClassIdentifier: 
-  item:
-    itemName: Block
-    itemDesc: I am Block
-    itemIcon: {fileID: 21300000, guid: 4b3559419cf6fc94a9417f1b5813c2e1, type: 3}
+  itemName: Block
+  itemDesc: I Am Block
+  itemIcon: {fileID: 21300000, guid: 4b3559419cf6fc94a9417f1b5813c2e1, type: 3}
