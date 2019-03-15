@@ -5,13 +5,22 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 712bd0fd7f5066148babdb00b2c86e33
   - enabled: 1
     path: Assets/Scenes/Game.unity
     guid: 02336a5f13d17844db142c57db49359e
+  - enabled: 1
+    path: Assets/Scenes/MapScene.unity
+    guid: 6d0f55d183eb48647bb13b4f35fd3253
+  - enabled: 1
+    path: Assets/Scenes/RedDungeon.unity
+    guid: 786639e69e687be42b3499d6f61af1fa
+  - enabled: 1
+    path: Assets/Scenes/BlueDungeon.unity
+    guid: 605808588ac9a554bac1c1351d41e272
+  - enabled: 1
+    path: Assets/Scenes/GreenDungeon.unity
+    guid: 244a419dbc71e6a41be4512bf6b622c7
   m_configObjects: {}

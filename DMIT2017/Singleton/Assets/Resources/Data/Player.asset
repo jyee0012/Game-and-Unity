@@ -20,11 +20,12 @@ MonoBehaviour:
   inventory:
   - itemDetail: {fileID: 11400000, guid: bef94a93f70beab40bee23df6e246f38, type: 2}
     itemAmount: 5
-  - itemDetail: {fileID: 0}
-    itemAmount: 0
-  - itemDetail: {fileID: 0}
-    itemAmount: 0
-  - itemDetail: {fileID: 0}
-    itemAmount: 0
-  - itemDetail: {fileID: 0}
-    itemAmount: 0
+  - itemDetail: {fileID: 11400000, guid: 6bc41cdf6f7ae9e48b2dee898fbed7f3, type: 2}
+    itemAmount: 2
+  - itemDetail: {fileID: 11400000, guid: 396733bcae51b83489c92dcdcaf2e168, type: 2}
+    itemAmount: 1
+  - itemDetail: {fileID: 11400000, guid: e933cb7f84f7c624c97adb1e678f5dad, type: 2}
+    itemAmount: 1
+  - itemDetail: {fileID: 11400000, guid: 6f3134a6b54f47147923bc48d86966b9, type: 2}
+    itemAmount: 1
+  inDungeon: 0

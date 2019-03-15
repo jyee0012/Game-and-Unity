@@ -1,13 +1,14 @@
-Create a basic game with the following:
+Create a basic game with the following: but using Scriptable Objects
 
+(Done)
 - Overworld map with three dungeon locations. The player can move to a dungeon and enter it.
-
+(Done)
 - Three dungeon levels where the player "fights" monsters and collects items
-
+(Done)
 - Fighting a monster involves reducing the health, increasing the score, and removing the monster
-
+(Done)
 - Monsters may respawn if the player enters the dungeon again
 
 
-
+(Done)
 The player info that should persist between scenes are health, score, position on the world map, player name, inventory
