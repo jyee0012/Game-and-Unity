@@ -29,9 +29,9 @@ public class DungeonScript : MonoBehaviour
                 PlayerController player = other.transform.GetComponent<PlayerController>();
                 if (entrance)
                 {
-                    if (!player.playerData.inDungeon)
+                    if (!player.tempData.playerData.inDungeon)
                     {
-                        player.playerData.EnterDungeon(player.transform.position);
+                        player.tempData.playerData.EnterDungeon(player.transform.position);
                         SceneManager.LoadScene(dungeonBuildIndex);
                     }
                 }
@@ -51,9 +51,9 @@ public class DungeonScript : MonoBehaviour
                 PlayerController player = other.transform.GetComponent<PlayerController>();
                 if (entrance)
                 {
-                    if (player.playerData.inDungeon)
+                    if (player.tempData.playerData.inDungeon)
                     {
-                        player.playerData.ExitDungeon();
+                        player.tempData.playerData.ExitDungeon();
                     }
                 }
             }

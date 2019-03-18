@@ -3,10 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
+
+[System.Serializable]
+public class TempData
+{
+    public PlayerData playerData = null;
+    public TempData()
+    {
+        playerData = null;
+    }
+}
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerData playerData = null;
+    public TempData tempData = new TempData();
     [SerializeField]
     float moveSpeed = 2f;
 
@@ -18,11 +29,11 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (playerData != null)
+        if (tempData.playerData != null)
         {
-            if (playerData.inDungeon && SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(2))
+            if (tempData.playerData.inDungeon && SceneManager.GetActiveScene() == SceneManager.GetSceneByBuildIndex(2))
             {
-                gameObject.transform.position = playerData.position;
+                gameObject.transform.position = tempData.playerData.position;
             }
         }
     }
@@ -39,37 +50,58 @@ public class PlayerController : MonoBehaviour
     }
     void UpdatePlayerText()
     {
-        if (playerData == null) return;
-        if (playerHealthText != null) playerHealthText.text = "PlayerHP: " + playerData.currentHp + "/" + playerData.maxHp;
-        if (playerNameText != null) playerNameText.text = playerData.playerName;
-        if (playerScoreText != null) playerScoreText.text = "Score: " + playerData.score;
+        if (tempData.playerData == null) return;
+        if (playerHealthText != null) playerHealthText.text = "PlayerHP: " + tempData.playerData.currentHp + "/" + tempData.playerData.maxHp;
+        if (playerNameText != null) playerNameText.text = tempData.playerData.playerName;
+        if (playerScoreText != null) playerScoreText.text = "Score: " + tempData.playerData.score;
 
         if (inventoryList.Count > 0)
         {
-            for(int i = 0; i < playerData.inventory.Count; i++)
+            for(int i = 0; i < tempData.playerData.inventory.Count; i++)
             {
-                inventoryList[i].GetComponent<ItemUIScript>().currentItem = playerData.inventory[i].itemDetail;
-                inventoryList[i].GetComponent<ItemUIScript>().itemAmount = playerData.inventory[i].itemAmount;
+                inventoryList[i].GetComponent<ItemUIScript>().currentItem = tempData.playerData.inventory[i].itemDetail;
+                inventoryList[i].GetComponent<ItemUIScript>().itemAmount = tempData.playerData.inventory[i].itemAmount;
             }
         }
     }
     public void ResetPlayerScore()
     {
-        if (playerData == null) return;
-        playerData.ResetScore();
+        if (tempData.playerData == null) return;
+        tempData.playerData.ResetScore();
     }
     public void FullHealPlayer()
     {
-        if (playerData == null) return;
-        playerData.FullHeal();
+        if (tempData.playerData == null) return;
+        tempData.playerData.FullHeal();
     }
     public void ClearPlayerInventory()
     {
-        if (playerData == null) return;
-        playerData.ClearInventory();
+        if (tempData.playerData == null) return;
+        tempData.playerData.ClearInventory();
         foreach (GameObject item in inventoryList)
         {
             item.GetComponent<ItemUIScript>().currentItem = null;
+        }
+    }
+    public void SavePlayerData()
+    {
+        SaveJson("PlayerData.json");
+    }
+    public void LoadPlayerData()
+    {
+        LoadJson("PlayerData.json");
+    }
+    public void SaveJson(string filePath)
+    {
+        string json = JsonUtility.ToJson(tempData);
+        File.WriteAllText(filePath, json);
+    }
+    public void LoadJson(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            tempData = JsonUtility.FromJson<TempData>(json);
         }
     }
 }

@@ -20,6 +20,7 @@ public class Item
     }
 }
 
+[Serializable]
 [CreateAssetMenu()]
 public class PlayerData : ScriptableObject
 {

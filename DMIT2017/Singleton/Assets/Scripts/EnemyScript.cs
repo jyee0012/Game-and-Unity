@@ -38,8 +38,8 @@ public class EnemyScript : MonoBehaviour
             if (other.GetComponent<PlayerController>() != null)
             {
                 PlayerController player = other.GetComponent<PlayerController>();
-                player.playerData.TakeDamage(damage);
-                player.playerData.GainScore(score);
+                player.tempData.playerData.TakeDamage(damage);
+                player.tempData.playerData.GainScore(score);
             }
             Destroy(gameObject);
         }

@@ -27,7 +27,7 @@ public class LootScript : MonoBehaviour
             if (lootAmount <= 0) lootAmount = Random.Range(1, 6);
             if (lootList.Count > 0)
             {
-                other.GetComponent<PlayerController>().playerData.AddInventoryItem(RandomItem(), lootAmount);
+                other.GetComponent<PlayerController>().tempData.playerData.AddInventoryItem(RandomItem(), lootAmount);
             }
             Destroy(gameObject);
         }
