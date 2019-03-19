@@ -1,0 +1,17 @@
+For this project you will be creating a simple game that four players can control aspects of a single vehicle. The first player will control the movement of the vehicle and a single forward facing weapon. The second player will control a weapon that fire in any direction like a turret. The third and fourth players will control weapons that can fire 180 degrees to the left or right of the vehicle.
+
+If you wish to work in pairs you must also complete the following tasks: (2 Marks each)
+
+- Add health to the player vehicle. The game ends when destroyed.
+
+- Include at least 5 waves of enemies.
+
+- Keep score of the enemies destroyed and display the score at the end.
+
+- Allow for two player vehicles with two players each. This mode is chosen at the player select screen.
+
+
+
+Solo Project: 16 Marks
+
+Paired Project: 24 Marks

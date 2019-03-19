@@ -1,0 +1,19 @@
+You will be making a small game demo for 3 players. Two players will use gamepads to each control a player object that can move around an area and destroy enemy units. The two players will use the first display(monitor) with a split screen. The third player will control the enemy units on the second display using the mouse and keyboard. The enemy units will use a navmesh and be directed to move and attack in a top down RTS view.
+
+If you are working on this project alone you must only complete the tasks on the basic rubric.
+
+If you wish to work in pairs you must also complete the following tasks: (2 Marks each)
+
+- Include a start screen where you can choose 1 - 3 players
+
+- One player will play alone against basic AI enemies
+
+- Two players can play together against AI enemies
+
+- Two players can play VS where one player controls all enemies
+
+
+
+Solo Project: 14 Marks
+
+Paired Project: 22 Marks
