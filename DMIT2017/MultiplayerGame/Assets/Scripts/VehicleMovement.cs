@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TankBaseMovement : MonoBehaviour
+public class VehicleMovement : MonoBehaviour
 {
 
     [SerializeField]
@@ -76,11 +76,11 @@ public class TankBaseMovement : MonoBehaviour
     {
         string[] controllers = Input.GetJoystickNames();
         //Debug.Log(controllers.Length + " controllers");
-        TankBaseMovement[] tanks = FindObjectsOfType<TankBaseMovement>();
-        TankBaseMovement otherTank = null;
+        VehicleMovement[] tanks = FindObjectsOfType<VehicleMovement>();
+        VehicleMovement otherTank = null;
         if (tanks.Length > 1)
         {
-            foreach (TankBaseMovement tank in tanks)
+            foreach (VehicleMovement tank in tanks)
             {
                 if (tank != this) otherTank = tank;
             }
