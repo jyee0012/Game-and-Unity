@@ -5,10 +5,26 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody rbody = null;
+    [Header("Player Settings")]
+    [SerializeField]
+    int playerNum = 0;
+    [SerializeField]
+    bool canJump = true, reverseVertical = false;
     [SerializeField]
     float movementSpeed = 2f, jumpForce = 320f;
+
+    [Space]
+    [Header("Keyboard Settings")]
     [SerializeField]
     KeyCode jumpKey = KeyCode.Space;
+
+    [Space]
+    [Header("Controller Settings")]
+    [SerializeField]
+    bool useController = false;
+
+    float vInput = 0, hInput = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,9 +52,19 @@ public class PlayerController : MonoBehaviour
     }
     void PlayerMovement()
     {
-        transform.Translate(new Vector3(Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime, 0 , Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime));
-
-        if (Input.GetKeyDown(jumpKey))
+        if (!useController)
+        {
+            hInput = Input.GetAxis("Horizontal");
+            vInput = Input.GetAxis("Vertical");
+        }
+        else
+        {
+            vInput = Input.GetAxis("Axis2P" + playerNum);
+            hInput = Input.GetAxis("Axis1P" + playerNum);
+        }
+        if (reverseVertical) vInput *= -1;
+        transform.Translate(new Vector3(hInput * movementSpeed * Time.deltaTime, 0, vInput * movementSpeed * Time.deltaTime));
+        if (JumpInput() && canJump)
         {
             Jump();
         }
@@ -46,5 +72,18 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
         rbody.AddForce(new Vector3(0, jumpForce, 0));
+    }
+    bool JumpInput()
+    {
+        bool input = false;
+        if (useController)
+        {
+            input = Input.GetAxis("Button0P" + playerNum) > 0;
+        }
+        else
+        {
+            input = Input.GetKeyDown(jumpKey);
+        }
+        return input;
     }
 }

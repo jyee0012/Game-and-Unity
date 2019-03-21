@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657886, g: 0.4964127, b: 0.57481724, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -349,7 +349,7 @@ Transform:
   m_GameObject: {fileID: 792742578}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 0.2, z: 10}
+  m_LocalScale: {x: 50, y: 0.2, z: 50}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -469,9 +469,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rbody: {fileID: 0}
+  playerNum: 1
+  canJump: 1
+  reverseVertical: 1
   movementSpeed: 2
   jumpForce: 320
   jumpKey: 32
+  useController: 1
 --- !u!136 &1383442266
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -579,9 +583,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rbody: {fileID: 0}
+  playerNum: 2
+  canJump: 1
+  reverseVertical: 0
   movementSpeed: 2
   jumpForce: 320
   jumpKey: 32
+  useController: 1
 --- !u!136 &1541425285
 CapsuleCollider:
   m_ObjectHideFlags: 0
