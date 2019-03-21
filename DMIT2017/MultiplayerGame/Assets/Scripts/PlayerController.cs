@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     bool canJump = true, reverseVertical = false;
     [SerializeField]
-    float movementSpeed = 2f, jumpForce = 320f;
+    float movementSpeed = 2f, jumpForce = 320f, rotateSpeed = 100f;
     
     [Header("Keyboard Settings")]
     [SerializeField]
@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     [Header("Controller Settings")]
     public bool useController = false;
 
-    float vInput = 0, hInput = 0;
+    float vInput = 0, hInput = 0, rInput = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +64,18 @@ public class PlayerController : MonoBehaviour
         {
             Jump();
         }
+    }
+    void PlayerRotate()
+    {
+        if (!useController)
+        {
+            rInput = Input.GetAxis("MouseX");
+        }
+        else
+        {
+            rInput = Input.GetAxis("Axis4P" + playerNum);
+        }
+        transform.Rotate(new Vector3(0,rInput * rotateSpeed * Time.deltaTime,0));
     }
     void Jump()
     {
