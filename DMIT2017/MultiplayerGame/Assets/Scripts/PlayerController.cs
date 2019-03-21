@@ -6,22 +6,18 @@ public class PlayerController : MonoBehaviour
 {
     public Rigidbody rbody = null;
     [Header("Player Settings")]
-    [SerializeField]
-    int playerNum = 0;
+    public int playerNum = 0;
     [SerializeField]
     bool canJump = true, reverseVertical = false;
     [SerializeField]
     float movementSpeed = 2f, jumpForce = 320f;
-
-    [Space]
+    
     [Header("Keyboard Settings")]
     [SerializeField]
     KeyCode jumpKey = KeyCode.Space;
-
-    [Space]
+    
     [Header("Controller Settings")]
-    [SerializeField]
-    bool useController = false;
+    public bool useController = false;
 
     float vInput = 0, hInput = 0;
 
