@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         PlayerMovement();
+        PlayerRotate();
     }
     void PlayerMovement()
     {
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!useController)
         {
-            rInput = Input.GetAxis("MouseX");
+            rInput = Input.GetAxis("Mouse X");
         }
         else
         {

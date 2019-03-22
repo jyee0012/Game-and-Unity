@@ -8,12 +8,18 @@ public class ShootingComponenet : MonoBehaviour
     GameObject projectilePrefab = null, muzzleObj = null;
     [SerializeField]
     bool canFire = true;
-    [SerializeField]
+    [SerializeField, Range(100, 3000)]
     float projectileForce = 300;
+    [SerializeField, Range(0, 3)]
+    float fireDelay = 1f;
+    [SerializeField, Range(1, 10)]
+    float projectileLife = 3f;
     [SerializeField]
     KeyCode fireKey = KeyCode.Mouse0;
     [SerializeField]
     PlayerController playerController = null;
+
+    float fireTimeStamp = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,9 +33,9 @@ public class ShootingComponenet : MonoBehaviour
     }
     void Fire()
     {
-        if (FireInput() && canFire)
+        if (FireInput() && canFire && fireTimeStamp < Time.time)
         {
-            Shoot();
+            Shoot(projectileLife);
         }
     }
     bool FireInput()
@@ -39,7 +45,7 @@ public class ShootingComponenet : MonoBehaviour
         {
             if (playerController.useController)
             {
-                input = Input.GetAxis("Button1P" + playerController.playerNum) > 0;
+                input = Input.GetAxis("Button5P" + playerController.playerNum) > 0;
             }
             else
             {
@@ -68,6 +74,7 @@ public class ShootingComponenet : MonoBehaviour
         SetupProjectile(tempProj);
         tempProj.GetComponent<Rigidbody>().AddForce(tempProj.transform.forward * projectileForce);
         Destroy(tempProj, projectileLife);
+        fireTimeStamp = Time.time + fireDelay;
     }
     void SetupProjectile(GameObject projectile, bool useGrav = false, float projectileMass = 0.1f, float projectileDrag = 1f)
     {

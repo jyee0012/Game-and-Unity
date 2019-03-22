@@ -4,22 +4,23 @@ using UnityEngine;
 
 public class SpawnerScript : MonoBehaviour
 {
+    public bool outOfSpawns { get { return spawnCount >= spawnAmount && transform.childCount <= 0; } }
+
     [SerializeField]
     GameObject spawnedPrefab = null;
     [SerializeField]
     Vector2 spawnRange = Vector2.one;
-    [SerializeField, Range(0,20)]
-    float spawnDelay = 10;
-    [SerializeField, Range(1,100)]
-    int spawnAmount = 1;
+    [SerializeField, Range(0,5)]
+    float spawnDelay = 1;
+    [SerializeField, Range(1,500)]
+    int spawnAmount = 100;
     [SerializeField]
     bool canSpawn = true, endlessSpawn = false, drawRange = false;
 
     [Header("Enemy Info")]
     [SerializeField]
     Camera cameraController = null;
-    [SerializeField]
-    bool playerControlled = false;
+    public bool playerControlled = false;
     public bool hasDestination = false;
     public Vector3 enemyDestination = Vector3.zero;
 
