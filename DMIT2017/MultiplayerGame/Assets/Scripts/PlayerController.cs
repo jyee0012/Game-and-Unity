@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     public Rigidbody rbody = null;
@@ -24,17 +25,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (rbody == null)
-        {
-            if (GetComponent<Rigidbody>() == null)
-            {
-                rbody = gameObject.AddComponent<Rigidbody>();
-            }
-            else
-            {
-                rbody = GetComponent<Rigidbody>();
-            }
-        }
+        if (rbody == null) rbody = GetComponent<Rigidbody>();
         rbody.useGravity = true;
         rbody.constraints = RigidbodyConstraints.FreezeRotation;
         rbody.drag = 1f;

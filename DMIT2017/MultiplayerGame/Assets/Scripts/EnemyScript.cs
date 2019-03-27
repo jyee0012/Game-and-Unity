@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class EnemyScript : MonoBehaviour
 {
     private int fingerID = -1;
@@ -80,17 +81,7 @@ public class EnemyScript : MonoBehaviour
     }
     void SetupNavAgent()
     {
-        if (navAgent == null)
-        {
-            if (GetComponent<NavMeshAgent>() != null)
-            {
-                navAgent = GetComponent<NavMeshAgent>();
-            }
-            else
-            {
-                navAgent = gameObject.AddComponent<NavMeshAgent>();
-            }
-        }
+        if (navAgent == null) navAgent = GetComponent<NavMeshAgent>();
     }
     void FindClosestPlayer(List<PlayerController> playerList)
     {
