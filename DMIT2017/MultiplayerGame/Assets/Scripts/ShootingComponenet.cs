@@ -2,8 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ControllerState { MouseKeyboard, Controller, PlayerController }
+
 public class ShootingComponenet : MonoBehaviour
 {
+    [SerializeField]
+    int playerNum = 0;
+    [SerializeField]
+    ControllerState controller = ControllerState.MouseKeyboard;
+    [Space]
     [SerializeField]
     GameObject projectilePrefab = null, muzzleObj = null;
     [SerializeField]
@@ -23,7 +30,11 @@ public class ShootingComponenet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        if (controller == ControllerState.PlayerController)
+        {
+            if (playerController != null)
+                playerNum = playerController.playerNum;
+        }
     }
 
     // Update is called once per frame
@@ -41,20 +52,26 @@ public class ShootingComponenet : MonoBehaviour
     bool FireInput()
     {
         bool input = false;
-        if (playerController != null)
+        switch (controller)
         {
-            if (playerController.useController)
-            {
-                input = Input.GetAxis("Button5P" + playerController.playerNum) > 0;
-            }
-            else
-            {
-                input = Input.GetKeyDown(fireKey);
-            }
-        }
-        else
-        {
-            Debug.Log("Please attach player controller to " + gameObject.name);
+            case ControllerState.MouseKeyboard:
+                input = Input.GetKey(fireKey);
+                break;
+            case ControllerState.Controller:
+                break;
+            case ControllerState.PlayerController:
+                if (playerController != null)
+                {
+                    if (playerController.useController)
+                    {
+                        input = Input.GetAxis("Button5P" + playerNum) > 0;
+                    }
+                }
+                else
+                {
+                    Debug.Log("Please attach player controller to " + gameObject.name);
+                }
+                break;
         }
         return input;
     }

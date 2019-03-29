@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [Header("Player Settings")]
     public int playerNum = 0;
     [SerializeField]
-    bool canJump = true, reverseVertical = false;
+    bool canJump = true, reverseVertical = false, playerMove = true;
     [SerializeField]
     float movementSpeed = 2f, jumpForce = 320f, rotateSpeed = 100f;
     
@@ -25,18 +25,24 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (rbody == null) rbody = GetComponent<Rigidbody>();
-        rbody.useGravity = true;
-        rbody.constraints = RigidbodyConstraints.FreezeRotation;
-        rbody.drag = 1f;
-        rbody.angularDrag = 1f;
+        if (playerMove)
+        {
+            if (rbody == null) rbody = GetComponent<Rigidbody>();
+            rbody.useGravity = true;
+            rbody.constraints = RigidbodyConstraints.FreezeRotation;
+            rbody.drag = 1f;
+            rbody.angularDrag = 1f;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerMovement();
-        PlayerRotate();
+        if (playerMove)
+        {
+            PlayerMovement();
+            PlayerRotate();
+        }
     }
     void PlayerMovement()
     {
@@ -85,5 +91,15 @@ public class PlayerController : MonoBehaviour
             input = Input.GetKeyDown(jumpKey);
         }
         return input;
+    }
+    private void OnDestroy()
+    {
+        if (GetComponentInChildren<Camera>() != null)
+        {
+            Camera playerCam = GetComponentInChildren<Camera>();
+            playerCam.transform.parent = null;
+            playerCam.enabled = true;
+
+        }
     }
 }
