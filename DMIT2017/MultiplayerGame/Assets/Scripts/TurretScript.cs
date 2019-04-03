@@ -5,78 +5,73 @@ using UnityEngine;
 public class TurretScript : MonoBehaviour {
 
     [SerializeField]
-    bool bWeaponClamp;
+    bool vCanClamp = false, hCanClamp = false;
     [SerializeField]
-    float rotationSpeed = 100, weaponClampMax, weaponClampMin, timeBetweenShot = 0.5f, projectileForce = 100;
+    float rotationSpeed = 100;
     [SerializeField]
-    GameObject weaponMount, fireLocation, projectilePrefab;
+    Vector2 vClampMinMax = Vector2.zero, hClampMinMax = Vector2.zero;
     [SerializeField]
-    KeyCode FireKey = KeyCode.Mouse0;
+    GameObject weaponMount;
     public bool useController = true;
     public int playerNum = 1;
-
-    bool canFire = true;
-    float tInput, wInput, lastShot;
+    
+    float tInput, wInput;
     Vector3 angles;
 
     // Use this for initialization
     void Start ()
     {
-        if (weaponClampMin < 0) weaponClampMin = 360 + weaponClampMin;
+        if (hClampMinMax.x < 0) hClampMinMax.x = 360 + hClampMinMax.x;
+        if (vClampMinMax.x < 0) vClampMinMax.x = 360 + vClampMinMax.x;
     }
 	
 	// Update is called once per frame
 	void Update () {
         TurretMovement();
-        //WeaponMountClamp();
-        Fire();
 	}
     void TurretMovement()
     {
-        tInput = Input.GetAxis("Axis6P" + playerNum);
+        if (useController)
+        {
+            tInput = Input.GetAxis("Axis6P" + playerNum);
+            wInput = Input.GetAxis("Axis7P" + playerNum);
+        }
+        else
+        {
+            tInput = Input.GetAxis("Horizontal") * -1;
+            wInput = Input.GetAxis("Vertical");
+        }
         transform.Rotate(Vector3.up, tInput * Time.deltaTime * -rotationSpeed);
         if (weaponMount != null)
         {
-            wInput = Input.GetAxis("Axis7P" + playerNum);
             weaponMount.transform.Rotate(Vector3.right, wInput * Time.deltaTime * -rotationSpeed);
         }
     }
-    void WeaponMountClamp()
+    void TurretClamp()
     {
-        if (!bWeaponClamp) return;
+        if (!vCanClamp && !hCanClamp) return;
         angles = weaponMount.transform.rotation.eulerAngles;
-        if (angles.x >= weaponClampMax)
+        if (hCanClamp)
         {
-            weaponMount.transform.localRotation = Quaternion.Euler(weaponClampMax, angles.y, angles.z);
+            if (angles.x >= hClampMinMax.y)
+            {
+                weaponMount.transform.localRotation = Quaternion.Euler(hClampMinMax.y, angles.y, angles.z);
+            }
+            if (angles.x <= hClampMinMax.x && angles.x > 270)
+            {
+                weaponMount.transform.localRotation = Quaternion.Euler(hClampMinMax.x, angles.y, angles.z);
+            }
         }
-        if (angles.x <= weaponClampMin && angles.x > 270)
+        if (vCanClamp)
         {
-            weaponMount.transform.localRotation = Quaternion.Euler(weaponClampMin, angles.y, angles.z);
+            if (angles.x >= vClampMinMax.y)
+            {
+                weaponMount.transform.localRotation = Quaternion.Euler(vClampMinMax.y, angles.y, angles.z);
+            }
+            if (angles.x <= vClampMinMax.x && angles.x > 270)
+            {
+                weaponMount.transform.localRotation = Quaternion.Euler(vClampMinMax.x, angles.y, angles.z);
+            }
         }
-    }
-    void Fire()
-    {
-        bool fireBool = false;
-        if (useController)
-        {
-            float fireButton = Input.GetAxis("Button0P" + playerNum);
-            fireBool = fireButton != 0;
-        }
-        else fireBool = Input.GetKey(FireKey);
-        if (fireBool && Time.time - lastShot > timeBetweenShot && canFire)
-        {
-            Shoot(fireLocation.transform);
-        }
-    }
-    bool Shoot(Transform fireLocation)
-    {
-        Vector3 spawnPos = fireLocation.position, fireDirection = fireLocation.forward;
-        GameObject projectile = Instantiate(projectilePrefab, spawnPos, fireLocation.rotation, null);
-        //Debug.Log("Spawned");
-        Rigidbody projectileRBody = projectile.GetComponent<Rigidbody>();
-        projectileRBody.AddForce(fireDirection * projectileForce);
-        Destroy(projectile, 3);
-        lastShot = Time.time;
-        return true;
     }
 }
