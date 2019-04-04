@@ -20,7 +20,7 @@ public class VehicleMovement : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        GetAllControllers();
+        //GetAllControllers();
         startPos = transform.position;
         startRot = transform.rotation;
         health = maxHealth;

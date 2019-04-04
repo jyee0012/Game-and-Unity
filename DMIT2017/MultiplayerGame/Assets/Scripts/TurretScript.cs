@@ -28,13 +28,14 @@ public class TurretScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         TurretMovement();
+        TurretClamp();
 	}
     void TurretMovement()
     {
         if (useController)
         {
-            tInput = Input.GetAxis("Axis6P" + playerNum);
-            wInput = Input.GetAxis("Axis7P" + playerNum);
+            tInput = Input.GetAxis("Axis1P" + playerNum);
+            wInput = Input.GetAxis("Axis2P" + playerNum);
         }
         else
         {

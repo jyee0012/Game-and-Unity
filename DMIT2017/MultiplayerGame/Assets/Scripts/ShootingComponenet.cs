@@ -58,6 +58,7 @@ public class ShootingComponenet : MonoBehaviour
                 input = Input.GetKey(fireKey);
                 break;
             case ControllerState.Controller:
+                input = Input.GetAxis("Button5P" + playerNum) > 0;
                 break;
             case ControllerState.PlayerController:
                 if (playerController != null)
