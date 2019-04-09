@@ -12,6 +12,8 @@ public class SpawnerScript : MonoBehaviour
     Vector2 spawnRange = Vector2.one;
     [SerializeField, Range(0,5)]
     float spawnDelay = 1;
+    [SerializeField]
+    float startSpawnDelay = 0;
     [SerializeField, Range(1,500)]
     int spawnAmount = 100;
     [SerializeField]
@@ -29,7 +31,7 @@ public class SpawnerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        spawnTimeStamp = spawnDelay;
+        spawnTimeStamp = spawnDelay + startSpawnDelay;
     }
 
     // Update is called once per frame

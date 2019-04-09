@@ -4223,7 +4223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34e5909526a528e46b44030d401efe17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  vCanClamp: 1
+  vCanClamp: 0
   hCanClamp: 0
   rotationSpeed: 100
   vClampMinMax: {x: -40, y: 15}
