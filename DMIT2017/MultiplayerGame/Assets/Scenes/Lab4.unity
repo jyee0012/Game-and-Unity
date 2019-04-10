@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657886, g: 0.4964127, b: 0.57481724, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -251,6 +251,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spawner (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552302, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
         type: 3}
@@ -711,6 +716,100 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &224966143
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5265556479903552302, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_Name
+      value: Spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552302, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552303, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: spawnAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552303, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: spawnDelay
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552303, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: spawnRange.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552303, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: canSpawn
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: db2ef4217fbcc0f438b79e83df195b7a, type: 3}
 --- !u!1 &266979367
 GameObject:
   m_ObjectHideFlags: 0
@@ -4516,6 +4615,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawner (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552302, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6385,6 +6489,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawner (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552302, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6809,6 +6918,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spawner (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552302, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7018,6 +7132,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Spawner (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265556479903552302, guid: db2ef4217fbcc0f438b79e83df195b7a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5265556479903552288, guid: db2ef4217fbcc0f438b79e83df195b7a,
         type: 3}

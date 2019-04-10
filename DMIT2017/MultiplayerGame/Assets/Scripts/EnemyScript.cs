@@ -23,61 +23,94 @@ public class EnemyScript : MonoBehaviour
     GameObject mouseIndicator = null;
     [SerializeField]
     KeyCode setDestinationKey = KeyCode.Mouse0;
-
+    Vector3 startPos = Vector3.zero;
     PlayerController closestPlayer = null;
+
+    [Header("Retreat Values")]
+    [SerializeField]
+    bool canRetreat = true;
+    [SerializeField]
+    float retreatRange = 3;
+    [SerializeField, Range(0, 100)]
+    int retreatChance = 30;
 
     // Start is called before the first frame update
     void Start()
     {
         SetupNavAgent();
+        startPos = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerControlled)
+        if (playerControlled )
         {
-            if (Input.GetKeyDown(setDestinationKey))
+            if (GetPlayerInput())
             {
-                if (cameraController != null)
-                {
-                    RaycastHit clickInfo;
-                    bool hitUI = false;
-                    Ray mouseRay = cameraController.ScreenPointToRay(Input.mousePosition);
-                    if (EventSystem.current.IsPointerOverGameObject(fingerID))    // is the touch on the GUI
-                    {
-                        // GUI Action
-                        hitUI = true;
-                    }
-                    if (Physics.Raycast(mouseRay, out clickInfo) && !hitUI)
-                    {
-                        if (showMouse && mouseIndicator != null)
-                        {
-                            mouseIndicator.transform.position = clickInfo.point;
-                        }
-                        navAgent.SetDestination(clickInfo.point);
-                        if (transform.parent.GetComponent<SpawnerScript>() != null)
-                        {
-                            SpawnerScript spawnParent = transform.parent.GetComponent<SpawnerScript>();
-                            spawnParent.hasDestination = true;
-                            spawnParent.enemyDestination = navAgent.destination;
-                        }
-
-                    }
-                }
+                PlayerSetDestination();
             }
         }
         else
         {
-            if (closestPlayer != null)
+            EnemyAI();
+        }
+    }
+    void EnemyAI()
+    {
+        if (closestPlayer != null)
+        {
+            if (canRetreat)
             {
-                navAgent.SetDestination(closestPlayer.transform.position);
+                //if (Vector3.Distance(closestPlayer.transform.position, transform.position) < retreatRange)
+                //{
+                //    navAgent.SetDestination(startPos);
+                //}
+                //else 
+                if (Vector3.Distance(startPos, transform.position) < (retreatRange / 2))
+                {
+                    navAgent.SetDestination(closestPlayer.transform.position);
+                }
             }
             else
             {
-                FindClosestPlayer(FindAllPlayers());
+                navAgent.SetDestination(closestPlayer.transform.position);
             }
         }
+        else
+        {
+            FindClosestPlayer(FindAllPlayers());
+        }
+    }
+    void PlayerSetDestination()
+    {
+        RaycastHit clickInfo;
+        bool hitUI = false;
+        Ray mouseRay = cameraController.ScreenPointToRay(Input.mousePosition);
+        if (EventSystem.current.IsPointerOverGameObject(fingerID))    // is the touch on the GUI
+        {
+            // GUI Action
+            hitUI = true;
+        }
+        if (Physics.Raycast(mouseRay, out clickInfo) && !hitUI)
+        {
+            if (showMouse && mouseIndicator != null)
+            {
+                mouseIndicator.transform.position = clickInfo.point;
+            }
+            navAgent.SetDestination(clickInfo.point);
+            if (transform.parent.GetComponent<SpawnerScript>() != null)
+            {
+                SpawnerScript spawnParent = transform.parent.GetComponent<SpawnerScript>();
+                spawnParent.hasDestination = true;
+                spawnParent.enemyDestination = navAgent.destination;
+            }
+
+        }
+    }
+    bool GetPlayerInput()
+    {
+        return (Input.GetKeyDown(setDestinationKey) && cameraController != null);
     }
     void SetupNavAgent()
     {
@@ -122,6 +155,10 @@ public class EnemyScript : MonoBehaviour
         {
             //collision.gameObject.SetActive(false);
             Destroy(collision.gameObject);
+        }
+        if (collision.transform.tag != "Enemy")
+        {
+            navAgent.SetDestination(startPos);
         }
     }
     private void OnDrawGizmos()

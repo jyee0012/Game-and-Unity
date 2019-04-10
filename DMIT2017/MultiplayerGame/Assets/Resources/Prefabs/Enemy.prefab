@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 1732125342696643730}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -115,6 +115,9 @@ MonoBehaviour:
   showDestination: 0
   mouseIndicator: {fileID: 0}
   setDestinationKey: 323
+  canRetreat: 1
+  retreatRange: 3
+  retreatChance: 30
 --- !u!54 &8167257714075377226
 Rigidbody:
   m_ObjectHideFlags: 0
