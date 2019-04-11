@@ -51,27 +51,29 @@ public class TurretScript : MonoBehaviour {
     void TurretClamp()
     {
         if (!vCanClamp && !hCanClamp) return;
-        angles = weaponMount.transform.rotation.eulerAngles;
         if (hCanClamp)
         {
-            if (angles.x >= hClampMinMax.y)
+            angles = transform.localRotation.eulerAngles;
+            //Debug.Log("Angles: " + angles + " | ");
+            if (angles.y >= hClampMinMax.y && angles.y < 180)
             {
-                weaponMount.transform.localRotation = Quaternion.Euler(hClampMinMax.y, angles.y, angles.z);
+                transform.localRotation = Quaternion.Euler(angles.x, hClampMinMax.y, angles.z);
             }
-            if (angles.x <= hClampMinMax.x && angles.x > 270)
+            if (angles.y <= hClampMinMax.x && angles.y > 180)
             {
-                weaponMount.transform.localRotation = Quaternion.Euler(hClampMinMax.x, angles.y, angles.z);
+                transform.localRotation = Quaternion.Euler(angles.x, hClampMinMax.x, angles.z);
             }
         }
         if (vCanClamp)
         {
-            if (angles.x >= vClampMinMax.y)
+            angles = weaponMount.transform.localRotation.eulerAngles;
+            if (angles.x <= vClampMinMax.x && angles.x > 180)
             {
-                weaponMount.transform.localRotation = Quaternion.Euler(vClampMinMax.y, angles.y, angles.z);
+                weaponMount.transform.localRotation = Quaternion.Euler(vClampMinMax.x, 0, angles.z);
             }
-            if (angles.x <= vClampMinMax.x && angles.x > 270)
+            if (angles.x >= vClampMinMax.y && angles.x < 180)
             {
-                weaponMount.transform.localRotation = Quaternion.Euler(vClampMinMax.x, angles.y, angles.z);
+                weaponMount.transform.localRotation = Quaternion.Euler(vClampMinMax.y, 0, angles.z);
             }
         }
     }

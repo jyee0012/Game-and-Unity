@@ -10,13 +10,14 @@ public class VehicleMovement : MonoBehaviour
     float movementSpeed = 2f, health, maxHealth = 10;
     [SerializeField]
     bool useController = true;
-
+    [SerializeField]
+    Text killCountText = null;
     public int playerNum = 1;
 
     float leftTread, rightTread, vInput, hInput;
     Vector3 startPos;
     Quaternion startRot;
-    int enemyScore = 0;
+    static int killCount = 0;
     // Use this for initialization
     void Start()
     {
@@ -24,12 +25,17 @@ public class VehicleMovement : MonoBehaviour
         startPos = transform.position;
         startRot = transform.rotation;
         health = maxHealth;
+        UpdateText();
     }
 
     // Update is called once per frame
     void Update()
     {
         BaseMovement();
+    }
+    public static VehicleMovement GetVehicleMovement()
+    {
+        return FindObjectOfType<VehicleMovement>();
     }
     void BaseMovement()
     {
@@ -92,7 +98,7 @@ public class VehicleMovement : MonoBehaviour
             {
                 if (otherTank.playerNum == i || otherTank == null)
                 {
-                    playerNum = i+1;
+                    playerNum = i + 1;
                     return;
                 }
             }
@@ -106,17 +112,39 @@ public class VehicleMovement : MonoBehaviour
             TakeDamage();
         }
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Enemy")
+        {
+            TakeDamage();
+        }
+    }
     void Respawn()
     {
         health = maxHealth;
         transform.position = startPos;
         transform.rotation = startRot;
-        enemyScore++;
     }
     void TakeDamage(float dmg = 1f)
     {
         health -= dmg;
         if (health > maxHealth) health = maxHealth;
-        else if (health <= 0) Respawn();
+        else if (health <= 0)
+        {
+            //Respawn();
+            Destroy(gameObject);
+        }
+    }
+    public static void GainKill(int killAmount = 1)
+    {
+        killCount += killAmount;
+        GetVehicleMovement().UpdateText();
+    }
+    public void UpdateText()
+    {
+        if (killCountText != null)
+        {
+            killCountText.text = "KillCount: " + killCount;
+        }
     }
 }

@@ -62,11 +62,10 @@ public class EnemyScript : MonoBehaviour
         {
             if (canRetreat)
             {
-                //if (Vector3.Distance(closestPlayer.transform.position, transform.position) < retreatRange)
-                //{
-                //    navAgent.SetDestination(startPos);
-                //}
-                //else 
+                if (Vector3.Distance(closestPlayer.transform.position, navAgent.destination) > retreatRange)
+                {
+                    navAgent.SetDestination(closestPlayer.transform.position);
+                }
                 if (Vector3.Distance(startPos, transform.position) < (retreatRange / 2))
                 {
                     navAgent.SetDestination(closestPlayer.transform.position);
@@ -149,14 +148,15 @@ public class EnemyScript : MonoBehaviour
         if (collision.transform.tag == "Projectile")
         {
             Destroy(collision.gameObject);
+            VehicleMovement.GainKill();
             Destroy(gameObject);
         }
         if (collision.transform.tag == "Player")
         {
             //collision.gameObject.SetActive(false);
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
         }
-        if (collision.transform.tag != "Enemy")
+        if (collision.transform.tag == "Player")
         {
             navAgent.SetDestination(startPos);
         }
