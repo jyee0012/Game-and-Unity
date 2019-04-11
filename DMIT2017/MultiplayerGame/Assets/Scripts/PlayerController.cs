@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -12,13 +13,20 @@ public class PlayerController : MonoBehaviour
     bool canJump = true, reverseVertical = false, playerMove = true;
     [SerializeField]
     float movementSpeed = 2f, jumpForce = 320f, rotateSpeed = 100f;
-    
+
     [Header("Keyboard Settings")]
     [SerializeField]
     KeyCode jumpKey = KeyCode.Space;
-    
+
     [Header("Controller Settings")]
     public bool useController = false;
+
+    [Header("Timer/Wave Controls")]
+    [SerializeField]
+    Text timerText = null;
+    [SerializeField]
+    Text waveText = null;
+    float timer = 0, waveNum = 0, waveTimer = 0;
 
     float vInput = 0, hInput = 0, rInput = 0;
 
@@ -43,6 +51,7 @@ public class PlayerController : MonoBehaviour
             PlayerMovement();
             PlayerRotate();
         }
+        Timer();
     }
     void PlayerMovement()
     {
@@ -73,7 +82,7 @@ public class PlayerController : MonoBehaviour
         {
             rInput = Input.GetAxis("Axis4P" + playerNum);
         }
-        transform.Rotate(new Vector3(0,rInput * rotateSpeed * Time.deltaTime,0));
+        transform.Rotate(new Vector3(0, rInput * rotateSpeed * Time.deltaTime, 0));
     }
     void Jump()
     {
@@ -101,5 +110,35 @@ public class PlayerController : MonoBehaviour
             playerCam.enabled = true;
 
         }
+    }
+    void Timer()
+    {
+        timer += Time.deltaTime;
+        //Debug.Log("Timer: " + timer);
+        if ((int)timer % 90 == 0 && timer > waveTimer)
+        {
+            if (waveNum < 3)
+            {
+                waveNum++;
+                waveTimer = timer + 10;
+            }
+        }
+        UpdateTimerText();
+        UpdateWaveText();
+    }
+    void UpdateTimerText()
+    {
+        string timerString = "Time: ",
+            minSec = GetTimeText(timer);
+        if (timerText != null) timerText.text = timerString + minSec;
+    }
+    void UpdateWaveText()
+    {
+        if (waveText == null) return;
+        waveText.text = "Wave: " + waveNum;
+    }
+    string GetTimeText(float time)
+    {
+        return string.Format("{0}:{1:00}", (int)time / 60, (int)time % 60);
     }
 }
