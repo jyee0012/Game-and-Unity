@@ -11,10 +11,11 @@ public class PaddleScript : MonoBehaviour
     [SerializeField]
     int playerNum = 0;
     [SerializeField]
-    bool useController = false, clampMovement = false;
+    bool useController = false, clampMovement = false, playerControlled = true;
     [SerializeField]
     float moveSpeed = 2f;
 
+    GameObject targetBall = null;
     Vector3 startPos = Vector3.zero;
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,31 @@ public class PaddleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Movement(GetPlayerInput());
+	if (playerControlled)
+	{
+        	Movement(GetPlayerInput());
+	}
+	else
+	{
+		if (targetBall == null) targetBall = GetClosestBall();
+		else
+		{
+			// get paddle move direction and follow the ball in that direction
+		}
+	}
+    }
+    GameObject GetClosestBall()
+    {
+	GameObject closestBall = null;
+	foreach(GameObject ball in FindObjectsByType<PongBallScript>())
+	{
+		if (closestBall == null) closestBall = ball;
+		if (Vector3.Distance(ball.transform.position, transform.position) < Vector3.Distance(closestBall.transform.position, transform.position))
+		{
+			closestBall = ball;
+		}
+	}
+	return closestBall;
     }
     Vector3 GetPlayerInput()
     {
