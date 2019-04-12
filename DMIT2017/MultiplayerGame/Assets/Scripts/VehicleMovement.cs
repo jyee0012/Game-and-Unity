@@ -9,12 +9,11 @@ public class VehicleMovement : MonoBehaviour
     [SerializeField]
     float movementSpeed = 2f, health, maxHealth = 10;
     [SerializeField]
-    bool useController = true;
+    bool useController = true, treadMovement = true;
     [SerializeField]
     Text killCountText = null;
     public int playerNum = 1;
-
-    float leftTread, rightTread, vInput, hInput;
+    
     Vector3 startPos;
     Quaternion startRot;
     static int killCount = 0;
@@ -63,16 +62,26 @@ public class VehicleMovement : MonoBehaviour
         #endregion
         if (useController)
         {
-            leftTread = Input.GetAxis("Axis2P" + playerNum);
-            rightTread = Input.GetAxis("Axis5P" + playerNum);
+            float leftTread = Input.GetAxis("Axis2P" + playerNum),
+                rightTread = Input.GetAxis("Axis5P" + playerNum),
+                leftAnalogH = Input.GetAxis("Axis1P" + playerNum);
 
-            transform.Translate(-Vector3.forward * (leftTread + rightTread) * Time.deltaTime * movementSpeed);
-            transform.Rotate(Vector3.up * (-leftTread + rightTread));
+            //tread movement
+            if (treadMovement)
+            {
+                transform.Translate(-Vector3.forward * (leftTread + rightTread) * Time.deltaTime * movementSpeed);
+                transform.Rotate(Vector3.up * (-leftTread + rightTread));
+            }
+            else
+            {
+                transform.Translate(-Vector3.forward * leftTread * movementSpeed * Time.deltaTime);
+                transform.Rotate(Vector3.up * leftAnalogH);
+            }
         }
         else
         {
-            vInput = Input.GetAxis("Vertical");
-            hInput = Input.GetAxis("Horizontal");
+            float vInput = Input.GetAxis("Vertical"),
+                hInput = Input.GetAxis("Horizontal");
             transform.Translate(Vector3.forward * (vInput) * Time.deltaTime * movementSpeed);
             transform.Rotate(Vector3.up * (hInput));
         }

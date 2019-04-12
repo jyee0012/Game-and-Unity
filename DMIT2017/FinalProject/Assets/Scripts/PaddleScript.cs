@@ -26,31 +26,31 @@ public class PaddleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-	if (playerControlled)
-	{
-        	Movement(GetPlayerInput());
-	}
-	else
-	{
-		if (targetBall == null) targetBall = GetClosestBall();
-		else
-		{
-			// get paddle move direction and follow the ball in that direction
-		}
-	}
+        if (playerControlled)
+        {
+            Movement(GetPlayerInput());
+        }
+        else
+        {
+            if (targetBall == null) targetBall = GetClosestBall();
+            else
+            {
+                // get paddle move direction and follow the ball in that direction
+            }
+        }
     }
     GameObject GetClosestBall()
     {
-	GameObject closestBall = null;
-	foreach(GameObject ball in FindObjectsByType<PongBallScript>())
-	{
-		if (closestBall == null) closestBall = ball;
-		if (Vector3.Distance(ball.transform.position, transform.position) < Vector3.Distance(closestBall.transform.position, transform.position))
-		{
-			closestBall = ball;
-		}
-	}
-	return closestBall;
+        GameObject closestBall = null;
+        foreach (PongBallScript ball in FindObjectsOfType<PongBallScript>())
+        {
+            if (closestBall == null) closestBall = ball.gameObject;
+            if (Vector3.Distance(ball.transform.position, transform.position) < Vector3.Distance(closestBall.transform.position, transform.position))
+            {
+                closestBall = ball.gameObject;
+            }
+        }
+        return closestBall;
     }
     Vector3 GetPlayerInput()
     {
@@ -85,7 +85,7 @@ public class PaddleScript : MonoBehaviour
         {
             xInput = Input.GetAxis("Horizontal");
         }
-        Vector3 playerDirection = new Vector3(xInput, 0,0);
+        Vector3 playerDirection = new Vector3(xInput, 0, 0);
         return playerDirection;
     }
     void Movement(Vector3 direction)

@@ -9,10 +9,12 @@ public class PlayerTextController : MonoBehaviour
     Text playerText = null;
     [SerializeField]
     int playerNum = 0;
+
+    Color startColor;
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (playerText != null) startColor = playerText.color;
     }
 
     // Update is called once per frame
@@ -32,7 +34,7 @@ public class PlayerTextController : MonoBehaviour
         // b button press
         if (Input.GetAxis("Button1P" + playerNum) > 0)
         {
-            playerText.color = Color.red;
+            playerText.color = startColor;
         }
     }
 }

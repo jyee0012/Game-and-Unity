@@ -34,7 +34,7 @@ public class TurretScript : MonoBehaviour {
     {
         if (useController)
         {
-            tInput = Input.GetAxis("Axis1P" + playerNum);
+            tInput = Input.GetAxis("Axis1P" + playerNum) * -1;
             wInput = Input.GetAxis("Axis2P" + playerNum);
         }
         else
