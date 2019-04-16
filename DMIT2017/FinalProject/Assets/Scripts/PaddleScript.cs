@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PaddleScript : MonoBehaviour
 {
+    public enum PaddleDirection { Horizontal, Vertical }
+    [SerializeField]
+    PaddleDirection paddleMoveDirection = PaddleDirection.Horizontal;
     [SerializeField]
     Vector2 distanceMinMax = Vector2.zero;
-    [SerializeField]
-    Vector3 paddleMoveDirection = Vector3.right;
     [SerializeField]
     int playerNum = 0;
     [SerializeField]
@@ -96,13 +97,27 @@ public class PaddleScript : MonoBehaviour
             // include checks based on axis
             // right now this only checks left-right, have it check forward/back and up/down
             Vector3 clampedPos = transform.position;
-            if (transform.position.x > startPos.x + distanceMinMax.y)
+            if (paddleMoveDirection == PaddleDirection.Horizontal)
             {
-                clampedPos.x = startPos.x + distanceMinMax.y;
+                if (transform.position.x > startPos.x + distanceMinMax.y)
+                {
+                    clampedPos.x = startPos.x + distanceMinMax.y;
+                }
+                if (transform.position.x < startPos.x + distanceMinMax.x)
+                {
+                    clampedPos.x = startPos.x + distanceMinMax.x;
+                }
             }
-            if (transform.position.x < startPos.x + distanceMinMax.x)
+            if (paddleMoveDirection == PaddleDirection.Vertical)
             {
-                clampedPos.x = startPos.x + distanceMinMax.x;
+                if (transform.position.z > startPos.z + distanceMinMax.y)
+                {
+                    clampedPos.z = startPos.z + distanceMinMax.y;
+                }
+                if (transform.position.z < startPos.z + distanceMinMax.x)
+                {
+                    clampedPos.z = startPos.z + distanceMinMax.x;
+                }
             }
             transform.position = clampedPos;
         }
