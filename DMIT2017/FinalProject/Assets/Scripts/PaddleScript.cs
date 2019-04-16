@@ -10,7 +10,7 @@ public class PaddleScript : MonoBehaviour
     [SerializeField]
     Vector2 distanceMinMax = Vector2.zero;
     [SerializeField]
-    int playerNum = 0;
+    int playerNum = 0, playerScore = 0;
     [SerializeField]
     bool useController = false, clampMovement = false, playerControlled = true;
     [SerializeField]
@@ -121,5 +121,14 @@ public class PaddleScript : MonoBehaviour
             }
             transform.position = clampedPos;
         }
+    }
+    public void GainScore(int score = 1)
+    {
+        playerScore += score;
+        UpdateText();
+    }
+    void UpdateText()
+    {
+
     }
 }

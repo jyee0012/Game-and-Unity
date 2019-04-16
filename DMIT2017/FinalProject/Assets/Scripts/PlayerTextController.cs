@@ -14,6 +14,7 @@ public class PlayerTextController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (playerText == null) playerText = GetComponentInChildren<Text>();
         if (playerText != null) startColor = playerText.color;
     }
 

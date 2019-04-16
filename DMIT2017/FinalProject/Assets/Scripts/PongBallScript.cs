@@ -7,6 +7,7 @@ public class PongBallScript : MonoBehaviour
 {
     [SerializeField, TextArea]
     string ballDesc = "";
+    public GameObject lastHit = null, lastPlayerHit = null;
     public Rigidbody rbody = null;
     public float moveSpeed = 2f, moveForce = 100f, rotateDelay = 0.5f, moveDelay = 1;
     [SerializeField]
@@ -75,6 +76,7 @@ public class PongBallScript : MonoBehaviour
             transform.rotation = collision.transform.rotation;
             RandomRotate();
             //Debug.Log("After: " + transform.rotation.eulerAngles);
+            lastPlayerHit = collision.gameObject;
             if (additiveForce)
             {
                 rbody.AddForce(transform.forward * moveForce);

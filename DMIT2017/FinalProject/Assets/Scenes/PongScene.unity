@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657886, g: 0.4964127, b: 0.57481724, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -142,7 +142,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 5, z: -5}
   m_LocalScale: {x: 10, y: 10, z: 0.39999998}
   m_Children: []
-  m_Father: {fileID: 1008860606}
+  m_Father: {fileID: 1206431204}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &11631945
@@ -306,8 +306,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paddleMoveDirection: 0
   distanceMinMax: {x: -15, y: 15}
-  playerNum: 1
-  useController: 0
+  playerNum: 2
+  useController: 1
   clampMovement: 1
   playerControlled: 1
   moveSpeed: 25
@@ -496,7 +496,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 0.39999998}
   m_Children: []
   m_Father: {fileID: 1008860606}
-  m_RootOrder: 5
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 180, z: 0}
 --- !u!65 &909740534
 BoxCollider:
@@ -583,12 +583,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 5}
   m_Children:
-  - {fileID: 11631944}
-  - {fileID: 1533715472}
-  - {fileID: 1126590297}
-  - {fileID: 1546933945}
   - {fileID: 1426091424}
   - {fileID: 909740533}
+  - {fileID: 1206431204}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -641,7 +638,7 @@ MonoBehaviour:
   paddleMoveDirection: 0
   distanceMinMax: {x: -15, y: 15}
   playerNum: 1
-  useController: 0
+  useController: 1
   clampMovement: 1
   playerControlled: 1
   moveSpeed: 25
@@ -737,8 +734,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paddleMoveDirection: 1
   distanceMinMax: {x: -15, y: 15}
-  playerNum: 1
-  useController: 0
+  playerNum: 3
+  useController: 1
   clampMovement: 1
   playerControlled: 1
   moveSpeed: 25
@@ -840,11 +837,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126590296}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -5, y: 5, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 0.39999998}
+  m_LocalScale: {x: 10, y: 10, z: 0.4000002}
   m_Children: []
-  m_Father: {fileID: 1008860606}
+  m_Father: {fileID: 1206431204}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!65 &1126590298
@@ -905,6 +902,40 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126590296}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1206431203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1206431204}
+  m_Layer: 0
+  m_Name: Unlocked Boundaries
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1206431204
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1206431203}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 11631944}
+  - {fileID: 1533715472}
+  - {fileID: 1126590297}
+  - {fileID: 1546933945}
+  m_Father: {fileID: 1008860606}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1426091423
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,7 +967,7 @@ Transform:
   m_LocalScale: {x: 10, y: 10, z: 0.39999998}
   m_Children: []
   m_Father: {fileID: 1008860606}
-  m_RootOrder: 4
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!65 &1426091425
 BoxCollider:
@@ -1022,11 +1053,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1533715471}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
   m_LocalPosition: {x: 0, y: 5, z: 5}
   m_LocalScale: {x: 10, y: 10, z: 0.39999998}
   m_Children: []
-  m_Father: {fileID: 1008860606}
+  m_Father: {fileID: 1206431204}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &1533715473
@@ -1113,11 +1144,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1546933944}
-  m_LocalRotation: {x: 0, y: 0.7071068, z: -0, w: -0.7071068}
+  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: -0.7071068}
   m_LocalPosition: {x: 5, y: 5, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 0.39999998}
+  m_LocalScale: {x: 10, y: 10, z: 0.4000002}
   m_Children: []
-  m_Father: {fileID: 1008860606}
+  m_Father: {fileID: 1206431204}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
 --- !u!65 &1546933946
@@ -1212,8 +1243,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paddleMoveDirection: 1
   distanceMinMax: {x: -15, y: 15}
-  playerNum: 1
-  useController: 0
+  playerNum: 4
+  useController: 1
   clampMovement: 1
   playerControlled: 1
   moveSpeed: 25
