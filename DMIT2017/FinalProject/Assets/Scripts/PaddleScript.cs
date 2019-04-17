@@ -10,11 +10,14 @@ public class PaddleScript : MonoBehaviour
     [SerializeField]
     Vector2 distanceMinMax = Vector2.zero;
     [SerializeField]
-    int playerNum = 0, playerScore = 0;
+    int playerNum = 0, playerScore = 0, playerLives = 10;
     [SerializeField]
     bool useController = false, clampMovement = false, playerControlled = true;
     [SerializeField]
     float moveSpeed = 2f;
+
+    public bool activePlayer = true;
+    public GameObject goalObject = null, wallObject = null;
 
     GameObject targetBall = null;
     Vector3 startPos = Vector3.zero;
@@ -27,6 +30,7 @@ public class PaddleScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        SetPlayerActive();
         if (playerControlled)
         {
             Movement(GetPlayerInput());
@@ -39,6 +43,16 @@ public class PaddleScript : MonoBehaviour
                 // get paddle move direction and follow the ball in that direction
             }
         }
+    }
+    void SetPlayerActive()
+    {
+        if (!activePlayer)
+        {
+            if (goalObject != null) goalObject.SetActive(activePlayer);
+            if (wallObject != null) wallObject.SetActive(!activePlayer);
+            gameObject.SetActive(activePlayer);
+        }
+        else if (wallObject != null && wallObject.activeInHierarchy) wallObject.SetActive(!activePlayer);
     }
     GameObject GetClosestBall()
     {
@@ -125,6 +139,12 @@ public class PaddleScript : MonoBehaviour
     public void GainScore(int score = 1)
     {
         playerScore += score;
+        UpdateText();
+    }
+    public void LoseLives(int kill = 1)
+    {
+        playerLives -= kill;
+        activePlayer = (playerLives > 0);
         UpdateText();
     }
     void UpdateText()
