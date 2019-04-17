@@ -6,14 +6,26 @@ using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
+    public static PlayerManager Instance = null;
     [SerializeField]
     List<PlayerTextController> playerTextList = new List<PlayerTextController>();
-    bool[] activePlayers;
+    [SerializeField]
+    List<GameObject> playerPaddleList = new List<GameObject>();
+    public bool[] activePlayers;
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else if (Instance != this)
+        {
+            activePlayers = Instance.activePlayers;
+            Destroy(Instance);
+            Instance = this;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
         DontDestroyOnLoad(gameObject);
-        activePlayers = new bool[playerTextList.Count];
     }
 
     // Update is called once per frame
@@ -21,8 +33,14 @@ public class PlayerManager : MonoBehaviour
     {
         
     }
+    public void SetPlayersThenPlayGame(int sceneIndex)
+    {
+        SetActivePlayers();
+        LoadScene(sceneIndex);
+    }
     void SetActivePlayers()
     {
+        activePlayers = new bool[playerTextList.Count];
         int activePlayerCount = 0;
         for(int i = 0; i < playerTextList.Count; i++)
         {

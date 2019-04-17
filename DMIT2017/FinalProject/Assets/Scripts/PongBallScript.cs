@@ -9,7 +9,7 @@ public class PongBallScript : MonoBehaviour
     string ballDesc = "";
     public GameObject lastHit = null, lastPlayerHit = null;
     public Rigidbody rbody = null;
-    public float moveSpeed = 2f, moveForce = 100f, rotateDelay = 0.5f, moveDelay = 1;
+    public float moveSpeed = 2f, moveForce = 100f, rotateDelay = 0.5f, moveDelay = 1, respawnDelay = 5;
     [SerializeField]
     Vector2 ricochetRange = Vector2.zero;
     [SerializeField]
@@ -29,8 +29,9 @@ public class PongBallScript : MonoBehaviour
     bool reset = false;
 
     // Private Variables
+    bool respawning = false;
     Vector3 startPos = Vector3.zero;
-    float rotateTimeStamp = 0, moveTimeStamp = 0, gravityTimeStamp = 0;
+    float rotateTimeStamp = 0, moveTimeStamp = 0, gravityTimeStamp = 0, respawnTimeStamp = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -63,6 +64,11 @@ public class PongBallScript : MonoBehaviour
         {
             GravityWell(gravityRange);
         }
+        if (respawning && respawnTimeStamp < Time.time)
+        {
+            ResetPos();
+            EnableDisableSelf(true);
+        }
     }
     void ConstantMovement(Vector3 direction)
     {
@@ -82,6 +88,21 @@ public class PongBallScript : MonoBehaviour
                 rbody.AddForce(transform.forward * moveForce);
             }
         }
+        if (collision.transform.tag == "Goal")
+        {
+            EnableDisableSelf(false);
+            respawnTimeStamp = Time.time + respawnDelay;
+            respawning = true;
+        }
+    }
+    void EnableDisableSelf(bool activeSelf = true)
+    {
+        MeshRenderer meshRender = GetComponent<MeshRenderer>();
+        Collider collide = GetComponent<Collider>();
+        rbody.velocity = Vector3.zero;
+
+        meshRender.enabled = activeSelf;
+        collide.enabled = activeSelf;
     }
     void RandomRotate()
     {
