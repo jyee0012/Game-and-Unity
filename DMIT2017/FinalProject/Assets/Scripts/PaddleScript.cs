@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PaddleScript : MonoBehaviour
 {
@@ -12,9 +13,11 @@ public class PaddleScript : MonoBehaviour
     [SerializeField]
     int playerNum = 0, playerScore = 0, playerLives = 10;
     [SerializeField]
-    bool useController = false, clampMovement = false, playerControlled = true;
+    bool useController = false, clampMovement = false, playerControlled = true, useLives = false, useScore = false;
     [SerializeField]
     float moveSpeed = 2f;
+    [SerializeField]
+    Text paddleText = null;
 
     public bool activePlayer = true;
     public GameObject goalObject = null, wallObject = null;
@@ -25,6 +28,7 @@ public class PaddleScript : MonoBehaviour
     void Start()
     {
         startPos = transform.position;
+        UpdateText();
     }
 
     // Update is called once per frame
@@ -46,13 +50,16 @@ public class PaddleScript : MonoBehaviour
     }
     void SetPlayerActive()
     {
-        if (!activePlayer)
-        {
-            if (goalObject != null) goalObject.SetActive(activePlayer);
-            if (wallObject != null) wallObject.SetActive(!activePlayer);
-            gameObject.SetActive(activePlayer);
-        }
-        else if (wallObject != null && wallObject.activeInHierarchy) wallObject.SetActive(!activePlayer);
+
+        if (goalObject != null) goalObject.SetActive(activePlayer);
+        if (wallObject != null) wallObject.SetActive(!activePlayer);
+        GetComponent<BoxCollider>().enabled = activePlayer;
+        GetComponent<MeshRenderer>().enabled = activePlayer;
+        //if (!activePlayer)
+        //{
+        //    //gameObject.SetActive(activePlayer);
+        //}
+        //else if (wallObject != null && wallObject.activeInHierarchy) wallObject.SetActive(!activePlayer);
     }
     GameObject GetClosestBall()
     {
@@ -147,8 +154,14 @@ public class PaddleScript : MonoBehaviour
         activePlayer = (playerLives > 0);
         UpdateText();
     }
+    public void LoseSomething(int amount = 1)
+    {
+        if (useLives) LoseLives(amount);
+        if (useScore) GainScore(amount);
+    }
     void UpdateText()
     {
-
+        if (paddleText == null) return;
+        paddleText.text = "Lives " + playerLives;
     }
 }

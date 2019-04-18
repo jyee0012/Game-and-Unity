@@ -66,8 +66,8 @@ public class PongBallScript : MonoBehaviour
         }
         if (respawning && respawnTimeStamp < Time.time)
         {
-            ResetPos();
             EnableDisableSelf(true);
+            ResetPos();
         }
     }
     void ConstantMovement(Vector3 direction)
@@ -82,17 +82,25 @@ public class PongBallScript : MonoBehaviour
             transform.rotation = collision.transform.rotation;
             RandomRotate();
             //Debug.Log("After: " + transform.rotation.eulerAngles);
-            lastPlayerHit = collision.gameObject;
+            lastHit = collision.gameObject;
+            if (collision.gameObject.GetComponent<PaddleScript>() != null)
+            {
+                lastPlayerHit = collision.gameObject;
+            }
             if (additiveForce)
             {
                 rbody.AddForce(transform.forward * moveForce);
             }
         }
-        if (collision.transform.tag == "Goal")
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.transform.tag == "Goal")
         {
-            EnableDisableSelf(false);
-            respawnTimeStamp = Time.time + respawnDelay;
-            respawning = true;
+            Destroy(gameObject);
+            //EnableDisableSelf(false);
+            //respawnTimeStamp = Time.time + respawnDelay;
+            //respawning = true;
         }
     }
     void EnableDisableSelf(bool activeSelf = true)
