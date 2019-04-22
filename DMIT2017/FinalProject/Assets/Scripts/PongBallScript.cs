@@ -9,11 +9,13 @@ public class PongBallScript : MonoBehaviour
     string ballDesc = "";
     public GameObject lastHit = null, lastPlayerHit = null;
     public Rigidbody rbody = null;
-    public float moveSpeed = 2f, moveForce = 100f, rotateDelay = 0.5f, moveDelay = 1, respawnDelay = 5;
+    public float moveSpeed = 2f, moveForce = 100f, rotateDelay = 0.5f, moveDelay = 1, respawnDelay = 5, destructionRange = 100;
     [SerializeField]
     Vector2 ricochetRange = Vector2.zero;
     [SerializeField]
     bool moving = false, useForce = false, canRotate = false, additiveForce = false;
+    [SerializeField]
+    AudioSource hitSound = null, playerHitSound = null, destroySound = null;
 
 
     [Header("Gravity Ball Settings")]
@@ -43,11 +45,7 @@ public class PongBallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (reset)
-        {
-            ResetPos(reset);
-            reset = !reset;
-        }
+        if (Vector3.Distance(startPos, transform.position) > destructionRange) Destroy(gameObject);
         if (moving && moveTimeStamp < Time.time)
         {
             if (useForce)
@@ -83,9 +81,11 @@ public class PongBallScript : MonoBehaviour
             RandomRotate();
             //Debug.Log("After: " + transform.rotation.eulerAngles);
             lastHit = collision.gameObject;
+            if (hitSound != null) hitSound.PlayOneShot(hitSound.clip);
             if (collision.gameObject.GetComponent<PaddleScript>() != null)
             {
                 lastPlayerHit = collision.gameObject;
+                if (playerHitSound != null) playerHitSound.PlayOneShot(playerHitSound.clip);
             }
             if (additiveForce)
             {
@@ -97,10 +97,8 @@ public class PongBallScript : MonoBehaviour
     {
         if (other.transform.tag == "Goal")
         {
+            if (destroySound != null) destroySound.PlayOneShot(destroySound.clip);
             Destroy(gameObject);
-            //EnableDisableSelf(false);
-            //respawnTimeStamp = Time.time + respawnDelay;
-            //respawning = true;
         }
     }
     void EnableDisableSelf(bool activeSelf = true)

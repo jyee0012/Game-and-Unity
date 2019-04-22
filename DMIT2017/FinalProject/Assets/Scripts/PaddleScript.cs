@@ -10,14 +10,14 @@ public class PaddleScript : MonoBehaviour
     PaddleDirection paddleMoveDirection = PaddleDirection.Horizontal;
     [SerializeField]
     Vector2 distanceMinMax = Vector2.zero;
+    public int playerNum = 0, playerScore = 0, playerLives = 10;
     [SerializeField]
-    int playerNum = 0, playerScore = 0, playerLives = 10;
-    [SerializeField]
-    bool useController = false, clampMovement = false, playerControlled = true, useLives = false, useScore = false;
+    bool useController = false, clampMovement = false, playerControlled = true;
+    public bool useLives = false, useScore = false, showScore = false;
     [SerializeField]
     float moveSpeed = 2f;
     [SerializeField]
-    Text paddleText = null;
+    GameObject paddleText = null;
 
     public bool activePlayer = true;
     public GameObject goalObject = null, wallObject = null;
@@ -53,6 +53,7 @@ public class PaddleScript : MonoBehaviour
 
         if (goalObject != null) goalObject.SetActive(activePlayer);
         if (wallObject != null) wallObject.SetActive(!activePlayer);
+        if (paddleText != null && !showScore) paddleText.SetActive(activePlayer);
         GetComponent<BoxCollider>().enabled = activePlayer;
         GetComponent<MeshRenderer>().enabled = activePlayer;
         //if (!activePlayer)
@@ -147,6 +148,7 @@ public class PaddleScript : MonoBehaviour
     {
         playerScore += score;
         UpdateText();
+        if (!showScore) showScore = true;
     }
     public void LoseLives(int kill = 1)
     {
@@ -154,14 +156,26 @@ public class PaddleScript : MonoBehaviour
         activePlayer = (playerLives > 0);
         UpdateText();
     }
-    public void LoseSomething(int amount = 1)
-    {
-        if (useLives) LoseLives(amount);
-        if (useScore) GainScore(amount);
-    }
-    void UpdateText()
+    public void UpdateText()
     {
         if (paddleText == null) return;
-        paddleText.text = "Lives " + playerLives;
+        string playerLifeText = "Lives: " + playerLives,
+            playerScoreText = "Score: " + playerScore;
+
+        string paddleFinalText = "Player " + playerNum;
+        paddleFinalText += "\n";
+        if (useScore)
+        {
+            paddleFinalText += playerScoreText;
+        }
+        if (useScore && useLives)
+        {
+            paddleFinalText += "\t";
+        }
+        if (useLives)
+        {
+            paddleFinalText += playerLifeText;
+        }
+        paddleText.GetComponentInChildren<Text>().text = paddleFinalText;
     }
 }

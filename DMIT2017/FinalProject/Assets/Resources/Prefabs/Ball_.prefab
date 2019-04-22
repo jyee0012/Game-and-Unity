@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 6685121176420341433}
   m_Layer: 9
   m_Name: Ball_
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -306,11 +306,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballDesc: False ball where only one is the real one
+  lastHit: {fileID: 0}
+  lastPlayerHit: {fileID: 0}
   rbody: {fileID: 0}
   moveSpeed: 15
   moveForce: 1500
   rotateDelay: 0.5
   moveDelay: 1
+  respawnDelay: 5
+  destructionRange: 100
   ricochetRange: {x: -80, y: 80}
   moving: 1
   useForce: 1

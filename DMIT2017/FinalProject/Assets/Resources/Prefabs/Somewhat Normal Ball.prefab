@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 455616884507759371}
   m_Layer: 9
   m_Name: Somewhat Normal Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 82790e5ee9250a54399d66eef008c9fe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -122,11 +122,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ballDesc: No Drag just Force
+  lastHit: {fileID: 0}
+  lastPlayerHit: {fileID: 0}
   rbody: {fileID: 0}
   moveSpeed: 15
   moveForce: 1500
   rotateDelay: 0.5
   moveDelay: 1
+  respawnDelay: 5
+  destructionRange: 100
   ricochetRange: {x: -80, y: 80}
   moving: 1
   useForce: 1

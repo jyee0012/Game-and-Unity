@@ -11,6 +11,8 @@ public class PlayerTextController : MonoBehaviour
     int playerNum = 0;
     public bool activePlayer = false;
     Color startColor;
+    [SerializeField]
+    Color activeColor = Color.green;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,7 @@ public class PlayerTextController : MonoBehaviour
     void Update()
     {
         ControllerInput();
-        if (playerText != null) playerText.color = (activePlayer) ? Color.green: startColor;
+        if (playerText != null) playerText.color = (activePlayer) ? activeColor : startColor;
     }
     void ControllerInput()
     {
