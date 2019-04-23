@@ -6,6 +6,8 @@ public class GoalScript : MonoBehaviour
 {
     [SerializeField]
     PaddleScript playerPaddle = null;
+    [SerializeField]
+    AudioSource destroySound = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +28,7 @@ public class GoalScript : MonoBehaviour
             {
                 UpdatePlayerScore(other.GetComponent<PongBallScript>());
             }
+            if (destroySound != null) destroySound.PlayOneShot(destroySound.clip);
         }
     }
     void UpdatePlayerLives()

@@ -92,6 +92,7 @@ public class PlayerManager : MonoBehaviour
             {
                 SetupBallSpawners(ref ballSpawner[i], ballAmount[i]);
             }
+            if (Display.displays.Length > 1) Display.displays[1].Activate();
             setupPlayers = false;
         }
         if (checkWin)
@@ -131,6 +132,7 @@ public class PlayerManager : MonoBehaviour
             for(int i = 0; i< ballSlider.Length; i++)
             {
                 ballAmount[i] = (int)ballSlider[i].value;
+                Debug.Log(i + ":" + (int)ballSlider[i].value);
             }
         }
     }

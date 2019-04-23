@@ -15,7 +15,7 @@ public class PongBallScript : MonoBehaviour
     [SerializeField]
     bool moving = false, useForce = false, canRotate = false, additiveForce = false;
     [SerializeField]
-    AudioSource hitSound = null, playerHitSound = null, destroySound = null;
+    AudioSource hitSound = null, playerHitSound = null;
 
 
     [Header("Gravity Ball Settings")]
@@ -40,6 +40,7 @@ public class PongBallScript : MonoBehaviour
     {
         startPos = transform.position;
         if (rbody == null) rbody = GetComponent<Rigidbody>();
+        RandomRotate();
     }
 
     // Update is called once per frame
@@ -97,7 +98,6 @@ public class PongBallScript : MonoBehaviour
     {
         if (other.transform.tag == "Goal")
         {
-            if (destroySound != null) destroySound.PlayOneShot(destroySound.clip);
             Destroy(gameObject);
         }
     }

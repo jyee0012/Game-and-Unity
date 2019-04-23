@@ -14,10 +14,10 @@ public class SpawnerScript : MonoBehaviour
     float spawnDelay = 1;
     [SerializeField]
     float startSpawnDelay = 0;
-    [Range(1,20)]
+    [Range(0,20)]
     public int spawnAmount = 4;
     [Tooltip("Maximum amount of spawned allowed at a time")]
-    [Range(1, 20)]
+    [Range(0, 20)]
     public int maxSpawnAmount = 4;
     public bool canSpawn = true, endlessSpawn = false, drawRange = false;
 
